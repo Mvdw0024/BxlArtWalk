@@ -28,11 +28,8 @@ public class MapFragment extends Fragment {
         public void onMapReady(GoogleMap googleMap) {
             mMap = googleMap;
             LatLng coordBrussel = new LatLng(50.858712, 4.347446);
-
             CameraUpdate moveToBrussel = CameraUpdateFactory.newLatLngZoom(coordBrussel, 16);
-
             mMap.animateCamera(moveToBrussel);
-            //speciaal voor Talia
             mMap.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
 
         }
@@ -52,6 +49,18 @@ public class MapFragment extends Fragment {
         mapView = rootView.findViewById(R.id.mapView);
         mapView.onCreate(savedInstanceState);
         mapView.getMapAsync(onMapReady);
+        /* TODO: aanpassen voor ArtRoute
+        iv = rootView.findViewById(R.id.iv_icon);
+        tv = rootView.findViewById(R.id.tv_joke);
+
+        JokeViewModel jokeViewModel = new ViewModelProvider(getActivity()).get(JokeViewModel.class);
+        jokeViewModel.getJokeOfTheDay().observe(getActivity(), new Observer<RandomJoke>() {
+            @Override
+            public void onChanged(RandomJoke randomJoke) {
+                Picasso.get().load(randomJoke.getImageUrl()).into(iv);
+                tv.setText(randomJoke.getJokeText());
+
+         */
         return rootView;
     }
 
@@ -77,5 +86,10 @@ public class MapFragment extends Fragment {
     public void onLowMemory() {
         super.onLowMemory();
         mapView.onLowMemory();
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
     }
 }
