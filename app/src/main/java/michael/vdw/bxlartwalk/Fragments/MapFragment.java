@@ -42,6 +42,7 @@ public class MapFragment extends Fragment {
         }
     };
     private GoogleMap mMap;
+    private ArtViewModel artViewModel;
 
     public MapFragment() {
         // Required empty public constructor
@@ -56,7 +57,9 @@ public class MapFragment extends Fragment {
         mapView = rootView.findViewById(R.id.mapView);
         mapView.onCreate(savedInstanceState);
         mapView.getMapAsync(onMapReady);
-        ArtViewModel artViewModel = new ViewModelProvider(getActivity()).get(ArtViewModel.class);
+        setHasOptionsMenu(true);
+
+        artViewModel = new ViewModelProvider(getActivity()).get(ArtViewModel.class);
         /* TODO: aanpassen voor ArtRoute
         //voorbeeld uit demo:
 
