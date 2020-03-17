@@ -6,6 +6,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -13,7 +15,10 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
+import com.squareup.picasso.Picasso;
 
+import michael.vdw.bxlartwalk.Models.Art;
+import michael.vdw.bxlartwalk.Models.ArtViewModel;
 import michael.vdw.bxlartwalk.R;
 
 /**
@@ -52,14 +57,13 @@ public class MapFragment extends Fragment {
         /* TODO: aanpassen voor ArtRoute
         iv = rootView.findViewById(R.id.iv_icon);
         tv = rootView.findViewById(R.id.tv_joke);
-
-        JokeViewModel jokeViewModel = new ViewModelProvider(getActivity()).get(JokeViewModel.class);
-        jokeViewModel.getJokeOfTheDay().observe(getActivity(), new Observer<RandomJoke>() {
-            @Override
+        */
+        ArtViewModel artViewModel = new ViewModelProvider(getActivity()).get(ArtViewModel.class);
+//        artViewModel.threadExecutor(getActivity(), new Observer<Art>() {
+        /*    @Override
             public void onChanged(RandomJoke randomJoke) {
                 Picasso.get().load(randomJoke.getImageUrl()).into(iv);
                 tv.setText(randomJoke.getJokeText());
-
          */
         return rootView;
     }
