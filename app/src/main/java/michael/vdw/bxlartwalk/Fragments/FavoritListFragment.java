@@ -20,7 +20,7 @@ import michael.vdw.bxlartwalk.R;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class FavortitListFragment extends Fragment {
+public class FavoritListFragment extends Fragment {
     //TODO search uitschrijven omvat(OnQueryTextListener, onQueryTextSubmit, onQueryTextChange( bevat adapter dus aanmaken en gebruiken))
 //    private SearchView.OnQueryTextListener searchListener = new SearchView.OnQueryTextListener() {
 //        //pas filteren na zoeken
@@ -37,7 +37,7 @@ public class FavortitListFragment extends Fragment {
 //    };
 //    private ... adapter;
 
-    public FavortitListFragment() {
+    public FavoritListFragment() {
         // Required empty public constructor
     }
 
