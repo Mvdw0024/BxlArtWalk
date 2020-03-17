@@ -26,6 +26,8 @@ import michael.vdw.bxlartwalk.R;
  */
 public class MapFragment extends Fragment {
 
+    //Fragment to implement a MapView
+
     private View rootView;
     private MapView mapView;
     private OnMapReadyCallback onMapReady = new OnMapReadyCallback() {
@@ -54,12 +56,14 @@ public class MapFragment extends Fragment {
         mapView = rootView.findViewById(R.id.mapView);
         mapView.onCreate(savedInstanceState);
         mapView.getMapAsync(onMapReady);
+        ArtViewModel artViewModel = new ViewModelProvider(getActivity()).get(ArtViewModel.class);
         /* TODO: aanpassen voor ArtRoute
+        //voorbeeld uit demo:
+
         iv = rootView.findViewById(R.id.iv_icon);
         tv = rootView.findViewById(R.id.tv_joke);
-        */
-        ArtViewModel artViewModel = new ViewModelProvider(getActivity()).get(ArtViewModel.class);
-//        artViewModel.threadExecutor(getActivity(), new Observer<Art>() {
+
+        artViewModel.threadExecutor(getActivity(), new Observer<Art>() {
         /*    @Override
             public void onChanged(RandomJoke randomJoke) {
                 Picasso.get().load(randomJoke.getImageUrl()).into(iv);

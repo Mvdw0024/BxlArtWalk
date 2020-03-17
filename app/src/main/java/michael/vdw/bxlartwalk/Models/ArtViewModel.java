@@ -36,7 +36,7 @@ public class ArtViewModel extends ViewModel {
                     Response response = client.newCall(request).execute();
                     String json = response.body().string();
                     JSONObject jsonObject = new JSONObject(json);
-                    //TODO: aanpassen naar de Art route
+//                    TODO: aanpassen naar de Art route
                     /*e.g. :
                     String url = object.getString("icon_url");
                     String joke = object.getString("value");
