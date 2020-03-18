@@ -29,7 +29,7 @@ public class DetailFragment extends Fragment {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_detail, container, false);
         TextView titleTv = rootView.findViewById(R.id.tv_detail_titleOfTheArt);
-        ImageView photoIv = rootView.findViewById(R.id.iv_detal_photo);
+        ImageView photoIv = rootView.findViewById(R.id.iv_detail_photo);
         TextView yearTv = rootView.findViewById(R.id.tv_detail_yearOfTheArt);
         TextView authorTv =rootView.findViewById(R.id.tv_detail_authorOfTheArt);
 
