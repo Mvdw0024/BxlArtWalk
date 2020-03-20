@@ -8,6 +8,6 @@
     <fragment
         android:id="@+id/mapFragment"
         android:name="michael.vdw.bxlartwalk.Fragments.MapFragment"
-        android:label="fragment_map"
+        android:label="BXL Art Walk"
         tools:layout="@layout/fragment_map" />
 </navigation>
