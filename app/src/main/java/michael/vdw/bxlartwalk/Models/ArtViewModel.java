@@ -3,6 +3,7 @@ package michael.vdw.bxlartwalk.Models;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -36,11 +37,18 @@ public class ArtViewModel extends ViewModel {
                     Response response = client.newCall(request).execute();
                     String json = response.body().string();
                     JSONObject jsonObject = new JSONObject(json);
+                    //JSONArray nodig?
+                   // JSONArray jsonArray = new JSONArray(json);
 //                    TODO: aanpassen naar de Art route
-                    /*e.g. :
-                    String url = object.getString("icon_url");
-                    String joke = object.getString("value");
-                     */
+
+                    String id = jsonObject.getString("id");
+                    String title = jsonObject.getString("value");
+                    String authors = jsonObject.getString("author(s)");
+                    String characters = jsonObject.getString("character(s)");
+                    String coordinates = jsonObject.getString("geocoordinates");
+                    String year = jsonObject.getString("year");
+                    String photo = jsonObject.getString("photo");
+
 
                 } catch (IOException | JSONException e) {
                     e.printStackTrace();
