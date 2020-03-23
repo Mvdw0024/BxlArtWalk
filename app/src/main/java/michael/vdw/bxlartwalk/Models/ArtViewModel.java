@@ -16,10 +16,17 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 public class ArtViewModel extends ViewModel {
+    private MutableLiveData<Art> cbRouteArt;
     public ExecutorService threadExecutor = Executors.newFixedThreadPool(4);
 
 
     public ArtViewModel() {
+        this.cbRouteArt = new MutableLiveData<>();
+    }
+
+    public MutableLiveData<Art> getCbRouteArt() {
+        fetchArt();
+        return cbRouteArt;
     }
 
     ;
@@ -38,7 +45,7 @@ public class ArtViewModel extends ViewModel {
                     String json = response.body().string();
                     JSONObject jsonObject = new JSONObject(json);
                     //JSONArray nodig?
-                   // JSONArray jsonArray = new JSONArray(json);
+                    // JSONArray jsonArray = new JSONArray(json);
 //                    TODO: aanpassen naar de Art route
 
                     String id = jsonObject.getString("id");
@@ -46,8 +53,13 @@ public class ArtViewModel extends ViewModel {
                     String authors = jsonObject.getString("author(s)");
                     String characters = jsonObject.getString("character(s)");
                     String coordinates = jsonObject.getString("geocoordinates");
-                    String year = jsonObject.getString("year");
-                    String photo = jsonObject.getString("photo");
+                    Integer year = jsonObject.getInt("year");
+                    Integer photo = jsonObject.getInt("photo");
+
+                    Art cbroute = new Art(
+                            //TODO: toe te voegen , constructor extra maken?
+                    );
+                    cbRouteArt.postValue(cbroute);
 
 
                 } catch (IOException | JSONException e) {

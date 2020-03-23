@@ -73,6 +73,9 @@ public class Art {
         this.coordinate = coordinate;
     }
 
+    public Art() {
+    }
+
     public Art(String author, String info, String imageUrl, String type, String title, int id, int year, LatLng coordinate) {
         this.author = author;
         this.info = info;
@@ -82,5 +85,6 @@ public class Art {
         this.id = id;
         this.year = year;
         this.coordinate = coordinate;
+
     }
 }

@@ -38,9 +38,15 @@ public class MapFragment extends Fragment {
             CameraUpdate moveToBrussel = CameraUpdateFactory.newLatLngZoom(coordBrussel, 16);
             mMap.animateCamera(moveToBrussel);
             mMap.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
+            drawMarkers();
 
         }
     };
+
+    private void drawMarkers() {
+//    for (Art art = artViewModel);
+    }
+
     private GoogleMap mMap;
     private ArtViewModel artViewModel;
 
