@@ -10,4 +10,18 @@
         android:name="michael.vdw.bxlartwalk.Fragments.MapFragment"
         android:label="BXL Art Walk"
         tools:layout="@layout/fragment_map" />
+    <fragment
+        android:id="@+id/artListFragment2"
+        android:name="michael.vdw.bxlartwalk.Fragments.ArtListFragment"
+        android:label="fragment_art_list"
+        tools:layout="@layout/fragment_art_list" >
+        <action
+            android:id="@+id/artList_to_detail"
+            app:destination="@id/detailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/detailFragment"
+        android:name="michael.vdw.bxlartwalk.Fragments.DetailFragment"
+        android:label="fragment_detail"
+        tools:layout="@layout/fragment_detail" />
 </navigation>

@@ -5,7 +5,7 @@ import com.google.android.gms.maps.model.LatLng;
 public class Art {
     //TODO: Check if class is complete or needs adjustments
 
-    private String author, info, imageUrl, type;
+    private String author, info, imageUrl, type, title;
     private int id, year;
     private LatLng coordinate;
 
@@ -41,6 +41,14 @@ public class Art {
         this.type = type;
     }
 
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
     public int getId() {
         return id;
     }
@@ -65,11 +73,12 @@ public class Art {
         this.coordinate = coordinate;
     }
 
-    public Art(String author, String info, String imageUrl, String type, int id, int year, LatLng coordinate) {
+    public Art(String author, String info, String imageUrl, String type, String title, int id, int year, LatLng coordinate) {
         this.author = author;
         this.info = info;
         this.imageUrl = imageUrl;
         this.type = type;
+        this.title = title;
         this.id = id;
         this.year = year;
         this.coordinate = coordinate;
