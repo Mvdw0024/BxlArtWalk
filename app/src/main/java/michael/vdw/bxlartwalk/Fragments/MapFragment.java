@@ -15,6 +15,8 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.squareup.picasso.Picasso;
 
 import michael.vdw.bxlartwalk.Models.Art;
@@ -44,8 +46,14 @@ public class MapFragment extends Fragment {
     };
 
     private void drawMarkers() {
-//    for (Art art = artViewModel);
+        for (Art cbArt = artViewModel.getCbRouteArt()) {
+            Marker m = mMap.addMarker(new MarkerOptions().position(cbArt.getCoordinate()));
+            m.setTitle(cbArt.getTitle());
+
+        }
     }
+
+    ;
 
     private GoogleMap mMap;
     private ArtViewModel artViewModel;
