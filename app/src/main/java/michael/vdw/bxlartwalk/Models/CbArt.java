@@ -8,6 +8,9 @@ public class CbArt {
     public LatLng geocoordinates;
     public int year;
 
+    public CbArt() {
+    }
+
     public CbArt(String characters, String authors, String photourl, LatLng geocoordinates, int year) {
         this.characters = characters;
         this.authors = authors;
