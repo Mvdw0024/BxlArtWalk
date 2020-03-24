@@ -55,6 +55,7 @@ public class MapFragment extends Fragment {
     private void drawMarkers() {
         MutableLiveData<Art> testArt = artViewModel.getCbRouteArt();
         Log.d("test", testArt.toString());
+
 //        for (Art cbArt : Collections.unmodifiableList(allCbArt)) {
 //            Marker m = mMap.addMarker(
 //                    new MarkerOptions().position(cbArt.getCoordinate())

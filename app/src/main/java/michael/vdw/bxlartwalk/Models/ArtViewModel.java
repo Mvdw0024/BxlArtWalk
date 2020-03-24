@@ -64,7 +64,7 @@ public class ArtViewModel extends ViewModel {
 
                     Log.d("requestresult", title);
                     Art cbroute = new Art(
-                            // Zou het niet beter zijn om ipv de klasse Art specifiek een klasse te maken ComicBookArt met als fields de gegevens die uit de API gehaald kunnen worden? Dan moete er geen etra contructor aangemaakt worden (hieronder), maar gewoon die van ComicBookArt.
+                            // Zou het niet beter zijn om ipv de klasse Art specifiek een klasse te maken ComicBookArt met als fields de gegevens die uit de API gehaald kunnen worden? Dan moete er geen extra contructor aangemaakt worden (hieronder), maar gewoon die van ComicBookArt.
                             //TODO: toe te voegen , constructor extra maken?
                     );
                     cbRouteArt.postValue(cbroute);
