@@ -1,6 +1,7 @@
 package michael.vdw.bxlartwalk.Fragments;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +21,10 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.squareup.picasso.Picasso;
+import androidx.lifecycle.MutableLiveData;
+
+import java.util.ArrayList;
+import java.util.Collections;
 
 import michael.vdw.bxlartwalk.Models.Art;
 import michael.vdw.bxlartwalk.Models.ArtViewModel;
@@ -48,16 +53,15 @@ public class MapFragment extends Fragment {
     };
 
     private void drawMarkers() {
-        for (Art cbArt = artViewModel.getCbRouteArt()) {
-            Marker m = mMap.addMarker(new MarkerOptions().position(cbArt.getCoordinate()
-            ));
-            m.setTitle(cbArt.getTitle());
-            ;
-
-        }
-    }
-
-    ;
+        MutableLiveData<Art> testArt = artViewModel.getCbRouteArt();
+        Log.d("test", testArt.toString());
+//        for (Art cbArt : Collections.unmodifiableList(allCbArt)) {
+//            Marker m = mMap.addMarker(
+//                    new MarkerOptions().position(cbArt.getCoordinate())
+//            );
+//            m.setTitle(cbArt.getTitle());
+//        }
+    };
 
     private GoogleMap mMap;
     private ArtViewModel artViewModel;
