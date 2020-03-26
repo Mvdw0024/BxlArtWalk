@@ -46,36 +46,32 @@ public class ArtViewModel extends ViewModel {
                 try {
                     Response response = client.newCall(request).execute();
                     String json = response.body().string();
-                    JSONObject jsonObject = new JSONObject(json);
-                    Log.d("response", jsonObject.toString());
-                    //JSONArray nodig?
-                    // Ik denk het wel: de gegevens die uit de API komen zitten in de "records" van de response en die bevat een array. Weet nog niet hoe ik dit juist doe...
-                    Log.d("array", jsonObject.toString());
                     JSONArray jsonArray = new JSONArray(json);
-                    // TODO: aanpassen naar de Art route
+                    for (int i = 0; i < jsonArray.length(); i++) {
+                        JSONObject jsonObject = jsonArray.getJSONObject(i);
 
-                    String id = jsonObject.getString("id");
-                    String title = jsonObject.getString("value");
-                    String authors = jsonObject.getString("author(s)");
-                    String characters = jsonObject.getString("character(s)");
-                    String coordinates = jsonObject.getString("geocoordinates");
-                    Integer year = jsonObject.getInt("year");
-                    Integer photo = jsonObject.getInt("photo");
 
-                    Log.d("requestresult", title);
-                    Art cbroute = new Art(
-                            // Zou het niet beter zijn om ipv de klasse Art specifiek een klasse te maken ComicBookArt met als fields de gegevens die uit de API gehaald kunnen worden? Dan moete er geen extra contructor aangemaakt worden (hieronder), maar gewoon die van ComicBookArt.
-                            //TODO: toe te voegen , constructor extra maken?
-                    );
-                    cbRouteArt.postValue(cbroute);
+                        String id = jsonObject.getString("id");
+                        String title = jsonObject.getString("value");
+                        String authors = jsonObject.getString("author(s)");
+                        String characters = jsonObject.getString("character(s)");
+                        String coordinates = jsonObject.getString("geocoordinates");
+                        Integer year = jsonObject.getInt("year");
+                        Integer photo = jsonObject.getInt("photo");
+
+
+                        Log.d("requestresult", title);
+                        //TODO: what is wrong here ??
+                        //nog steeds error wanneer ik deze wil toevoegen//
+                        //Art cbroute = new Art(authors, characters, id, title, coordinates, year, photo);
+                        Art cbroute = new Art();
+                        cbRouteArt.postValue(cbroute);
+                    }
 
 
                 } catch (IOException | JSONException e) {
                     Log.d("requestresult", "Lap, we zitten in de catch...");
-                    e.printStackTrace();
                 }
-
-
             }
         });
     }

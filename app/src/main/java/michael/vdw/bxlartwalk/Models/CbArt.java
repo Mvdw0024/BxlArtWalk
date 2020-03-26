@@ -2,7 +2,9 @@ package michael.vdw.bxlartwalk.Models;
 
 import com.google.android.gms.maps.model.LatLng;
 
-public class CbArt {
+import java.io.Serializable;
+
+public class CbArt implements Serializable {
 
     public String characters, authors, photourl;
     public LatLng geocoordinates;
@@ -57,5 +59,17 @@ public class CbArt {
 
     public void setYear(int year) {
         this.year = year;
+    }
+
+    // nog geen id, of dit nodig zal zijn, maar just in case
+    @Override
+    public String toString() {
+        return "CbArt{" +
+                "characters='" + characters + '\'' +
+                ", authors='" + authors + '\'' +
+                ", photourl='" + photourl + '\'' +
+                ", geocoordinates=" + geocoordinates +
+                ", year=" + year +
+                '}';
     }
 }
