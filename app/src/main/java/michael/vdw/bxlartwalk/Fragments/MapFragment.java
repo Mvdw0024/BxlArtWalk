@@ -5,6 +5,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
@@ -21,6 +22,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.squareup.picasso.Picasso;
+
 import androidx.lifecycle.MutableLiveData;
 
 import java.util.ArrayList;
@@ -28,6 +30,7 @@ import java.util.Collections;
 
 import michael.vdw.bxlartwalk.Models.Art;
 import michael.vdw.bxlartwalk.Models.ArtViewModel;
+import michael.vdw.bxlartwalk.Models.CbArt;
 import michael.vdw.bxlartwalk.R;
 
 /**
@@ -39,6 +42,8 @@ public class MapFragment extends Fragment {
 
     private View rootView;
     private MapView mapView;
+    private GoogleMap mMap;
+    private ArtViewModel artViewModel;
     private OnMapReadyCallback onMapReady = new OnMapReadyCallback() {
         @Override
         public void onMapReady(GoogleMap googleMap) {
@@ -48,24 +53,26 @@ public class MapFragment extends Fragment {
             mMap.animateCamera(moveToBrussel);
             mMap.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
             drawMarkers();
+            Toast.makeText(getActivity(), "Comic Book Route is loaded", Toast.LENGTH_SHORT).show();
 
         }
     };
 
     private void drawMarkers() {
-        MutableLiveData<Art> testArt = artViewModel.getCbRouteArt();
-        Log.d("test", testArt.toString());
-
-//        for (Art cbArt : Collections.unmodifiableList(allCbArt)) {
-//            Marker m = mMap.addMarker(
-//                    new MarkerOptions().position(cbArt.getCoordinate())
-//            );
-//            m.setTitle(cbArt.getTitle());
-//        }
-    };
-
-    private GoogleMap mMap;
-    private ArtViewModel artViewModel;
+//        MutableLiveData<CbArt> testArt = artViewModel.getCbRouteArt();
+//        Log.d("test", testArt.toString());
+        for (CbArt cbArt : artViewModel.getCbRouteArt()) {
+            Marker m = mMap.addMarker(new MarkerOptions().position(cbArt.geocoordinates));
+            m.setTitle(cbArt.getCharacters());
+            m.setSnippet(cbArt.getAuthors());
+        }
+  /*   for (Art cbArt : Collections.unmodifiableList(allCbArt)) {
+            Marker m = mMap.addMarker(
+                    new MarkerOptions().position(cbArt.getCoordinate())
+            );
+            m.setTitle(cbArt.getTitle());
+        }*/
+    }
 
     public MapFragment() {
         // Required empty public constructor

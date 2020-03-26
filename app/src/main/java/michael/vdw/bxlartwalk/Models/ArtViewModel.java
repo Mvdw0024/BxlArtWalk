@@ -5,6 +5,8 @@ import android.util.Log;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.google.android.gms.maps.model.LatLng;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -18,7 +20,7 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 public class ArtViewModel extends ViewModel {
-    private MutableLiveData<Art> cbRouteArt;
+    private MutableLiveData<CbArt> cbRouteArt;
     public ExecutorService threadExecutor = Executors.newFixedThreadPool(4);
 
 
@@ -26,7 +28,7 @@ public class ArtViewModel extends ViewModel {
         this.cbRouteArt = new MutableLiveData<>();
     }
 
-    public MutableLiveData<Art> getCbRouteArt() {
+    public MutableLiveData<CbArt> getCbRouteArt() {
         fetchArt();
         return cbRouteArt;
     }
@@ -52,6 +54,8 @@ public class ArtViewModel extends ViewModel {
 
 
                         String id = jsonObject.getString("id");
+                        //LatLng geoco = jsonObject.getJSONArray("geocoordinates").getString();
+
                         String title = jsonObject.getString("value");
                         String authors = jsonObject.getString("author(s)");
                         String characters = jsonObject.getString("character(s)");
@@ -63,8 +67,8 @@ public class ArtViewModel extends ViewModel {
                         Log.d("requestresult", title);
                         //TODO: what is wrong here ??
                         //nog steeds error wanneer ik deze wil toevoegen//
-                        //Art cbroute = new Art(authors, characters, id, title, coordinates, year, photo);
-                        Art cbroute = new Art();
+                        // CbArt cbroute = new CbArt(authors,characters,id,title, coordinates, year, photo);
+                        CbArt cbroute = new CbArt();
                         cbRouteArt.postValue(cbroute);
                     }
 
