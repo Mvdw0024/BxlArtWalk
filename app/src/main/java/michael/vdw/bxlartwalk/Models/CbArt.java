@@ -71,7 +71,7 @@ public class CbArt implements Serializable {
         this.year = year;
     }
 
-    // nog geen id, of dit nodig zal zijn, maar just in case
+    // nog geen idee, of dit nodig zal zijn, maar just in case
     @Override
     public String toString() {
         return "CbArt{" +

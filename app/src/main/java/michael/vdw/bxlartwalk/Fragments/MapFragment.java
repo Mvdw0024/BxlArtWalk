@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -21,6 +22,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.squareup.picasso.Picasso;
+
 import androidx.lifecycle.MutableLiveData;
 
 import java.util.ArrayList;
@@ -30,6 +32,7 @@ import michael.vdw.bxlartwalk.Models.Art;
 import michael.vdw.bxlartwalk.Models.ArtViewModel;
 import michael.vdw.bxlartwalk.Models.CbArt;
 import michael.vdw.bxlartwalk.R;
+import michael.vdw.bxlartwalk.Room.CbArtDataBase;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -41,6 +44,7 @@ public class MapFragment extends Fragment {
     private View rootView;
     private MapView mapView;
     private GoogleMap mMap;
+    private FragmentActivity fragmentActivity;
     private ArtViewModel artViewModel;
 
     private OnMapReadyCallback onMapReady = new OnMapReadyCallback() {
@@ -58,7 +62,16 @@ public class MapFragment extends Fragment {
 
     private void drawMarkers() {
         ArrayList<CbArt> allCbArt = artViewModel.getCbRouteArt().getValue();
-        Log.d("CbArtlength", "here: "+allCbArt.size());
+        Log.d("CbArtlength", "here: " + allCbArt.size());
+
+    // for-loop met ROOM-Database
+        for (CbArt cbArtMarkers : CbArtDataBase.getSharedInstance(fragmentActivity).cbArtDao().getAllCb()
+        ) {
+            Marker m = mMap.addMarker(new MarkerOptions().position(cbArtMarkers.getGeocoordinates()));
+            m.setTitle(cbArtMarkers.getCharacters());
+            m.setSnippet(cbArtMarkers.getAuthors());
+        }
+
 
 //        for (CbArt cbArt : allCbArt) {
 //            Log.d("testart", cbArt.getCharacters());
@@ -67,7 +80,9 @@ public class MapFragment extends Fragment {
 //            );
 //            m.setTitle(cbArt.getCharacters());
 //        }
-    };
+    }
+
+    ;
 
 
     public MapFragment() {
