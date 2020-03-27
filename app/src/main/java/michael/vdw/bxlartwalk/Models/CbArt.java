@@ -1,13 +1,25 @@
 package michael.vdw.bxlartwalk.Models;
 
+import androidx.annotation.NonNull;
+import androidx.room.Entity;
+import androidx.room.Ignore;
+import androidx.room.PrimaryKey;
+
 import com.google.android.gms.maps.model.LatLng;
 
-public class CbArt {
+import java.io.Serializable;
 
+@Entity // ROOM preparation
+public class CbArt implements Serializable {
+
+    @NonNull
+    @PrimaryKey(autoGenerate = false)
+    public int id;
     public String characters, authors, photourl;
     public LatLng geocoordinates;
     public int year;
 
+    @Ignore
     public CbArt() {
     }
 
@@ -57,5 +69,17 @@ public class CbArt {
 
     public void setYear(int year) {
         this.year = year;
+    }
+
+    // nog geen id, of dit nodig zal zijn, maar just in case
+    @Override
+    public String toString() {
+        return "CbArt{" +
+                "characters='" + characters + '\'' +
+                ", authors='" + authors + '\'' +
+                ", photourl='" + photourl + '\'' +
+                ", geocoordinates=" + geocoordinates +
+                ", year=" + year +
+                '}';
     }
 }
