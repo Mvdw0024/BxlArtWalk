@@ -1,15 +1,22 @@
 package michael.vdw.bxlartwalk.Models;
 
+import androidx.annotation.NonNull;
+import androidx.room.Entity;
+import androidx.room.Ignore;
+
 import com.google.android.gms.maps.model.LatLng;
 
 import java.io.Serializable;
 
+@Entity // ROOM preparation
 public class CbArt implements Serializable {
 
+    @NonNull
     public String characters, authors, photourl;
     public LatLng geocoordinates;
     public int year;
 
+    @Ignore
     public CbArt() {
     }
 

@@ -19,7 +19,7 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
-public class ArtViewModel extends ViewModel {
+public abstract class ArtViewModel extends ViewModel implements Iterable {
     private MutableLiveData<CbArt> cbRouteArt;
     public ExecutorService threadExecutor = Executors.newFixedThreadPool(4);
 
@@ -52,22 +52,22 @@ public class ArtViewModel extends ViewModel {
                     for (int i = 0; i < jsonArray.length(); i++) {
                         JSONObject jsonObject = jsonArray.getJSONObject(i);
 
-
                         String id = jsonObject.getString("id");
-                        //LatLng geoco = jsonObject.getJSONArray("geocoordinates").getString();
-
                         String title = jsonObject.getString("value");
-                        String authors = jsonObject.getString("author(s)");
-                        String characters = jsonObject.getString("character(s)");
-                        String coordinates = jsonObject.getString("geocoordinates");
-                        Integer year = jsonObject.getInt("year");
+                        String authors = jsonObject.getString("auteur_s");
+                        String characters = jsonObject.getString("personnage_s");
+                       // LatLng coordinates = jsonObject.getLong("coordonnees_geographiques");
+                        /* LatLng geocoord = jsonObject.getLong("coordinates");
+                        */
+
+                        Integer year = jsonObject.getInt("annee");
                         Integer photo = jsonObject.getInt("photo");
 
 
                         Log.d("requestresult", title);
                         //TODO: what is wrong here ??
                         //nog steeds error wanneer ik deze wil toevoegen//
-                        // CbArt cbroute = new CbArt(authors,characters,id,title, coordinates, year, photo);
+                       // CbArt cbroute = new CbArt(authors, characters, id, title, year, photo);
                         CbArt cbroute = new CbArt();
                         cbRouteArt.postValue(cbroute);
                     }

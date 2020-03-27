@@ -61,11 +61,11 @@ public class MapFragment extends Fragment {
     private void drawMarkers() {
 //        MutableLiveData<CbArt> testArt = artViewModel.getCbRouteArt();
 //        Log.d("test", testArt.toString());
-        for (CbArt cbArt : artViewModel.getCbRouteArt()) {
+       /* for (CbArt cbArt : artViewModel.getCbRouteArt().getValue().getGeocoordinates()) {
             Marker m = mMap.addMarker(new MarkerOptions().position(cbArt.geocoordinates));
             m.setTitle(cbArt.getCharacters());
             m.setSnippet(cbArt.getAuthors());
-        }
+        }*/
   /*   for (Art cbArt : Collections.unmodifiableList(allCbArt)) {
             Marker m = mMap.addMarker(
                     new MarkerOptions().position(cbArt.getCoordinate())
