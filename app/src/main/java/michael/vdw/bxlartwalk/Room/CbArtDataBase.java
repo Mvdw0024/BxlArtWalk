@@ -5,10 +5,13 @@ import android.content.Context;
 import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
+import androidx.room.TypeConverters;
 
 import michael.vdw.bxlartwalk.Models.CbArt;
+import michael.vdw.bxlartwalk.Utils.Converters;
 
 @Database(version = 1, entities = {CbArt.class}, exportSchema = false)
+@TypeConverters(Converters.class)
 public abstract class CbArtDataBase extends RoomDatabase {
 
     public static CbArtDataBase sharedInstance;
@@ -24,5 +27,6 @@ public abstract class CbArtDataBase extends RoomDatabase {
     private static CbArtDataBase createDB(Context c) {
         return Room.databaseBuilder(c, CbArtDataBase.class, "cbart.db").allowMainThreadQueries().build();
     }
+
     public abstract CbArtDao cbArtDao();
 }

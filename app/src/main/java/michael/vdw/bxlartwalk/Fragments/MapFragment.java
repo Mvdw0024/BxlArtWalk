@@ -8,7 +8,6 @@ import android.view.ViewGroup;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.google.android.gms.maps.CameraUpdate;
@@ -16,19 +15,12 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.model.BitmapDescriptor;
-import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.squareup.picasso.Picasso;
-
-import androidx.lifecycle.MutableLiveData;
 
 import java.util.ArrayList;
-import java.util.Collections;
 
-import michael.vdw.bxlartwalk.Models.Art;
 import michael.vdw.bxlartwalk.Models.ArtViewModel;
 import michael.vdw.bxlartwalk.Models.CbArt;
 import michael.vdw.bxlartwalk.R;
@@ -64,9 +56,8 @@ public class MapFragment extends Fragment {
         ArrayList<CbArt> allCbArt = artViewModel.getCbRouteArt().getValue();
         Log.d("CbArtlength", "here: " + allCbArt.size());
 
-    // for-loop met ROOM-Database
-        for (CbArt cbArtMarkers : CbArtDataBase.getSharedInstance(fragmentActivity).cbArtDao().getAllCb()
-        ) {
+        // for-loop met ROOM-Database
+        for (CbArt cbArtMarkers : CbArtDataBase.getSharedInstance(fragmentActivity).cbArtDao().getAllCb()) {
             Marker m = mMap.addMarker(new MarkerOptions().position(cbArtMarkers.getGeocoordinates()));
             m.setTitle(cbArtMarkers.getCharacters());
             m.setSnippet(cbArtMarkers.getAuthors());
@@ -83,7 +74,6 @@ public class MapFragment extends Fragment {
     }
 
     ;
-
 
     public MapFragment() {
         // Required empty public constructor

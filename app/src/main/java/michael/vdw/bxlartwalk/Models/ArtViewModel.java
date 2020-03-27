@@ -29,7 +29,7 @@ public class ArtViewModel extends ViewModel {
     }
 
     public MutableLiveData<ArrayList<CbArt>> getCbRouteArt() {
-        if(cbRouteArt == null) {
+        if (cbRouteArt == null) {
             fetchArt();
         }
         return cbRouteArt;
@@ -57,7 +57,7 @@ public class ArtViewModel extends ViewModel {
 
                     int i = 0;
                     ArrayList<CbArt> comicBookArt = new ArrayList<>();
-                    while(i < jsonRecords.length()) {
+                    while (i < jsonRecords.length()) {
                         JSONObject jsonArt = jsonRecords.getJSONObject(i).getJSONObject("fields");
 
                         // Prepare coordinates for Latlng
@@ -74,7 +74,6 @@ public class ArtViewModel extends ViewModel {
                         comicBookArt.add(currentCbArt);
                         i++;
                     }
-
 
                     cbRouteArt.postValue(comicBookArt);
 
