@@ -17,7 +17,7 @@
             </intent-filter>
         </activity>
         <meta-data android:name="com.google.android.geo.API_KEY"
-            android:value="KEY_NOG_IN_TE_GEVEN">
+            android:value="AIzaSyCBcmgvOwgUxcjwF95Jkk-sCE3vuaHCAF0">
         </meta-data>
     </application>
 

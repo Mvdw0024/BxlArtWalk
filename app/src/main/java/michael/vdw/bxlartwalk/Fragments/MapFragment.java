@@ -28,6 +28,7 @@ import java.util.Collections;
 
 import michael.vdw.bxlartwalk.Models.Art;
 import michael.vdw.bxlartwalk.Models.ArtViewModel;
+import michael.vdw.bxlartwalk.Models.CbArt;
 import michael.vdw.bxlartwalk.R;
 
 /**
@@ -39,6 +40,9 @@ public class MapFragment extends Fragment {
 
     private View rootView;
     private MapView mapView;
+    private GoogleMap mMap;
+    private ArtViewModel artViewModel;
+
     private OnMapReadyCallback onMapReady = new OnMapReadyCallback() {
         @Override
         public void onMapReady(GoogleMap googleMap) {
@@ -46,26 +50,25 @@ public class MapFragment extends Fragment {
             LatLng coordBrussel = new LatLng(50.858712, 4.347446);
             CameraUpdate moveToBrussel = CameraUpdateFactory.newLatLngZoom(coordBrussel, 16);
             mMap.animateCamera(moveToBrussel);
-            mMap.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
+//            mMap.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
             drawMarkers();
 
         }
     };
 
     private void drawMarkers() {
-        MutableLiveData<Art> testArt = artViewModel.getCbRouteArt();
-        Log.d("test", testArt.toString());
+        ArrayList<CbArt> allCbArt = artViewModel.getCbRouteArt().getValue();
+        Log.d("CbArtlength", "here: "+allCbArt.size());
 
-//        for (Art cbArt : Collections.unmodifiableList(allCbArt)) {
+//        for (CbArt cbArt : allCbArt) {
+//            Log.d("testart", cbArt.getCharacters());
 //            Marker m = mMap.addMarker(
-//                    new MarkerOptions().position(cbArt.getCoordinate())
+//                    new MarkerOptions().position(cbArt.getGeocoordinates())
 //            );
-//            m.setTitle(cbArt.getTitle());
+//            m.setTitle(cbArt.getCharacters());
 //        }
     };
 
-    private GoogleMap mMap;
-    private ArtViewModel artViewModel;
 
     public MapFragment() {
         // Required empty public constructor
