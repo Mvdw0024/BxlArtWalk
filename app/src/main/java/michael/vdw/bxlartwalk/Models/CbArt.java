@@ -3,6 +3,7 @@ package michael.vdw.bxlartwalk.Models;
 import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.Ignore;
+import androidx.room.PrimaryKey;
 
 import com.google.android.gms.maps.model.LatLng;
 
@@ -12,6 +13,8 @@ import java.io.Serializable;
 public class CbArt implements Serializable {
 
     @NonNull
+    @PrimaryKey(autoGenerate = false)
+    public int id;
     public String characters, authors, photourl;
     public LatLng geocoordinates;
     public int year;

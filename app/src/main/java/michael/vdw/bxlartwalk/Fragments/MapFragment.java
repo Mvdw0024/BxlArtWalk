@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -32,6 +33,7 @@ import michael.vdw.bxlartwalk.Models.Art;
 import michael.vdw.bxlartwalk.Models.ArtViewModel;
 import michael.vdw.bxlartwalk.Models.CbArt;
 import michael.vdw.bxlartwalk.R;
+import michael.vdw.bxlartwalk.Room.CbArtDataBase;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -43,6 +45,7 @@ public class MapFragment extends Fragment {
     private View rootView;
     private MapView mapView;
     private GoogleMap mMap;
+    private FragmentActivity fragmentActivity;
     private ArtViewModel artViewModel;
     private OnMapReadyCallback onMapReady = new OnMapReadyCallback() {
         @Override
@@ -59,6 +62,13 @@ public class MapFragment extends Fragment {
     };
 
     private void drawMarkers() {
+        for (CbArt cbArtMarkers : CbArtDataBase.getSharedInstance(fragmentActivity).cbArtDao().getAllCb()
+        ) {
+            Marker m = mMap.addMarker(new MarkerOptions().position(cbArtMarkers.getGeocoordinates()));
+            m.setTitle(cbArtMarkers.getCharacters());
+            m.setSnippet(cbArtMarkers.getAuthors());
+
+        }
 //        MutableLiveData<CbArt> testArt = artViewModel.getCbRouteArt();
 //        Log.d("test", testArt.toString());
        /* for (CbArt cbArt : artViewModel.getCbRouteArt().getValue().getGeocoordinates()) {
