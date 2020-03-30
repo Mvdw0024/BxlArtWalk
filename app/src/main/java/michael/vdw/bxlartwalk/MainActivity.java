@@ -7,10 +7,15 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
+import androidx.viewpager.widget.ViewPager;
 
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+
+import com.google.android.material.tabs.TabLayout;
+
+import michael.vdw.bxlartwalk.Utils.TabPagertAdapter;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -24,6 +29,14 @@ public class MainActivity extends AppCompatActivity {
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        //om tab bar te kunnen gebruiken
+            TabLayout tabLayout = findViewById(R.id.tab_layout);
+            ViewPager viewPager = findViewById(R.id.nav_host);
+
+            TabPagertAdapter adapter = new TabPagertAdapter(getSupportFragmentManager(),0);
+            viewPager.setAdapter(adapter);
+            tabLayout.setupWithViewPager(viewPager);
 
         appBarConfiguration = new AppBarConfiguration.Builder(R.id.mapFragment).build();
         navController = Navigation.findNavController(this, R.id.nav_host);
