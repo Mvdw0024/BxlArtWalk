@@ -1,5 +1,6 @@
 package michael.vdw.bxlartwalk.Models;
 
+import android.content.Context;
 import android.util.Log;
 
 import androidx.lifecycle.MutableLiveData;
@@ -16,11 +17,13 @@ import java.util.ArrayList;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+import michael.vdw.bxlartwalk.Room.CbArtDataBase;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
 public class ArtViewModel extends ViewModel {
+    private Context context;
     private MutableLiveData<ArrayList<CbArt>> cbRouteArt;
     public ExecutorService threadExecutor = Executors.newFixedThreadPool(4);
 
@@ -37,6 +40,9 @@ public class ArtViewModel extends ViewModel {
 
     private void fetchArt() {
         threadExecutor.execute(new Runnable() {
+
+            private CbArt currentCbArt;
+
             @Override
             public void run() {
                 OkHttpClient client = new OkHttpClient();
@@ -64,7 +70,7 @@ public class ArtViewModel extends ViewModel {
                         Double currentLat = jsonArt.getJSONArray("coordonnees_geographiques").getDouble(0);
                         Double currentLng = jsonArt.getJSONArray("coordonnees_geographiques").getDouble(1);
 
-                        CbArt currentCbArt = new CbArt(
+                        currentCbArt = new CbArt(
                                 jsonArt.getString("personnage_s"),
                                 jsonArt.getString("auteur_s"),
                                 jsonArt.getJSONObject("photo").getString("filename"),
@@ -76,6 +82,7 @@ public class ArtViewModel extends ViewModel {
                     }
 
                     cbRouteArt.postValue(comicBookArt);
+                    CbArtDataBase.getSharedInstance(context).cbArtDao().insertCbArt(currentCbArt);
 
                 } catch (IOException | JSONException e) {
                     Log.d("requestresult", "Lap, we zitten in de catch...");
