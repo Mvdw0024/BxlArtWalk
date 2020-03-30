@@ -17,6 +17,10 @@ import michael.vdw.bxlartwalk.R;
  * A simple {@link Fragment} subclass.
  */
 public class ArtListFragment extends Fragment {
+    //nodig voor de tab
+    public static ArtListFragment newInstance (){
+        return new ArtListFragment();
+    }
 
     //TODO search uitschrijven omvat(OnQueryTextListener, onQueryTextSubmit, onQueryTextChange( bevat adapter dus aanmaken en gebruiken))
 //    private SearchView.OnQueryTextListener searchListener = new SearchView.OnQueryTextListener() {

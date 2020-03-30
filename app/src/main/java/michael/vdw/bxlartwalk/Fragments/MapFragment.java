@@ -31,6 +31,11 @@ import michael.vdw.bxlartwalk.Room.CbArtDataBase;
  */
 public class MapFragment extends Fragment {
 
+    //nodig voor de tab
+    public static MapFragment newInstance (){
+        return new MapFragment();
+    }
+
     //Fragment to implement a MapView
 
     private View rootView;
