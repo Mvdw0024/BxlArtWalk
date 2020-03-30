@@ -5,17 +5,20 @@ import android.os.Build;
 import androidx.annotation.RequiresApi;
 import androidx.room.TypeConverter;
 
+import com.google.android.gms.maps.model.LatLng;
+
 import java.time.LocalDate;
 
 public class Converters {
     @RequiresApi(api = Build.VERSION_CODES.O)
     @TypeConverter
-    public static LocalDate toDate(String dateString) {
-        return (dateString == null) ? null : LocalDate.parse(dateString);
+    public static LatLng fromJSON(Double jsontoLatLng) {
+        return (jsontoLatLng == null) ? null : new LatLng(jsontoLatLng,jsontoLatLng);
     }
 
     @TypeConverter
-    public static String toDateString(LocalDate localDate) {
-        return (localDate == null) ? null : localDate.toString();
+    public static Double toLatLng(LatLng latLng) {
+        return latLng == null ? null : latLng.latitude;
+
     }
 }

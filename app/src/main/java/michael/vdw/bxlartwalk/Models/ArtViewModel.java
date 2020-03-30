@@ -82,6 +82,7 @@ public class ArtViewModel extends ViewModel {
                     }
 
                     cbRouteArt.postValue(comicBookArt);
+                    //TODO: methode moet nog getest worden.
                     CbArtDataBase.getSharedInstance(context).cbArtDao().insertCbArt(currentCbArt);
 
                 } catch (IOException | JSONException e) {
