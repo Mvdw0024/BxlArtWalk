@@ -32,11 +32,11 @@ public class MainActivity extends AppCompatActivity {
 
         //om tab bar te kunnen gebruiken
             TabLayout tabLayout = findViewById(R.id.tab_layout);
-            ViewPager viewPager = findViewById(R.id.nav_host);
+//            ViewPager viewPager = findViewById(R.id.nav_host);
 
             TabPagertAdapter adapter = new TabPagertAdapter(getSupportFragmentManager(),0);
-            viewPager.setAdapter(adapter);
-            tabLayout.setupWithViewPager(viewPager);
+//            viewPager.setAdapter(adapter);
+//            tabLayout.setupWithViewPager(viewPager);
 
         appBarConfiguration = new AppBarConfiguration.Builder(R.id.mapFragment).build();
         navController = Navigation.findNavController(this, R.id.nav_host);

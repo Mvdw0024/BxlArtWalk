@@ -1,6 +1,7 @@
 package michael.vdw.bxlartwalk.Room;
 
 import android.content.Context;
+import android.util.Log;
 
 import androidx.room.Database;
 import androidx.room.Room;
@@ -24,8 +25,10 @@ public abstract class CbArtDataBase extends RoomDatabase {
     }
 
 
-    private static CbArtDataBase createDB(Context c) {
-        return Room.databaseBuilder(c, CbArtDataBase.class, "cbart.db").allowMainThreadQueries().build();
+    private static CbArtDataBase createDB(final Context context) {
+        Log.d("testje", "hello again!");
+        Log.d("context", ""+context);
+        return Room.databaseBuilder(context, CbArtDataBase.class, "cbart.db").allowMainThreadQueries().build();
     }
 
     public abstract CbArtDao cbArtDao();

@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
+import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.google.android.gms.maps.CameraUpdate;
@@ -58,8 +59,10 @@ public class MapFragment extends Fragment {
     };
 
     private void drawMarkers() {
-        ArrayList<CbArt> allCbArt = artViewModel.getCbRouteArt().getValue();
-        Log.d("CbArtlength", "here: " + allCbArt.size());
+//        MutableLiveData<ArrayList<CbArt>> allCbArt = artViewModel.getCbRouteArt();
+//        ArrayList<CbArt> allCbArtArray = allCbArt.getValue();
+
+//        Log.d("CbArtlength", "here: " + allCbArt.size());
 
         // for-loop met ROOM-Database
         for (CbArt cbArtMarkers : CbArtDataBase.getSharedInstance(fragmentActivity).cbArtDao().getAllCb()) {

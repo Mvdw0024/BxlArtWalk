@@ -32,9 +32,7 @@ public class ArtViewModel extends ViewModel {
     }
 
     public MutableLiveData<ArrayList<CbArt>> getCbRouteArt() {
-        if (cbRouteArt == null) {
-            fetchArt();
-        }
+        fetchArt();
         return cbRouteArt;
     }
 
@@ -78,12 +76,17 @@ public class ArtViewModel extends ViewModel {
                                 Integer.parseInt(jsonArt.getString("annee"))
                         );
                         comicBookArt.add(currentCbArt);
+                        //TODO: methode moet nog getest worden.
+                        CbArtDataBase.getSharedInstance(context).cbArtDao().insertCbArt(currentCbArt);
                         i++;
                     }
 
+                    // Geeft resultaten van de API call in de logcat
+                    for(CbArt cbArt : comicBookArt){
+                        Log.d("ReceivedData", ""+cbArt);
+                    }
+
                     cbRouteArt.postValue(comicBookArt);
-                    //TODO: methode moet nog getest worden.
-                    CbArtDataBase.getSharedInstance(context).cbArtDao().insertCbArt(currentCbArt);
 
                 } catch (IOException | JSONException e) {
                     Log.d("requestresult", "Lap, we zitten in de catch...");
