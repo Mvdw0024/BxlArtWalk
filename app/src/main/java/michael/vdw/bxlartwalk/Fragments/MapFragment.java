@@ -65,7 +65,7 @@ public class MapFragment extends Fragment {
 //        Log.d("CbArtlength", "here: " + allCbArt.size());
 
         // for-loop met ROOM-Database
-        for (CbArt cbArtMarkers : CbArtDataBase.getSharedInstance(fragmentActivity).cbArtDao().getAllCb()) {
+        for (CbArt cbArtMarkers : CbArtDataBase.getSharedInstance(getContext()).cbArtDao().getAllCb()) {
             Marker m = mMap.addMarker(new MarkerOptions().position(cbArtMarkers.getGeocoordinates()));
             m.setTitle(cbArtMarkers.getCharacters());
             m.setSnippet(cbArtMarkers.getAuthors());
