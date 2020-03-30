@@ -48,6 +48,7 @@ public class MapFragment extends Fragment {
     private OnMapReadyCallback onMapReady = new OnMapReadyCallback() {
         @Override
         public void onMapReady(GoogleMap googleMap) {
+            artViewModel.getCbRouteArt();
             mMap = googleMap;
             LatLng coordBrussel = new LatLng(50.858712, 4.347446);
             CameraUpdate moveToBrussel = CameraUpdateFactory.newLatLngZoom(coordBrussel, 16);
@@ -59,29 +60,15 @@ public class MapFragment extends Fragment {
     };
 
     private void drawMarkers() {
-//        MutableLiveData<ArrayList<CbArt>> allCbArt = artViewModel.getCbRouteArt();
-//        ArrayList<CbArt> allCbArtArray = allCbArt.getValue();
-
-//        Log.d("CbArtlength", "here: " + allCbArt.size());
 
         // for-loop met ROOM-Database
-        for (CbArt cbArtMarkers : CbArtDataBase.getSharedInstance(getContext()).cbArtDao().getAllCb()) {
-            Marker m = mMap.addMarker(new MarkerOptions().position(cbArtMarkers.getGeocoordinates()));
-            m.setTitle(cbArtMarkers.getCharacters());
-            m.setSnippet(cbArtMarkers.getAuthors());
+        for (CbArt cbArtMarker : artViewModel.getAllCbArtFromDataBase()) {
+            Marker m = mMap.addMarker(new MarkerOptions().position(new LatLng(cbArtMarker.getLat(), cbArtMarker.getLng())));
+            m.setTitle(cbArtMarker.getCharacters());
+            m.setSnippet(cbArtMarker.getAuthors());
         }
 
-
-//        for (CbArt cbArt : allCbArt) {
-//            Log.d("testart", cbArt.getCharacters());
-//            Marker m = mMap.addMarker(
-//                    new MarkerOptions().position(cbArt.getGeocoordinates())
-//            );
-//            m.setTitle(cbArt.getCharacters());
-//        }
     }
-
-    ;
 
     public MapFragment() {
         // Required empty public constructor

@@ -4,6 +4,7 @@ import android.app.Application;
 import android.content.Context;
 import android.util.Log;
 
+import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
@@ -15,6 +16,7 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -23,13 +25,14 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
-public class ArtViewModel extends ViewModel {
+public class ArtViewModel extends AndroidViewModel {
     private Context context;
     private CbArtDataBase cbArtDataBase;
     private MutableLiveData<ArrayList<CbArt>> cbRouteArt;
     public ExecutorService threadExecutor = Executors.newFixedThreadPool(4);
 
-    public ArtViewModel() {
+    public ArtViewModel(Application application) {
+        super(application);
         this.cbRouteArt = new MutableLiveData<>();
     }
 
@@ -38,7 +41,20 @@ public class ArtViewModel extends ViewModel {
         return cbRouteArt;
     }
 
+    public List<CbArt> getAllCbArtFromDataBase() {
+        return CbArtDataBase.getSharedInstance(getApplication()).cbArtDao().getAllCb();
+    }
+
+    public void insertCbArtInDataBase(CbArt cbArt) {
+        CbArtDataBase.getSharedInstance(getApplication()).cbArtDao().insertCbArt(cbArt);
+    }
+
+    public CbArt findCbById(String id) {
+        return CbArtDataBase.getSharedInstance(getApplication()).cbArtDao().findById(id);
+    }
+
     private void fetchArt() {
+//        CbArtDataBase.getSharedInstance(getApplication()).cbArtDao().nukeTable();
         threadExecutor.execute(new Runnable() {
 
 
@@ -63,17 +79,19 @@ public class ArtViewModel extends ViewModel {
                     int i = 0;
                     ArrayList<CbArt> comicBookArt = new ArrayList<>();
                     while (i < jsonRecords.length()) {
+                        String jsonId = jsonRecords.getJSONObject(i).getString("recordid");
                         JSONObject jsonArt = jsonRecords.getJSONObject(i).getJSONObject("fields");
 
                         // Prepare coordinates for Latlng
-                        Double currentLat = jsonArt.getJSONArray("coordonnees_geographiques").getDouble(0);
-                        Double currentLng = jsonArt.getJSONArray("coordonnees_geographiques").getDouble(1);
 
                         final CbArt currentCbArt = new CbArt(
+                                jsonId,
                                 jsonArt.getString("personnage_s"),
                                 jsonArt.getString("auteur_s"),
                                 jsonArt.getJSONObject("photo").getString("filename"),
-                                new LatLng(currentLat, currentLng),
+//                                new LatLng(currentLat, currentLng),
+                                jsonArt.getJSONArray("coordonnees_geographiques").getDouble(0),
+                                jsonArt.getJSONArray("coordonnees_geographiques").getDouble(1),
                                 Integer.parseInt(jsonArt.getString("annee"))
                         );
                         comicBookArt.add(currentCbArt);
@@ -81,10 +99,11 @@ public class ArtViewModel extends ViewModel {
                         CbArtDataBase.dbExecutor.execute(new Runnable() {
                             @Override
                             public void run() {
-                                cbArtDataBase.cbArtDao().insertCbArt(currentCbArt);
+                                if(findCbById(currentCbArt.getId()) == null){
+                                    insertCbArtInDataBase(currentCbArt);
+                                }
                             }
                         });
-
                         i++;
                     }
 
@@ -96,7 +115,6 @@ public class ArtViewModel extends ViewModel {
                     cbRouteArt.postValue(comicBookArt);
 
                 } catch (IOException | JSONException e) {
-                    Log.d("requestresult", "Lap, we zitten in de catch...");
                     e.printStackTrace();
                 }
 

@@ -14,7 +14,7 @@ import java.util.concurrent.Executors;
 import michael.vdw.bxlartwalk.Models.CbArt;
 import michael.vdw.bxlartwalk.Utils.Converters;
 
-@Database(version = 1, entities = {CbArt.class}, exportSchema = false)
+@Database(version = 5, entities = {CbArt.class}, exportSchema = false)
 @TypeConverters(Converters.class)
 public abstract class CbArtDataBase extends RoomDatabase {
 
@@ -27,11 +27,8 @@ public abstract class CbArtDataBase extends RoomDatabase {
         return sharedInstance;
     }
 
-
     private static CbArtDataBase createDB(final Context context) {
-        Log.d("testje", "hello again!");
-        Log.d("context", "" + context);
-        return Room.databaseBuilder(context, CbArtDataBase.class, "cbart.db").allowMainThreadQueries().build();
+        return Room.databaseBuilder(context, CbArtDataBase.class, "cbart.db").allowMainThreadQueries().fallbackToDestructiveMigration().build();
     }
 
     public abstract CbArtDao cbArtDao();

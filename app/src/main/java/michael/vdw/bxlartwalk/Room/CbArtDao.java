@@ -19,4 +19,10 @@ public interface CbArtDao {
 
     @Query("SELECT * FROM CbArt")
     List<CbArt> getAllCb();
+
+    @Query("DELETE FROM CbArt")
+    void nukeTable();
+
+    @Query("SELECT * FROM CbArt WHERE id LIKE :id")
+    CbArt findById(String id);
 }

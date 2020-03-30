@@ -14,21 +14,34 @@ public class CbArt implements Serializable {
 
     @NonNull
     @PrimaryKey(autoGenerate = false)
-    public int id;
+    public String id;
     public String characters, authors, photourl;
-    public LatLng geocoordinates;
+//    public LatLng geocoordinates;
+    public Double lat, lng;
     public int year;
 
     @Ignore
     public CbArt() {
     }
 
-    public CbArt(String characters, String authors, String photourl, LatLng geocoordinates, int year) {
+    public CbArt(String id, String characters, String authors, String photourl, Double lat, Double lng, int year) {
+        this.id = id;
         this.characters = characters;
         this.authors = authors;
         this.photourl = photourl;
-        this.geocoordinates = geocoordinates;
+//        this.geocoordinates = geocoordinates;
+        this.lat = lat;
+        this.lng = lng;
         this.year = year;
+    }
+
+    @NonNull
+    public String getId() {
+        return id;
+    }
+
+    public void setId(@NonNull String id) {
+        this.id = id;
     }
 
     public String getCharacters() {
@@ -55,12 +68,29 @@ public class CbArt implements Serializable {
         this.photourl = photourl;
     }
 
-    public LatLng getGeocoordinates() {
-        return geocoordinates;
+//    public LatLng getGeocoordinates() {
+//        return geocoordinates;
+//    }
+//
+//    public void setGeocoordinates(LatLng geocoordinates) {
+//        this.geocoordinates = geocoordinates;
+//    }
+
+
+    public Double getLat() {
+        return lat;
     }
 
-    public void setGeocoordinates(LatLng geocoordinates) {
-        this.geocoordinates = geocoordinates;
+    public void setLat(Double lat) {
+        this.lat = lat;
+    }
+
+    public Double getLng() {
+        return lng;
+    }
+
+    public void setLng(Double lng) {
+        this.lng = lng;
     }
 
     public int getYear() {
@@ -72,14 +102,14 @@ public class CbArt implements Serializable {
     }
 
     // nog geen idee, of dit nodig zal zijn, maar just in case
-    @Override
-    public String toString() {
-        return "CbArt{" +
-                "characters='" + characters + '\'' +
-                ", authors='" + authors + '\'' +
-                ", photourl='" + photourl + '\'' +
-                ", geocoordinates=" + geocoordinates +
-                ", year=" + year +
-                '}';
-    }
+//    @Override
+//    public String toString() {
+//        return "CbArt{" +
+//                "characters='" + characters + '\'' +
+//                ", authors='" + authors + '\'' +
+//                ", photourl='" + photourl + '\'' +
+//                ", geocoordinates=" + geocoordinates +
+//                ", year=" + year +
+//                '}';
+//    }
 }
