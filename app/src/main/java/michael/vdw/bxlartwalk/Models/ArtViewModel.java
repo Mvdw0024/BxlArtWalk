@@ -1,5 +1,6 @@
 package michael.vdw.bxlartwalk.Models;
 
+import android.app.Application;
 import android.content.Context;
 import android.util.Log;
 
@@ -24,6 +25,7 @@ import okhttp3.Response;
 
 public class ArtViewModel extends ViewModel {
     private Context context;
+    private CbArtDataBase cbArtDataBase;
     private MutableLiveData<ArrayList<CbArt>> cbRouteArt;
     public ExecutorService threadExecutor = Executors.newFixedThreadPool(4);
 
@@ -39,7 +41,6 @@ public class ArtViewModel extends ViewModel {
     private void fetchArt() {
         threadExecutor.execute(new Runnable() {
 
-            private CbArt currentCbArt;
 
             @Override
             public void run() {
@@ -68,7 +69,7 @@ public class ArtViewModel extends ViewModel {
                         Double currentLat = jsonArt.getJSONArray("coordonnees_geographiques").getDouble(0);
                         Double currentLng = jsonArt.getJSONArray("coordonnees_geographiques").getDouble(1);
 
-                        currentCbArt = new CbArt(
+                        final CbArt currentCbArt = new CbArt(
                                 jsonArt.getString("personnage_s"),
                                 jsonArt.getString("auteur_s"),
                                 jsonArt.getJSONObject("photo").getString("filename"),
@@ -77,13 +78,19 @@ public class ArtViewModel extends ViewModel {
                         );
                         comicBookArt.add(currentCbArt);
                         //TODO: methode moet nog getest worden.
-                        CbArtDataBase.getSharedInstance(context).cbArtDao().insertCbArt(currentCbArt);
+                        CbArtDataBase.dbExecutor.execute(new Runnable() {
+                            @Override
+                            public void run() {
+                                cbArtDataBase.cbArtDao().insertCbArt(currentCbArt);
+                            }
+                        });
+
                         i++;
                     }
 
                     // Geeft resultaten van de API call in de logcat
-                    for(CbArt cbArt : comicBookArt){
-                        Log.d("ReceivedData", ""+cbArt);
+                    for (CbArt cbArt : comicBookArt) {
+                        Log.d("ReceivedData", "" + cbArt);
                     }
 
                     cbRouteArt.postValue(comicBookArt);

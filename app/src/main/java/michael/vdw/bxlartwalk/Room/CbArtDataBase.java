@@ -8,6 +8,9 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import androidx.room.TypeConverters;
 
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
 import michael.vdw.bxlartwalk.Models.CbArt;
 import michael.vdw.bxlartwalk.Utils.Converters;
 
@@ -27,9 +30,12 @@ public abstract class CbArtDataBase extends RoomDatabase {
 
     private static CbArtDataBase createDB(final Context context) {
         Log.d("testje", "hello again!");
-        Log.d("context", ""+context);
+        Log.d("context", "" + context);
         return Room.databaseBuilder(context, CbArtDataBase.class, "cbart.db").allowMainThreadQueries().build();
     }
 
     public abstract CbArtDao cbArtDao();
+
+    public static ExecutorService dbExecutor = Executors.newFixedThreadPool(4);
+
 }
