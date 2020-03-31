@@ -8,6 +8,7 @@ import androidx.room.PrimaryKey;
 import com.google.android.gms.maps.model.LatLng;
 
 import java.io.Serializable;
+import java.util.Collection;
 
 @Entity // ROOM preparation
 public class CbArt implements Serializable {
@@ -100,6 +101,8 @@ public class CbArt implements Serializable {
     public void setYear(int year) {
         this.year = year;
     }
+
+
 
     // nog geen idee, of dit nodig zal zijn, maar just in case
 //    @Override
