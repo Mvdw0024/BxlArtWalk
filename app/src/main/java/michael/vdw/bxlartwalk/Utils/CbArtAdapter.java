@@ -22,7 +22,7 @@ import michael.vdw.bxlartwalk.R;
 public class CbArtAdapter extends RecyclerView.Adapter<CbArtAdapter.ArtViewHolder> implements Filterable {
 
     class ArtViewHolder extends RecyclerView.ViewHolder {
-        final TextView tvTitle, tvArtist, tvYear;
+        final TextView tvTitle, tvArtist;
         final ImageView ivPhoto;
 
         final View.OnClickListener detailListener = new View.OnClickListener() {
@@ -43,10 +43,10 @@ public class CbArtAdapter extends RecyclerView.Adapter<CbArtAdapter.ArtViewHolde
 
         public ArtViewHolder(@NonNull View itemView) {
             super(itemView);
-            tvTitle = itemView.findViewById(R.id.tv_detail_titleOfTheArt);
-            tvArtist = itemView.findViewById(R.id.tv_detail_authorOfTheArt);
-            tvYear = itemView.findViewById(R.id.tv_detail_yearOfTheArt);
-            ivPhoto = itemView.findViewById(R.id.iv_detail_photo);
+            tvTitle = itemView.findViewById(R.id.tv_artListCart_titleOfTheArt);
+            tvArtist = itemView.findViewById(R.id.tv_artListCard_autor);
+//            tvYear = itemView.findViewById(R.id.tv_detail_yearOfTheArt);
+            ivPhoto = itemView.findViewById(R.id.iv_artListCard_photo);
         }
     }
 
@@ -70,11 +70,24 @@ public class CbArtAdapter extends RecyclerView.Adapter<CbArtAdapter.ArtViewHolde
 
     @Override
     public void onBindViewHolder(@NonNull ArtViewHolder holder, int position) {
+        //Todo waar if plaatsen?
         CbArt currentArt = items.get(position);
-        holder.tvTitle.setText(currentArt.getCharacters());
+        if (currentArt.getCharacters() == "") {
+            holder.tvTitle.setText("Unknown");
+        } else {
+            holder.tvTitle.setText(currentArt.getCharacters());
+        }
+
         //holder.ivPhoto.setImageIcon(currentArt.getphotoUrl());
-        holder.tvArtist.setText(currentArt.getAuthors());
-        holder.tvYear.setText(currentArt.getYear());
+        if (currentArt.getAuthors() == "") {
+            holder.tvArtist.setText("Unknown");
+        } else {
+            holder.tvArtist.setText(currentArt.getAuthors());
+        }
+
+
+//        holder.tvYear.setText(currentArt.getYear());
+
     }
 
     @Override
@@ -88,6 +101,7 @@ public class CbArtAdapter extends RecyclerView.Adapter<CbArtAdapter.ArtViewHolde
         OGItems.clear();
         OGItems.addAll(cbArts);
     }
+
     @Override
     public Filter getFilter() {
 
@@ -95,17 +109,18 @@ public class CbArtAdapter extends RecyclerView.Adapter<CbArtAdapter.ArtViewHolde
             @Override
             protected FilterResults performFiltering(CharSequence constraint) {
                 String input = constraint.toString();
-                if(input.isEmpty()) {
+                if (input.isEmpty()) {
                     items = OGItems;
-                }else{
+                } else {
                     items = OGItems;
                     ArrayList<CbArt> tempList = new ArrayList<>();
-                    for (CbArt element : items){
+                    for (CbArt element : items) {
                         if (element.getCharacters().contains(input)) {
                             tempList.add(element);
-                        }else{ if (element.getAuthors().contains(input)){
-                            tempList.add(element);
-                        }
+                        } else {
+                            if (element.getAuthors().contains(input)) {
+                                tempList.add(element);
+                            }
 
                         }
                     }
@@ -114,6 +129,7 @@ public class CbArtAdapter extends RecyclerView.Adapter<CbArtAdapter.ArtViewHolde
 
                 return null;
             }
+
             @Override
             protected void publishResults(CharSequence constraint, FilterResults results) {
                 notifyDataSetChanged();
