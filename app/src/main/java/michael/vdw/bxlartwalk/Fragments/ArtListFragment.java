@@ -92,8 +92,8 @@ public class ArtListFragment extends Fragment {
 
         inflater.inflate(R.menu. search_menu,menu);
 
-        SearchView searchView = (SearchView) menu.findItem(R.id.mi_search).getActionView();
-        searchView.setOnQueryTextListener(searchListener);
+//        SearchView searchView = (SearchView) menu.findItem(R.id.mi_search).getActionView();
+//        searchView.setOnQueryTextListener(searchListener);
 
         super.onCreateOptionsMenu(menu, inflater);
     }

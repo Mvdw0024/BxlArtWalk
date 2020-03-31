@@ -53,7 +53,7 @@ public class MapFragment extends Fragment {
             artViewModel.getCbRouteArt();
             mMap = googleMap;
             LatLng coordBrussel = new LatLng(50.858712, 4.347446);
-            CameraUpdate moveToBrussel = CameraUpdateFactory.newLatLngZoom(coordBrussel, 16);
+            CameraUpdate moveToBrussel = CameraUpdateFactory.newLatLngZoom(coordBrussel, 10);
             mMap.animateCamera(moveToBrussel);
 //            mMap.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
             drawMarkers();
