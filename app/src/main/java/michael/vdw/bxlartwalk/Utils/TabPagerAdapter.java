@@ -9,10 +9,10 @@ import androidx.fragment.app.FragmentPagerAdapter;
 import michael.vdw.bxlartwalk.Fragments.ArtListFragment;
 import michael.vdw.bxlartwalk.Fragments.MapFragment;
 
-public class TabPagertAdapter extends FragmentPagerAdapter {
+public class TabPagerAdapter extends FragmentPagerAdapter {
     private Fragment [] fragments ={MapFragment.newInstance(), ArtListFragment.newInstance()};
 
-    public TabPagertAdapter(@NonNull FragmentManager fm, int behavior){super(fm, behavior);}
+    public TabPagerAdapter(@NonNull FragmentManager fm, int behavior){super(fm, behavior);}
     @Override
     public  int getCount() {return fragments.length;}
 

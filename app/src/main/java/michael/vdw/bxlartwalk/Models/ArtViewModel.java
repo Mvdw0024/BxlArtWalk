@@ -195,7 +195,7 @@ public class ArtViewModel extends AndroidViewModel {
 
                     // Geeft resultaten van de API call in de logcat
                     for (StreetArt curStreetArt : streetArtJSON) {
-                        Log.d("ReceivedData", "" + curStreetArt);
+                        Log.d("ReceivedStreetData", "" + curStreetArt);
                     }
 
                     streetArtRoute.postValue(streetArtJSON);

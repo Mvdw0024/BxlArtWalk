@@ -105,14 +105,17 @@ public class CbArt implements Serializable {
 
 
     // nog geen idee, of dit nodig zal zijn, maar just in case
-//    @Override
-//    public String toString() {
-//        return "CbArt{" +
-//                "characters='" + characters + '\'' +
-//                ", authors='" + authors + '\'' +
-//                ", photourl='" + photourl + '\'' +
-//                ", geocoordinates=" + geocoordinates +
-//                ", year=" + year +
-//                '}';
-//    }
+
+    @Override
+    public String toString() {
+        return "CbArt{" +
+                "id='" + id + '\'' +
+                ", characters='" + characters + '\'' +
+                ", authors='" + authors + '\'' +
+                ", photourl='" + photourl + '\'' +
+                ", lat=" + lat +
+                ", lng=" + lng +
+                ", year=" + year +
+                '}';
+    }
 }

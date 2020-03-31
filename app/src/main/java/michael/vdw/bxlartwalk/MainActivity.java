@@ -15,7 +15,7 @@ import android.view.MenuItem;
 
 import com.google.android.material.tabs.TabLayout;
 
-import michael.vdw.bxlartwalk.Utils.TabPagertAdapter;
+import michael.vdw.bxlartwalk.Utils.TabPagerAdapter;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
             TabLayout tabLayout = findViewById(R.id.tab_layout);
 //            ViewPager viewPager = findViewById(R.id.nav_host);
 
-            TabPagertAdapter adapter = new TabPagertAdapter(getSupportFragmentManager(),0);
+            TabPagerAdapter adapter = new TabPagerAdapter(getSupportFragmentManager(),0);
 //            viewPager.setAdapter(adapter);
 //            tabLayout.setupWithViewPager(viewPager);
 
