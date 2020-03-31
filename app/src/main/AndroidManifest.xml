@@ -16,9 +16,15 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <!-- Wouter-->
+        <!--meta-data android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyCBcmgvOwgUxcjwF95Jkk-sCE3vuaHCAF0"-->
+        <!--Talia-->
         <meta-data android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyCBcmgvOwgUxcjwF95Jkk-sCE3vuaHCAF0">
+            android:value="AIzaSyCgPELdm4JmAhw-qBy7WLDUR62DNIosFTg">
+
         </meta-data>
+
     </application>
 
 </manifest>
