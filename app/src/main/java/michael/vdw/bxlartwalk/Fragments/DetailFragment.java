@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import michael.vdw.bxlartwalk.Models.CbArt;
 import michael.vdw.bxlartwalk.R;
 
 
@@ -33,7 +34,18 @@ public class DetailFragment extends Fragment {
         TextView yearTv = rootView.findViewById(R.id.tv_detail_yearOfTheArt);
         TextView authorTv =rootView.findViewById(R.id.tv_detail_authorOfTheArt);
 
-        //TODO data binnen trekken
+        //get argument scherm gaat ergumenten binnen trekken zie main_nav
+        Bundle data = getArguments();
+        if (data != null) {
+            if (data.containsKey("passedArt")) {
+                CbArt cbArt = (CbArt) data.getSerializable("passedJoke");
+                titleTv.setText(cbArt.getCharacters());
+                yearTv.setText(cbArt.getYear());
+                authorTv.setText(cbArt.getAuthors());
+                //photoIv.setImageView(cbArt.getphotourl());
+
+            }
+        }
         return rootView;
     }
 }
