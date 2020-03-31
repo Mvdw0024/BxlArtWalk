@@ -14,15 +14,12 @@ import androidx.annotation.NonNull;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
-
 import java.util.ArrayList;
 
 import michael.vdw.bxlartwalk.Models.CbArt;
 import michael.vdw.bxlartwalk.R;
 
-public class ArtAdapter extends RecyclerView.Adapter<ArtAdapter.ArtViewHolder> implements Filterable {
+public class CbArtAdapter extends RecyclerView.Adapter<CbArtAdapter.ArtViewHolder> implements Filterable {
 
     class ArtViewHolder extends RecyclerView.ViewHolder {
         final TextView tvTitle, tvArtist, tvYear;
@@ -56,7 +53,7 @@ public class ArtAdapter extends RecyclerView.Adapter<ArtAdapter.ArtViewHolder> i
     private ArrayList<CbArt> items;
     private ArrayList<CbArt> OGItems;
 
-    public ArtAdapter() {
+    public CbArtAdapter() {
         items = new ArrayList<>();
         OGItems = new ArrayList<>();
     }
