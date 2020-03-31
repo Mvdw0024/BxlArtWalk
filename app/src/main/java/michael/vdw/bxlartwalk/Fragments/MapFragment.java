@@ -16,6 +16,7 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -24,6 +25,7 @@ import java.util.ArrayList;
 
 import michael.vdw.bxlartwalk.Models.ArtViewModel;
 import michael.vdw.bxlartwalk.Models.CbArt;
+import michael.vdw.bxlartwalk.Models.StreetArt;
 import michael.vdw.bxlartwalk.R;
 import michael.vdw.bxlartwalk.Room.CbArtDataBase;
 
@@ -33,7 +35,7 @@ import michael.vdw.bxlartwalk.Room.CbArtDataBase;
 public class MapFragment extends Fragment {
 
     //nodig voor de tab
-    public static MapFragment newInstance (){
+    public static MapFragment newInstance() {
         return new MapFragment();
     }
 
@@ -66,6 +68,16 @@ public class MapFragment extends Fragment {
             Marker m = mMap.addMarker(new MarkerOptions().position(new LatLng(cbArtMarker.getLat(), cbArtMarker.getLng())));
             m.setTitle(cbArtMarker.getCharacters());
             m.setSnippet(cbArtMarker.getAuthors());
+        }
+        for (StreetArt streetArtMarker : artViewModel.getAllStreetArtFromDataBase()
+        ) {
+            Marker s = mMap.addMarker(new MarkerOptions()
+                    .position(new LatLng(streetArtMarker.getLat(), streetArtMarker.getLng()))
+                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
+            s.setSnippet(streetArtMarker.getArtists());
+            s.setTitle(streetArtMarker.getWorkname());
+            s.setTag("StreetArt");
+
         }
 
     }
