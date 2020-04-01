@@ -71,6 +71,8 @@ public class ArtViewModel extends AndroidViewModel {
 
     private void fetchCbArt() {
 //        CbArtDataBase.getSharedInstance(getApplication()).cbArtDao().nukeTable();
+        Log.d("dendezen", "heeft gedraaid");
+
         threadExecutor.execute(new Runnable() {
 
 
@@ -85,6 +87,7 @@ public class ArtViewModel extends AndroidViewModel {
 
 
                 try {
+
                     Response response = client.newCall(request).execute();
 
                     String postData = response.body().string();
@@ -98,14 +101,11 @@ public class ArtViewModel extends AndroidViewModel {
                         String jsonId = jsonRecords.getJSONObject(i).getString("recordid");
                         JSONObject jsonArt = jsonRecords.getJSONObject(i).getJSONObject("fields");
 
-                        // Prepare coordinates for Latlng
-
                         final CbArt currentCbArt = new CbArt(
                                 jsonId,
                                 jsonArt.getString("personnage_s"),
                                 jsonArt.getString("auteur_s"),
                                 jsonArt.getJSONObject("photo").getString("filename"),
-//                                new LatLng(currentLat, currentLng),
                                 jsonArt.getJSONArray("coordonnees_geographiques").getDouble(0),
                                 jsonArt.getJSONArray("coordonnees_geographiques").getDouble(1),
                                 Integer.parseInt(jsonArt.getString("annee"))
@@ -130,7 +130,9 @@ public class ArtViewModel extends AndroidViewModel {
 
                     cbRouteArt.postValue(comicBookArt);
 
+
                 } catch (IOException | JSONException e) {
+                    Log.d("dendezen", "heeft scheef gedraaid");
                     e.printStackTrace();
                 }
 
@@ -172,7 +174,7 @@ public class ArtViewModel extends AndroidViewModel {
                         final StreetArt curStreetArt = new StreetArt(
                                 jsonId,
                                 (jsonStreetArt.has("naam_van_de_kunstenaar")) ? jsonStreetArt.getString("naam_van_de_kunstenaar") : "Unknown",
-                                (!jsonStreetArt.has("werknaam")) ? "" : jsonStreetArt.getString("werknaam"),
+                                (jsonStreetArt.has("name_of_the_work")) ? jsonStreetArt.getString("name_of_the_work"): "",
                                 (jsonStreetArt.has("adres")) ? jsonStreetArt.getString("adres") : "Unknown",
                                 (jsonStreetArt.has("photo")) ? jsonStreetArt.getJSONObject("photo").getString("filename") : "Unknown",
                                 (jsonStreetArt.has("annee")) ? Integer.parseInt(jsonStreetArt.getString("annee")) : 0,

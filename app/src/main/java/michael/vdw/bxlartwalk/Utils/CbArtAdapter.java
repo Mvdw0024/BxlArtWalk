@@ -2,6 +2,7 @@ package michael.vdw.bxlartwalk.Utils;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,7 +34,7 @@ public class CbArtAdapter extends RecyclerView.Adapter<CbArtAdapter.ArtViewHolde
                 int position = getAdapterPosition();
 
                 Bundle data = new Bundle();
-                data.putSerializable("passedArt", itemsCbArt.get(position));
+                data.putSerializable("passedCbArt", itemsCbArt.get(position));
 
                 //navigatie starten
 
@@ -53,17 +54,15 @@ public class CbArtAdapter extends RecyclerView.Adapter<CbArtAdapter.ArtViewHolde
 
     private ArrayList<CbArt> itemsCbArt;
     private ArrayList<CbArt> OGItemsCbArt;
-    private ArrayList<StreetArt> items;
-    private ArrayList<StreetArt> OGItems;
+    private ArrayList<StreetArt> itemsStreetArt;
+    private ArrayList<StreetArt> OGItemsStreetArt;
 
     public CbArtAdapter() {
         itemsCbArt = new ArrayList<>();
         OGItemsCbArt = new ArrayList<>();
-        items = new ArrayList<>();
-        OGItems = new ArrayList<>();
+        itemsStreetArt = new ArrayList<>();
+        OGItemsStreetArt = new ArrayList<>();
     }
-
-
 
 
     @NonNull
@@ -79,23 +78,26 @@ public class CbArtAdapter extends RecyclerView.Adapter<CbArtAdapter.ArtViewHolde
     @Override
     public void onBindViewHolder(@NonNull ArtViewHolder holder, int position) {
 
-        CbArt currentArt = itemsCbArt.get(position);
-        if (currentArt.getCharacters() == "") {
+        Log.d("position", ""+position);
+        Log.d("itemsCbArt", ""+itemsCbArt);
+        //TODO: itemsCbArt blijkt een lege array te zijn: [] -> dus index 0 is iets dat niet bestaat, vandaar de IndexOutOfBoundsException error
+        CbArt currentCbArt = itemsCbArt.get(position);
+        if (currentCbArt.getCharacters() == "") {
             holder.tvTitle.setText("Unknown");
         } else {
-            holder.tvTitle.setText(currentArt.getCharacters());
+            holder.tvTitle.setText(currentCbArt.getCharacters());
         }
 
         //holder.ivPhoto.setImageIcon(currentArt.getphotoUrl());
-        if (currentArt.getAuthors() == "") {
+        if (currentCbArt.getAuthors() == "") {
             holder.tvArtist.setText("Unknown");
         } else {
-            holder.tvArtist.setText(currentArt.getAuthors());
+            holder.tvArtist.setText(currentCbArt.getAuthors());
         }
 
         //        holder.tvYear.setText(currentArt.getYear());
 
-StreetArt currentStreetArt = items.get(position);
+        StreetArt currentStreetArt = itemsStreetArt.get(position);
         if (currentStreetArt.getWorkname() ==""){
             holder.tvTitle.setText("Unknown");
         }else{
@@ -113,21 +115,25 @@ StreetArt currentStreetArt = items.get(position);
     @Override
     public int getItemCount() {
         int cbArtSize = itemsCbArt.size();
-        int streetArtSize = items.size();
+        int streetArtSize = itemsStreetArt.size();
         return cbArtSize + streetArtSize;
     }
 
 
-    public void addItems(ArrayList<CbArt> cbArts, ArrayList<StreetArt> streetArts) {
+    public void addCbItems(ArrayList<CbArt> cbArts) {
         itemsCbArt.clear();
-        items.clear();
         itemsCbArt.addAll(cbArts);
-        items.addAll(streetArts);
 
         OGItemsCbArt.clear();
-        OGItems.clear();
         OGItemsCbArt.addAll(cbArts);
-       OGItems.addAll(streetArts);
+    }
+
+    public void addStreetItems(ArrayList<StreetArt> streetArts) {
+        itemsStreetArt.clear();
+        itemsStreetArt.addAll(streetArts);
+
+        OGItemsStreetArt.clear();
+        OGItemsStreetArt.addAll(streetArts);
     }
 
 

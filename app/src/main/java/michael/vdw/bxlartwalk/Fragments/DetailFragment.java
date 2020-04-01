@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import michael.vdw.bxlartwalk.Models.CbArt;
+import michael.vdw.bxlartwalk.Models.StreetArt;
 import michael.vdw.bxlartwalk.R;
 
 
@@ -37,12 +38,21 @@ public class DetailFragment extends Fragment {
         //get argument scherm gaat ergumenten binnen trekken zie main_nav
         Bundle data = getArguments();
         if (data != null) {
-            if (data.containsKey("passedArt")) {
-                CbArt cbArt = (CbArt) data.getSerializable("passedJoke");
+            if (data.containsKey("passedCbArt")) {
+                CbArt cbArt = (CbArt) data.getSerializable("passedCbArt");
                 titleTv.setText(cbArt.getCharacters());
                 yearTv.setText(cbArt.getYear());
                 authorTv.setText(cbArt.getAuthors());
                 //photoIv.setImageView(cbArt.getphotourl());
+
+            }
+
+            if (data.containsKey("passedStreetArt")) {
+                StreetArt streetArt = (StreetArt) data.getSerializable("passedStreetArt");
+//                titleTv.setText(streetArt.getCharacters());
+//                yearTv.setText(streetArt.getYear());
+//                authorTv.setText(streetArt.getAuthors());
+                //photoIv.setImageView(streetArt.getphotourl());
 
             }
         }

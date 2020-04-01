@@ -10,6 +10,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -78,13 +79,28 @@ public class ArtListFragment extends Fragment {
         rvCbArt.setAdapter(adapter);
         //verwijzing naar viewModel, waar staat alle data
         ArtViewModel model = new ViewModelProvider(this).get(ArtViewModel.class);
+
         model.getCbRouteArt().observe(getViewLifecycleOwner(), new Observer<ArrayList<CbArt>>() {
+
             @Override
+            //TODO: Deze onChanged wordt nooit uitgevoerd in de code -> dus wordt de itemsCbArt in de adapter niet opgevuld (dus error)
+            // Reden zit in de ArtViewModel, in de fetchCbArt(), momenteel kom ik in de catch terecht, dus de MutableLiveData wordt nooit geupdatet, dus geen onChanged()
             public void onChanged(ArrayList<CbArt> cbArts) {
-                adapter.addItems(cbArts);
+                Log.d("onChangedArtList", "yop!");
+                adapter.addCbItems(cbArts);
                 adapter.notifyDataSetChanged();
             }
         });
+
+        model.getStreetArtRoute().observe(getViewLifecycleOwner(), new Observer<ArrayList<StreetArt>>() {
+            @Override
+            public void onChanged(ArrayList<StreetArt> streetArts) {
+                Log.d("onChangedStreetList", "streetyop!");
+                adapter.addStreetItems(streetArts);
+                adapter.notifyDataSetChanged();
+            }
+        });
+
         return rootView;
     }
 
