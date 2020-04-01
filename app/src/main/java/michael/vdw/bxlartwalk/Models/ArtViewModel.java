@@ -79,7 +79,7 @@ public class ArtViewModel extends AndroidViewModel {
                 OkHttpClient client = new OkHttpClient();
 
                 Request request = new Request.Builder()
-                        .url("https://bruxellesdata.opendatasoft.com/api/records/1.0/search/?dataset=comic-book-route")
+                        .url("https://bruxellesdata.opendatasoft.com/api/records/1.0/search/?dataset=comic-book-route&rows=58")
                         .get()
                         .build();
 
@@ -148,7 +148,7 @@ public class ArtViewModel extends AndroidViewModel {
                 OkHttpClient client = new OkHttpClient();
 
                 Request request = new Request.Builder()
-                        .url("https://opendata.brussel.be/explore/dataset/street-art/api/")
+                        .url("https://opendata.brussel.be/api/records/1.0/search/?dataset=street-art&rows=23")
                         .get()
                         .build();
 
@@ -171,11 +171,11 @@ public class ArtViewModel extends AndroidViewModel {
 
                         final StreetArt curStreetArt = new StreetArt(
                                 jsonId,
-                                jsonStreetArt.getString("adres"),
-                                jsonStreetArt.getString("werknaam"),
-                                jsonStreetArt.getString("naam_van_de_kunstenaar"),
-                                jsonStreetArt.getJSONObject("photo").getString("filename"),
-                                Integer.parseInt(jsonStreetArt.getString("jaar")),
+                                (jsonStreetArt.has("adres"))?jsonStreetArt.getString("adres"):"Unknown",
+                                (!jsonStreetArt.has("werknaam") )?"": jsonStreetArt.getString("werknaam"),
+                                (jsonStreetArt.has("naam_van_de_kunstenaar"))?jsonStreetArt.getString("naam_van_de_kunstenaar"):"Unknown",
+                                (jsonStreetArt.has("photo"))?jsonStreetArt.getJSONObject("photo").getString("filename"):"Unknown",
+                                (jsonStreetArt.has("jaar"))?Integer.parseInt(jsonStreetArt.getString("jaar")):0,
                                 jsonStreetArt.getJSONArray("geocoordinates").getDouble(0),
                                 jsonStreetArt.getJSONArray("geocoordinates").getDouble(1)
 
