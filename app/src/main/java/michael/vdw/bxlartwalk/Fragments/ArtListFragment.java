@@ -20,6 +20,7 @@ import java.util.ArrayList;
 
 import michael.vdw.bxlartwalk.Models.ArtViewModel;
 import michael.vdw.bxlartwalk.Models.CbArt;
+import michael.vdw.bxlartwalk.Models.StreetArt;
 import michael.vdw.bxlartwalk.R;
 import michael.vdw.bxlartwalk.Utils.CbArtAdapter;
 

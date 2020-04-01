@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 
 import michael.vdw.bxlartwalk.Models.CbArt;
+import michael.vdw.bxlartwalk.Models.StreetArt;
 import michael.vdw.bxlartwalk.R;
 
 public class CbArtAdapter extends RecyclerView.Adapter<CbArtAdapter.ArtViewHolder> implements Filterable {
@@ -32,7 +33,7 @@ public class CbArtAdapter extends RecyclerView.Adapter<CbArtAdapter.ArtViewHolde
                 int position = getAdapterPosition();
 
                 Bundle data = new Bundle();
-                data.putSerializable("passedArt", items.get(position));
+                data.putSerializable("passedArt", itemsCbArt.get(position));
 
                 //navigatie starten
 
@@ -50,13 +51,20 @@ public class CbArtAdapter extends RecyclerView.Adapter<CbArtAdapter.ArtViewHolde
         }
     }
 
-    private ArrayList<CbArt> items;
-    private ArrayList<CbArt> OGItems;
+    private ArrayList<CbArt> itemsCbArt;
+    private ArrayList<CbArt> OGItemsCbArt;
+    private ArrayList<StreetArt> items;
+    private ArrayList<StreetArt> OGItems;
 
     public CbArtAdapter() {
+        itemsCbArt = new ArrayList<>();
+        OGItemsCbArt = new ArrayList<>();
         items = new ArrayList<>();
         OGItems = new ArrayList<>();
     }
+
+
+
 
     @NonNull
     @Override
@@ -70,8 +78,8 @@ public class CbArtAdapter extends RecyclerView.Adapter<CbArtAdapter.ArtViewHolde
 
     @Override
     public void onBindViewHolder(@NonNull ArtViewHolder holder, int position) {
-        //Todo waar if plaatsen?
-        CbArt currentArt = items.get(position);
+
+        CbArt currentArt = itemsCbArt.get(position);
         if (currentArt.getCharacters() == "") {
             holder.tvTitle.setText("Unknown");
         } else {
@@ -85,22 +93,43 @@ public class CbArtAdapter extends RecyclerView.Adapter<CbArtAdapter.ArtViewHolde
             holder.tvArtist.setText(currentArt.getAuthors());
         }
 
+        //        holder.tvYear.setText(currentArt.getYear());
 
-//        holder.tvYear.setText(currentArt.getYear());
+StreetArt currentStreetArt = items.get(position);
+        if (currentStreetArt.getWorkname() ==""){
+            holder.tvTitle.setText("Unknown");
+        }else{
+            holder.tvTitle.setText(currentStreetArt.getWorkname());
+        }
+        if (currentStreetArt.getArtists() == "") {
+            holder.tvArtist.setText("Unknown");
+        } else {
+            holder.tvArtist.setText(currentStreetArt.getArtists());
+        }
+
 
     }
 
     @Override
     public int getItemCount() {
-        return items.size();
+        int cbArtSize = itemsCbArt.size();
+        int streetArtSize = items.size();
+        return cbArtSize + streetArtSize;
     }
 
-    public void addItems(ArrayList<CbArt> cbArts) {
+
+    public void addItems(ArrayList<CbArt> cbArts, ArrayList<StreetArt> streetArts) {
+        itemsCbArt.clear();
         items.clear();
-        items.addAll(cbArts);
+        itemsCbArt.addAll(cbArts);
+        items.addAll(streetArts);
+
+        OGItemsCbArt.clear();
         OGItems.clear();
-        OGItems.addAll(cbArts);
+        OGItemsCbArt.addAll(cbArts);
+       OGItems.addAll(streetArts);
     }
+
 
     @Override
     public Filter getFilter() {
@@ -109,12 +138,14 @@ public class CbArtAdapter extends RecyclerView.Adapter<CbArtAdapter.ArtViewHolde
             @Override
             protected FilterResults performFiltering(CharSequence constraint) {
                 String input = constraint.toString();
+
+
                 if (input.isEmpty()) {
-                    items = OGItems;
+                    itemsCbArt = OGItemsCbArt;
                 } else {
-                    items = OGItems;
+                    itemsCbArt = OGItemsCbArt;
                     ArrayList<CbArt> tempList = new ArrayList<>();
-                    for (CbArt element : items) {
+                    for (CbArt element : itemsCbArt) {
                         if (element.getCharacters().contains(input)) {
                             tempList.add(element);
                         } else {
@@ -124,9 +155,8 @@ public class CbArtAdapter extends RecyclerView.Adapter<CbArtAdapter.ArtViewHolde
 
                         }
                     }
-                    items = tempList;
-                }
 
+                }
                 return null;
             }
 
