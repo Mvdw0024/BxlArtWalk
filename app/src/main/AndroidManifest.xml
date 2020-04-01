@@ -19,13 +19,13 @@
         <!-- Wouter-->
         <!--meta-data android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyCBcmgvOwgUxcjwF95Jkk-sCE3vuaHCAF0"-->
-        <!--Talia-->
+        <!--Talia
         <meta-data android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyCgPELdm4JmAhw-qBy7WLDUR62DNIosFTg">
+            android:value="AIzaSyCgPELdm4JmAhw-qBy7WLDUR62DNIosFTg">-->
         <!--Michael-->
-        <!--meta-data
+        <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyAAUvqHHnJtklELr3_IEQmW3IpykSj33xw"-->
+            android:value="AIzaSyAAUvqHHnJtklELr3_IEQmW3IpykSj33xw">
 
         </meta-data>
 

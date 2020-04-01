@@ -41,7 +41,7 @@ public class ArtViewModel extends AndroidViewModel {
     }
 
     public MutableLiveData<ArrayList<StreetArt>> getStreetArtRoute() {
-        fetchCbArt();
+        fetchStreetArt();
         return streetArtRoute;
     }
 
@@ -148,7 +148,7 @@ public class ArtViewModel extends AndroidViewModel {
                 OkHttpClient client = new OkHttpClient();
 
                 Request request = new Request.Builder()
-                        .url("https://opendata.brussel.be/api/records/1.0/search/?dataset=street-art")
+                        .url("https://opendata.brussel.be/explore/dataset/street-art/api/")
                         .get()
                         .build();
 

@@ -51,6 +51,7 @@ public class MapFragment extends Fragment {
         @Override
         public void onMapReady(GoogleMap googleMap) {
             artViewModel.getCbRouteArt();
+            artViewModel.getStreetArtRoute();
             mMap = googleMap;
             LatLng coordBrussel = new LatLng(50.858712, 4.347446);
             CameraUpdate moveToBrussel = CameraUpdateFactory.newLatLngZoom(coordBrussel, 10);
@@ -69,8 +70,7 @@ public class MapFragment extends Fragment {
             m.setTitle(cbArtMarker.getCharacters());
             m.setSnippet(cbArtMarker.getAuthors());
         }
-        for (StreetArt streetArtMarker : artViewModel.getAllStreetArtFromDataBase()
-        ) {
+        for (StreetArt streetArtMarker : artViewModel.getAllStreetArtFromDataBase()) {
             Marker s = mMap.addMarker(new MarkerOptions()
                     .position(new LatLng(streetArtMarker.getLat(), streetArtMarker.getLng()))
                     .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
