@@ -171,11 +171,11 @@ public class ArtViewModel extends AndroidViewModel {
 
                         final StreetArt curStreetArt = new StreetArt(
                                 jsonId,
-                                (jsonStreetArt.has("adres"))?jsonStreetArt.getString("adres"):"Unknown",
-                                (!jsonStreetArt.has("werknaam") )?"": jsonStreetArt.getString("werknaam"),
-                                (jsonStreetArt.has("naam_van_de_kunstenaar"))?jsonStreetArt.getString("naam_van_de_kunstenaar"):"Unknown",
-                                (jsonStreetArt.has("photo"))?jsonStreetArt.getJSONObject("photo").getString("filename"):"Unknown",
-                                (jsonStreetArt.has("jaar"))?Integer.parseInt(jsonStreetArt.getString("jaar")):0,
+                                (jsonStreetArt.has("naam_van_de_kunstenaar")) ? jsonStreetArt.getString("naam_van_de_kunstenaar") : "Unknown",
+                                (!jsonStreetArt.has("werknaam")) ? "" : jsonStreetArt.getString("werknaam"),
+                                (jsonStreetArt.has("adres")) ? jsonStreetArt.getString("adres") : "Unknown",
+                                (jsonStreetArt.has("photo")) ? jsonStreetArt.getJSONObject("photo").getString("filename") : "Unknown",
+                                (jsonStreetArt.has("annee")) ? Integer.parseInt(jsonStreetArt.getString("annee")) : 0,
                                 jsonStreetArt.getJSONArray("geocoordinates").getDouble(0),
                                 jsonStreetArt.getJSONArray("geocoordinates").getDouble(1)
 

@@ -64,7 +64,6 @@ public class MapFragment extends Fragment {
 
     private void drawMarkers() {
 
-        // for-loop met ROOM-Database
         for (CbArt cbArtMarker : artViewModel.getAllCbArtFromDataBase()) {
             Marker m = mMap.addMarker(new MarkerOptions().position(new LatLng(cbArtMarker.getLat(), cbArtMarker.getLng())));
             m.setTitle(cbArtMarker.getCharacters());
@@ -76,7 +75,7 @@ public class MapFragment extends Fragment {
                     .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
             s.setSnippet(streetArtMarker.getArtists());
             s.setTitle(streetArtMarker.getWorkname());
-            s.setTag("StreetArt");
+
 
         }
 
