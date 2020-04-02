@@ -49,9 +49,9 @@ public class DetailFragment extends Fragment {
 
             if (data.containsKey("passedStreetArt")) {
                 StreetArt streetArt = (StreetArt) data.getSerializable("passedStreetArt");
-//                titleTv.setText(streetArt.getCharacters());
-//                yearTv.setText(streetArt.getYear());
-//                authorTv.setText(streetArt.getAuthors());
+                titleTv.setText(streetArt.getWorkname());
+                yearTv.setText(streetArt.getJaar());
+                authorTv.setText(streetArt.getArtists());
                 //photoIv.setImageView(streetArt.getphotourl());
 
             }

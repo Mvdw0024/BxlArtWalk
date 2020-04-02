@@ -11,6 +11,7 @@ import michael.vdw.bxlartwalk.Models.CbArt;
 
 @Dao
 public interface CbArtDao {
+
     @Insert
     void insertCbArt(CbArt cbArt);
 

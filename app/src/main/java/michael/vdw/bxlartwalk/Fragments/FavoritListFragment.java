@@ -31,6 +31,11 @@ import michael.vdw.bxlartwalk.Utils.CbArtAdapter;
 public class FavoritListFragment extends Fragment {
 
     private CbArtAdapter adapter;
+
+    //nodig voor de tab
+    public static FavoritListFragment newInstance() {
+        return new FavoritListFragment();
+    }
     //search uitschrijven
     private SearchView.OnQueryTextListener searchListener = new SearchView.OnQueryTextListener() {
         //pas filteren na zoeken

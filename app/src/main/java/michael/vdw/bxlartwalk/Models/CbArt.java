@@ -25,7 +25,7 @@ public class CbArt implements Serializable {
     public CbArt() {
     }
 
-    public CbArt(String id, String characters, String authors, String photourl, Double lat, Double lng, int year) {
+    public CbArt(@NonNull String id, String characters, String authors, String photourl, Double lat, Double lng, int year) {
         this.id = id;
         this.characters = characters;
         this.authors = authors;
