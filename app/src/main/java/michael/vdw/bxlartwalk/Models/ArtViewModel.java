@@ -174,7 +174,7 @@ public class ArtViewModel extends AndroidViewModel {
                         final StreetArt curStreetArt = new StreetArt(
                                 jsonId,
                                 (jsonStreetArt.has("naam_van_de_kunstenaar")) ? jsonStreetArt.getString("naam_van_de_kunstenaar") : "Unknown",
-                                (jsonStreetArt.has("name_of_the_work")) ? jsonStreetArt.getString("name_of_the_work"): "",
+                                (jsonStreetArt.has("name_of_the_work")) ? jsonStreetArt.getString("name_of_the_work") : "",
                                 (jsonStreetArt.has("adres")) ? jsonStreetArt.getString("adres") : "Unknown",
                                 (jsonStreetArt.has("photo")) ? jsonStreetArt.getJSONObject("photo").getString("filename") : "Unknown",
                                 (jsonStreetArt.has("annee")) ? Integer.parseInt(jsonStreetArt.getString("annee")) : 0,

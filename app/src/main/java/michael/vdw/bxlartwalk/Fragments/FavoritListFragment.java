@@ -5,6 +5,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -64,7 +65,7 @@ public class FavoritListFragment extends Fragment {
         //opvulling rv
         rvFavorit.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false));
         //adapter, nodig om data om te zetten in iets visueel(in dit geval card)
-        adapter = new CbArtAdapter();
+        adapter = new CbArtAdapter(getActivity());
         rvFavorit.setAdapter(adapter);
 
         //TODO verwijzing naar viewModel, waar staat alle data

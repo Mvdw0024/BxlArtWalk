@@ -12,10 +12,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.FragmentActivity;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import michael.vdw.bxlartwalk.Models.CbArt;
 import michael.vdw.bxlartwalk.Models.StreetArt;
@@ -32,12 +34,9 @@ public class CbArtAdapter extends RecyclerView.Adapter<CbArtAdapter.ArtViewHolde
             public void onClick(View view) {
                 //welke card(rij)?
                 int position = getAdapterPosition();
-
                 Bundle data = new Bundle();
                 data.putSerializable("passedCbArt", itemsCbArt.get(position));
-
                 //navigatie starten
-
                 Navigation.findNavController(view).navigate(R.id.artList_to_detail, data);
             }
         };
@@ -57,9 +56,11 @@ public class CbArtAdapter extends RecyclerView.Adapter<CbArtAdapter.ArtViewHolde
     private ArrayList<StreetArt> itemsStreetArt;
     private ArrayList<StreetArt> OGItemsStreetArt;
 
-    public CbArtAdapter() {
+    public CbArtAdapter(FragmentActivity fragmentActivity) {
+        //CbArt
         itemsCbArt = new ArrayList<>();
         OGItemsCbArt = new ArrayList<>();
+        //streetArt
         itemsStreetArt = new ArrayList<>();
         OGItemsStreetArt = new ArrayList<>();
     }
@@ -78,8 +79,8 @@ public class CbArtAdapter extends RecyclerView.Adapter<CbArtAdapter.ArtViewHolde
     @Override
     public void onBindViewHolder(@NonNull ArtViewHolder holder, int position) {
 
-        Log.d("position", ""+position);
-        Log.d("itemsCbArt", ""+itemsCbArt);
+        Log.d("position", "" + position);
+        Log.d("itemsCbArt", "" + itemsCbArt);
         //TODO: itemsCbArt blijkt een lege array te zijn: [] -> dus index 0 is iets dat niet bestaat, vandaar de IndexOutOfBoundsException error
         CbArt currentCbArt = itemsCbArt.get(position);
         if (currentCbArt.getCharacters() == "") {
@@ -98,9 +99,9 @@ public class CbArtAdapter extends RecyclerView.Adapter<CbArtAdapter.ArtViewHolde
         //        holder.tvYear.setText(currentArt.getYear());
 
         StreetArt currentStreetArt = itemsStreetArt.get(position);
-        if (currentStreetArt.getWorkname() ==""){
+        if (currentStreetArt.getWorkname() == "") {
             holder.tvTitle.setText("Unknown");
-        }else{
+        } else {
             holder.tvTitle.setText(currentStreetArt.getWorkname());
         }
         if (currentStreetArt.getArtists() == "") {
@@ -123,17 +124,22 @@ public class CbArtAdapter extends RecyclerView.Adapter<CbArtAdapter.ArtViewHolde
     public void addCbItems(ArrayList<CbArt> cbArts) {
         itemsCbArt.clear();
         itemsCbArt.addAll(cbArts);
+        OGItemsCbArt = cbArts;
 
+/* hier maak je 2 aparte Arraylists, volgens mij is dit niet correct // M
         OGItemsCbArt.clear();
         OGItemsCbArt.addAll(cbArts);
+        */
     }
 
     public void addStreetItems(ArrayList<StreetArt> streetArts) {
         itemsStreetArt.clear();
         itemsStreetArt.addAll(streetArts);
-
+        OGItemsStreetArt = streetArts;
+/* hier maak je 2 aparte Arraylists, volgens mij is dit niet correct // M
         OGItemsStreetArt.clear();
         OGItemsStreetArt.addAll(streetArts);
+        */
     }
 
 
@@ -142,9 +148,8 @@ public class CbArtAdapter extends RecyclerView.Adapter<CbArtAdapter.ArtViewHolde
 
         return new Filter() {
             @Override
-            protected FilterResults performFiltering(CharSequence constraint) {
-                String input = constraint.toString();
-
+            protected FilterResults performFiltering(CharSequence charSequence) {
+                String input = charSequence.toString();
 
                 if (input.isEmpty()) {
                     itemsCbArt = OGItemsCbArt;
@@ -152,16 +157,15 @@ public class CbArtAdapter extends RecyclerView.Adapter<CbArtAdapter.ArtViewHolde
                     itemsCbArt = OGItemsCbArt;
                     ArrayList<CbArt> tempList = new ArrayList<>();
                     for (CbArt element : itemsCbArt) {
-                        if (element.getCharacters().contains(input)) {
+                        if (element.getCharacters().toLowerCase().contains(input.toLowerCase())) {
                             tempList.add(element);
                         } else {
-                            if (element.getAuthors().contains(input)) {
+                            if (element.getAuthors().toLowerCase().contains(input.toLowerCase())) {
                                 tempList.add(element);
                             }
-
+                            itemsCbArt = tempList;
                         }
                     }
-
                 }
                 return null;
             }

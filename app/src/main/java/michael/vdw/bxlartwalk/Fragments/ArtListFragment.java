@@ -75,7 +75,7 @@ public class ArtListFragment extends Fragment {
         //opvulling rv
         rvCbArt.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false));
         // adapter, nodig om data om te zetten naar iets visueel(hier is dat een card)
-        adapter = new CbArtAdapter();
+        adapter = new CbArtAdapter(getActivity());
         rvCbArt.setAdapter(adapter);
         //verwijzing naar viewModel, waar staat alle data
         ArtViewModel model = new ViewModelProvider(this).get(ArtViewModel.class);

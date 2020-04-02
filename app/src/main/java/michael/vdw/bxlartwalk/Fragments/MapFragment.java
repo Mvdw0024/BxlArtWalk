@@ -73,7 +73,7 @@ public class MapFragment extends Fragment {
             Marker s = mMap.addMarker(new MarkerOptions()
                     .position(new LatLng(streetArtMarker.getLat(), streetArtMarker.getLng()))
                     .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
-            s.setSnippet(streetArtMarker.getArtists());
+            s.setSnippet("Unknown");
             s.setTitle(streetArtMarker.getWorkname());
 
 
