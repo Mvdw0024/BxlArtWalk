@@ -106,7 +106,7 @@ public class ArtViewModel extends AndroidViewModel {
                                 jsonId,
                                 jsonArt.getString("personnage_s"),
                                 jsonArt.getString("auteur_s"),
-                                jsonArt.getJSONObject("photo").getString("filename"),
+                                (jsonArt.has("photo"))?jsonArt.getJSONObject("photo").getString("filename"):"placeholder.image",
                                 jsonArt.getJSONArray("coordonnees_geographiques").getDouble(0),
                                 jsonArt.getJSONArray("coordonnees_geographiques").getDouble(1),
                                 Integer.parseInt(jsonArt.getString("annee"))

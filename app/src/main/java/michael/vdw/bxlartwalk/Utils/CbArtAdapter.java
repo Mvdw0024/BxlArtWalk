@@ -82,34 +82,40 @@ public class CbArtAdapter extends RecyclerView.Adapter<CbArtAdapter.ArtViewHolde
         Log.d("position", "" + position);
         Log.d("itemsCbArt", "" + itemsCbArt);
         //TODO: itemsCbArt blijkt een lege array te zijn: [] -> dus index 0 is iets dat niet bestaat, vandaar de IndexOutOfBoundsException error
-        CbArt currentCbArt = itemsCbArt.get(position);
-        if (currentCbArt.getCharacters() == "") {
-            holder.tvTitle.setText("Unknown");
-        } else {
-            holder.tvTitle.setText(currentCbArt.getCharacters());
-        }
+        if(itemsCbArt.size() > 0 && position < itemsCbArt.size()) {
+            CbArt currentCbArt = itemsCbArt.get(position);
+            if (currentCbArt.getCharacters() == "") {
+                holder.tvTitle.setText("Unknown");
+            } else {
+                holder.tvTitle.setText(currentCbArt.getCharacters());
+            }
 
-        //holder.ivPhoto.setImageIcon(currentArt.getphotoUrl());
-        if (currentCbArt.getAuthors() == "") {
-            holder.tvArtist.setText("Unknown");
-        } else {
-            holder.tvArtist.setText(currentCbArt.getAuthors());
+            //holder.ivPhoto.setImageIcon(currentArt.getphotoUrl());
+            if (currentCbArt.getAuthors() == "") {
+                holder.tvArtist.setText("Unknown");
+            } else {
+                holder.tvArtist.setText(currentCbArt.getAuthors());
+            }
         }
-
         //        holder.tvYear.setText(currentArt.getYear());
 
-        StreetArt currentStreetArt = itemsStreetArt.get(position);
-        if (currentStreetArt.getWorkname() == "") {
-            holder.tvTitle.setText("Unknown");
-        } else {
-            holder.tvTitle.setText(currentStreetArt.getWorkname());
-        }
-        if (currentStreetArt.getArtists() == "") {
-            holder.tvArtist.setText("Unknown");
-        } else {
-            holder.tvArtist.setText(currentStreetArt.getArtists());
-        }
+        StreetArt currentStreetArt;
+        if(itemsCbArt.size() > 0) {
+            if(itemsStreetArt.size() >0 && position >= itemsCbArt.size() ){
+                currentStreetArt = itemsStreetArt.get(position - itemsCbArt.size());
 
+                if (currentStreetArt.getWorkname() == "") {
+                    holder.tvTitle.setText("Unknown");
+                } else {
+                    holder.tvTitle.setText(currentStreetArt.getWorkname());
+                }
+                if (currentStreetArt.getArtists() == "") {
+                    holder.tvArtist.setText("Unknown");
+                } else {
+                    holder.tvArtist.setText(currentStreetArt.getArtists());
+                }
+            }
+        }
 
     }
 
