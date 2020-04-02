@@ -33,6 +33,7 @@ public class ArtViewModel extends AndroidViewModel {
         super(application);
         this.cbRouteArt = new MutableLiveData<>();
         this.streetArtRoute = new MutableLiveData<>();
+
     }
 
     public MutableLiveData<ArrayList<CbArt>> getCbRouteArt() {

@@ -150,11 +150,11 @@ public class CbArtAdapter extends RecyclerView.Adapter<CbArtAdapter.ArtViewHolde
             @Override
             protected FilterResults performFiltering(CharSequence charSequence) {
                 String input = charSequence.toString();
+                itemsCbArt = OGItemsCbArt;
 
                 if (input.isEmpty()) {
                     itemsCbArt = OGItemsCbArt;
                 } else {
-                    itemsCbArt = OGItemsCbArt;
                     ArrayList<CbArt> tempList = new ArrayList<>();
                     for (CbArt element : itemsCbArt) {
                         if (element.getCharacters().toLowerCase().contains(input.toLowerCase())) {
