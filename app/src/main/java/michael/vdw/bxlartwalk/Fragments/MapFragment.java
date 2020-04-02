@@ -50,13 +50,14 @@ public class MapFragment extends Fragment {
     private OnMapReadyCallback onMapReady = new OnMapReadyCallback() {
         @Override
         public void onMapReady(GoogleMap googleMap) {
-            artViewModel.getCbRouteArt();
-            artViewModel.getStreetArtRoute();
+//            artViewModel.getCbRouteArt();
+//            artViewModel.getStreetArtRoute();
             mMap = googleMap;
             LatLng coordBrussel = new LatLng(50.858712, 4.347446);
             CameraUpdate moveToBrussel = CameraUpdateFactory.newLatLngZoom(coordBrussel, 10);
             mMap.animateCamera(moveToBrussel);
 //            mMap.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
+
             drawMarkers();
 
         }
@@ -65,16 +66,18 @@ public class MapFragment extends Fragment {
     private void drawMarkers() {
 
         for (CbArt cbArtMarker : artViewModel.getAllCbArtFromDataBase()) {
-            Marker m = mMap.addMarker(new MarkerOptions().position(new LatLng(cbArtMarker.getLat(), cbArtMarker.getLng())));
+            Marker m = mMap.addMarker(new MarkerOptions()
+                    .position(new LatLng(cbArtMarker.getLat(), cbArtMarker.getLng())));
             m.setTitle(cbArtMarker.getCharacters());
             m.setSnippet(cbArtMarker.getAuthors());
         }
+
         for (StreetArt streetArtMarker : artViewModel.getAllStreetArtFromDataBase()) {
             Marker s = mMap.addMarker(new MarkerOptions()
                     .position(new LatLng(streetArtMarker.getLat(), streetArtMarker.getLng()))
                     .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
-            s.setSnippet("Unknown");
             s.setTitle(streetArtMarker.getWorkname());
+            s.setSnippet(streetArtMarker.getArtists());
 
 
         }
@@ -94,6 +97,7 @@ public class MapFragment extends Fragment {
         mapView = rootView.findViewById(R.id.mapView);
         mapView.onCreate(savedInstanceState);
         mapView.getMapAsync(onMapReady);
+        //todo :uitleggen aan Talia waarvoor volgende lijn dient
         setHasOptionsMenu(true);
 
         artViewModel = new ViewModelProvider(getActivity()).get(ArtViewModel.class);
