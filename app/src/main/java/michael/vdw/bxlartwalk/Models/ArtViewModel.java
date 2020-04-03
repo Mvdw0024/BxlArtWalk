@@ -107,6 +107,7 @@ public class ArtViewModel extends AndroidViewModel {
                                 jsonArt.getString("personnage_s"),
                                 jsonArt.getString("auteur_s"),
                                 (jsonArt.has("photo"))?jsonArt.getJSONObject("photo").getString("filename"):"placeholder.image",
+                                (jsonArt.has("photo"))?jsonArt.getJSONObject("photo").getString("id"):"Unknown",
                                 jsonArt.getJSONArray("coordonnees_geographiques").getDouble(0),
                                 jsonArt.getJSONArray("coordonnees_geographiques").getDouble(1),
                                 Integer.parseInt(jsonArt.getString("annee"))
@@ -175,9 +176,10 @@ public class ArtViewModel extends AndroidViewModel {
                         final StreetArt curStreetArt = new StreetArt(
                                 jsonId,
                                 (jsonStreetArt.has("naam_van_de_kunstenaar")) ? jsonStreetArt.getString("naam_van_de_kunstenaar") : "Unknown",
-                                (jsonStreetArt.has("name_of_the_work")) ? jsonStreetArt.getString("name_of_the_work") : "",
+                                (jsonStreetArt.has("name_of_the_work")) ? jsonStreetArt.getString("name_of_the_work") : "Unknown",
                                 (jsonStreetArt.has("adres")) ? jsonStreetArt.getString("adres") : "Unknown",
                                 (jsonStreetArt.has("photo")) ? jsonStreetArt.getJSONObject("photo").getString("filename") : "Unknown",
+                                (jsonStreetArt.has("photo")) ? jsonStreetArt.getJSONObject("photo").getString("id") : "Unknown",
                                 (jsonStreetArt.has("annee")) ? Integer.parseInt(jsonStreetArt.getString("annee")) : 0,
                                 jsonStreetArt.getJSONArray("geocoordinates").getDouble(0),
                                 jsonStreetArt.getJSONArray("geocoordinates").getDouble(1)

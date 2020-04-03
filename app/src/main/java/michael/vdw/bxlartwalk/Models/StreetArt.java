@@ -15,7 +15,7 @@ public class StreetArt implements Serializable {
     @NonNull
     @PrimaryKey(autoGenerate = false)
     public String id;
-    public String artists, workname, adres, verduidelijking;
+    public String artists, workname, adres, verduidelijking, photoid;
     public int jaar;
     public Double lat, lng;
     public boolean isFavorite;
@@ -24,12 +24,13 @@ public class StreetArt implements Serializable {
     public StreetArt() {
     }
 
-    public StreetArt(@NonNull String id, String artists, String workname, String adres, String verduidelijking, int jaar, Double lat, Double lng) {
+    public StreetArt(@NonNull String id, String artists, String workname, String adres, String verduidelijking, String photoid,  int jaar, Double lat, Double lng) {
         this.id = id;
         this.artists = artists;
         this.workname = workname;
         this.adres = adres;
         this.verduidelijking = verduidelijking;
+        this.photoid = photoid;
         this.jaar = jaar;
         this.lat = lat;
         this.lng = lng;
@@ -47,6 +48,22 @@ public class StreetArt implements Serializable {
 
     public String getArtists() {
         return artists;
+    }
+
+    public String getPhotoid() {
+        return photoid;
+    }
+
+    public void setPhotoid(String photoid) {
+        this.photoid = photoid;
+    }
+
+    public boolean isFavorite() {
+        return isFavorite;
+    }
+
+    public void setFavorite(boolean favorite) {
+        isFavorite = favorite;
     }
 
     public void setArtists(String artists) {

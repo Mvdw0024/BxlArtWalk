@@ -16,6 +16,8 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.squareup.picasso.Picasso;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -96,6 +98,12 @@ public class CbArtAdapter extends RecyclerView.Adapter<CbArtAdapter.ArtViewHolde
             } else {
                 holder.tvArtist.setText(currentCbArt.getAuthors());
             }
+
+            if (currentCbArt.getPhotoid() != "Unknown"){
+                Log.d("photoid", ""+currentCbArt.getPhotoid());
+
+                Picasso.get().load("https://opendata.brussel.be/explore/dataset/striproute0/files/"+currentCbArt.getPhotoid()+"/download").into(holder.ivPhoto);
+            }
         }
         //        holder.tvYear.setText(currentArt.getYear());
 
@@ -107,12 +115,18 @@ public class CbArtAdapter extends RecyclerView.Adapter<CbArtAdapter.ArtViewHolde
                 if (currentStreetArt.getWorkname() == "") {
                     holder.tvTitle.setText("Unknown");
                 } else {
+
                     holder.tvTitle.setText(currentStreetArt.getWorkname());
                 }
                 if (currentStreetArt.getArtists() == "") {
                     holder.tvArtist.setText("Unknown");
                 } else {
                     holder.tvArtist.setText(currentStreetArt.getArtists());
+                }
+
+                if (currentStreetArt.getPhotoid() != "Unkwown") {
+                    Log.d("photoid", ""+currentStreetArt.getPhotoid());
+                    Picasso.get().load("https://opendata.brussel.be/explore/dataset/street-art/files/"+currentStreetArt.getPhotoid()+"/download").into(holder.ivPhoto);
                 }
             }
         }

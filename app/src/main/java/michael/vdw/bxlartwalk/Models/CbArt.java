@@ -16,7 +16,7 @@ public class CbArt implements Serializable {
     @NonNull
     @PrimaryKey(autoGenerate = false)
     public String id;
-    public String characters, authors, photourl;
+    public String characters, authors, photourl, photoid;
 //    public LatLng geocoordinates;
     public Double lat, lng;
     public int year;
@@ -26,11 +26,12 @@ public class CbArt implements Serializable {
     public CbArt() {
     }
 
-    public CbArt(@NonNull String id, String characters, String authors, String photourl, Double lat, Double lng, int year) {
+    public CbArt(@NonNull String id, String characters, String authors, String photourl, String photoid, Double lat, Double lng, int year) {
         this.id = id;
         this.characters = characters;
         this.authors = authors;
         this.photourl = photourl;
+        this.photoid = photoid;
 //        this.geocoordinates = geocoordinates;
         this.lat = lat;
         this.lng = lng;
@@ -49,6 +50,14 @@ public class CbArt implements Serializable {
 
     public boolean isFavorite() {
         return isFavorite;
+    }
+
+    public String getPhotoid() {
+        return photoid;
+    }
+
+    public void setPhotoid(String photoid) {
+        this.photoid = photoid;
     }
 
     public void setFavorite(boolean favorite) {
