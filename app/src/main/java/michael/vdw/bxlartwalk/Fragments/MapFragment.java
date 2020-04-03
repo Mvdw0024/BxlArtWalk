@@ -55,7 +55,7 @@ public class MapFragment extends Fragment {
             mMap = googleMap;
             LatLng coordBrussel = new LatLng(50.858712, 4.347446);
             CameraUpdate moveToBrussel = CameraUpdateFactory.newLatLngZoom(coordBrussel, 12);
-//            mMap.animateCamera(moveToBrussel);
+            mMap.animateCamera(moveToBrussel);
 //            mMap.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
 
             drawMarkers();
@@ -78,8 +78,6 @@ public class MapFragment extends Fragment {
                     .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
             s.setTitle(streetArtMarker.getWorkname());
             s.setSnippet(streetArtMarker.getArtists());
-
-
         }
 
     }
