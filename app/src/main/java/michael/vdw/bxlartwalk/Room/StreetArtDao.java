@@ -24,6 +24,9 @@ public interface StreetArtDao {
     @Query("delete from StreetArt")
     void nukeTable();
 
-    @Query("select*from StreetArt where id like:id")
+    @Query("select * from StreetArt where id like:id")
     StreetArt findById(String id);
+
+    @Query("SELECT * FROM StreetArt WHERE isFavorite LIKE :isFavorite")
+    StreetArt findStreetArtFavorite(boolean isFavorite);
 }

@@ -18,6 +18,7 @@ public class StreetArt implements Serializable {
     public String artists, workname, adres, verduidelijking;
     public int jaar;
     public Double lat, lng;
+    public boolean isFavorite;
 
     @Ignore
     public StreetArt() {
@@ -32,6 +33,7 @@ public class StreetArt implements Serializable {
         this.jaar = jaar;
         this.lat = lat;
         this.lng = lng;
+        this.isFavorite = false;
     }
 
     @NonNull

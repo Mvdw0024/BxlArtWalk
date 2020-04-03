@@ -20,6 +20,7 @@ public class CbArt implements Serializable {
 //    public LatLng geocoordinates;
     public Double lat, lng;
     public int year;
+    public boolean isFavorite;
 
     @Ignore
     public CbArt() {
@@ -34,6 +35,7 @@ public class CbArt implements Serializable {
         this.lat = lat;
         this.lng = lng;
         this.year = year;
+        this.isFavorite = false;
     }
 
     @NonNull
@@ -43,6 +45,14 @@ public class CbArt implements Serializable {
 
     public void setId(@NonNull String id) {
         this.id = id;
+    }
+
+    public boolean isFavorite() {
+        return isFavorite;
+    }
+
+    public void setFavorite(boolean favorite) {
+        isFavorite = favorite;
     }
 
     public String getCharacters() {

@@ -15,7 +15,7 @@ import michael.vdw.bxlartwalk.Models.CbArt;
 import michael.vdw.bxlartwalk.Models.StreetArt;
 import michael.vdw.bxlartwalk.Utils.Converters;
 
-@Database(version = 5, entities = {CbArt.class, StreetArt.class}, exportSchema = false)
+@Database(version = 6, entities = {CbArt.class, StreetArt.class}, exportSchema = false)
 @TypeConverters(Converters.class)
 public abstract class CbArtDataBase extends RoomDatabase {
 

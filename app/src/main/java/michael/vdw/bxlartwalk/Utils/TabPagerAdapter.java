@@ -40,7 +40,7 @@ public class TabPagerAdapter extends FragmentPagerAdapter {
         if (position == 0)
             return "Map";
         if (position == 1)
-            return "List";
-        return "Favorit";
+            return "Overview";
+        return "Favorites";
     }
 }
