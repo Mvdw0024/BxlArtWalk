@@ -58,6 +58,10 @@ public class ArtViewModel extends AndroidViewModel {
         CbArtDataBase.getSharedInstance(getApplication()).cbArtDao().insertCbArt(cbArt);
     }
 
+    public void updateCbArtInDatabase(CbArt cbArt) {
+        CbArtDataBase.getSharedInstance(getApplication()).cbArtDao().updateCbArt(cbArt);
+    }
+
     public void insertStreetArtInDataBase(StreetArt streetArt) {
         CbArtDataBase.getSharedInstance(getApplication()).streetArtDao().insertStreetArt(streetArt);
     }

@@ -24,12 +24,13 @@ import java.util.List;
 import michael.vdw.bxlartwalk.Models.CbArt;
 import michael.vdw.bxlartwalk.Models.StreetArt;
 import michael.vdw.bxlartwalk.R;
+import michael.vdw.bxlartwalk.Room.CbArtDao;
 
 public class CbArtAdapter extends RecyclerView.Adapter<CbArtAdapter.ArtViewHolder> implements Filterable {
 
     class ArtViewHolder extends RecyclerView.ViewHolder {
         final TextView tvTitle, tvArtist;
-        final ImageView ivPhoto;
+        final ImageView ivPhoto, ivArtListFavorite;
 
         final View.OnClickListener detailListener = new View.OnClickListener() {
             @Override
@@ -42,14 +43,15 @@ public class CbArtAdapter extends RecyclerView.Adapter<CbArtAdapter.ArtViewHolde
                 Navigation.findNavController(view).navigate(R.id.artList_to_detail, data);
             }
         };
-        //default constructor(zonder parameter)
 
+        //default constructor(zonder parameter)
         public ArtViewHolder(@NonNull View itemView) {
             super(itemView);
             tvTitle = itemView.findViewById(R.id.tv_artListCart_titleOfTheArt);
             tvArtist = itemView.findViewById(R.id.tv_artListCard_autor);
 //            tvYear = itemView.findViewById(R.id.tv_detail_yearOfTheArt);
             ivPhoto = itemView.findViewById(R.id.iv_artListCard_photo);
+            ivArtListFavorite = itemView.findViewById(R.id.iv_artListCard_favorite);
         }
     }
 
@@ -81,18 +83,27 @@ public class CbArtAdapter extends RecyclerView.Adapter<CbArtAdapter.ArtViewHolde
     @Override
     public void onBindViewHolder(@NonNull ArtViewHolder holder, int position) {
 
-        Log.d("position", "" + position);
-        Log.d("itemsCbArt", "" + itemsCbArt);
-        //TODO: itemsCbArt blijkt een lege array te zijn: [] -> dus index 0 is iets dat niet bestaat, vandaar de IndexOutOfBoundsException error
         if(itemsCbArt.size() > 0 && position < itemsCbArt.size()) {
-            CbArt currentCbArt = itemsCbArt.get(position);
+
+            final CbArt currentCbArt = itemsCbArt.get(position);
+            View.OnClickListener addCbToFavorites = new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Log.d("ckicke", currentCbArt.getCharacters());
+                    Log.d("ckicke", "favorite: "+currentCbArt.isFavorite());
+                    currentCbArt.setFavorite(true);
+                    Log.d("ckicke", "favorite: "+currentCbArt.isFavorite());
+                    // in database opslaan als favorite
+
+                }
+            };
+
             if (currentCbArt.getCharacters() == "") {
                 holder.tvTitle.setText("Unknown");
             } else {
                 holder.tvTitle.setText(currentCbArt.getCharacters());
             }
 
-            //holder.ivPhoto.setImageIcon(currentArt.getphotoUrl());
             if (currentCbArt.getAuthors() == "") {
                 holder.tvArtist.setText("Unknown");
             } else {
@@ -100,16 +111,15 @@ public class CbArtAdapter extends RecyclerView.Adapter<CbArtAdapter.ArtViewHolde
             }
 
             if (currentCbArt.getPhotoid() != "Unknown"){
-                Log.d("photoid", ""+currentCbArt.getPhotoid());
-
                 Picasso.get().load("https://opendata.brussel.be/explore/dataset/striproute0/files/"+currentCbArt.getPhotoid()+"/download").into(holder.ivPhoto);
             }
+
+            holder.ivArtListFavorite.setOnClickListener(addCbToFavorites);
         }
-        //        holder.tvYear.setText(currentArt.getYear());
 
         StreetArt currentStreetArt;
         if(itemsCbArt.size() > 0) {
-            if(itemsStreetArt.size() >0 && position >= itemsCbArt.size() ){
+            if(itemsStreetArt.size() > 0 && position >= itemsCbArt.size() ){
                 currentStreetArt = itemsStreetArt.get(position - itemsCbArt.size());
 
                 if (currentStreetArt.getWorkname() == "") {
@@ -118,6 +128,7 @@ public class CbArtAdapter extends RecyclerView.Adapter<CbArtAdapter.ArtViewHolde
 
                     holder.tvTitle.setText(currentStreetArt.getWorkname());
                 }
+
                 if (currentStreetArt.getArtists() == "") {
                     holder.tvArtist.setText("Unknown");
                 } else {
@@ -125,7 +136,6 @@ public class CbArtAdapter extends RecyclerView.Adapter<CbArtAdapter.ArtViewHolde
                 }
 
                 if (currentStreetArt.getPhotoid() != "Unkwown") {
-                    Log.d("photoid", ""+currentStreetArt.getPhotoid());
                     Picasso.get().load("https://opendata.brussel.be/explore/dataset/street-art/files/"+currentStreetArt.getPhotoid()+"/download").into(holder.ivPhoto);
                 }
             }
