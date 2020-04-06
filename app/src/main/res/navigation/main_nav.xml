@@ -23,5 +23,14 @@
         android:id="@+id/detailFragment"
         android:name="michael.vdw.bxlartwalk.Fragments.DetailFragment"
         android:label="fragment_detail"
-        tools:layout="@layout/fragment_detail" />
+        tools:layout="@layout/fragment_detail" >
+        <argument
+            android:name="passedCbArt"
+            app:argType="michael.vdw.bxlartwalk.Models.CbArt"
+            app:nullable="true" />
+        <argument
+            android:name="passedStreetArt"
+            app:argType="michael.vdw.bxlartwalk.Models.StreetArt"
+            app:nullable="true" />
+    </fragment>
 </navigation>

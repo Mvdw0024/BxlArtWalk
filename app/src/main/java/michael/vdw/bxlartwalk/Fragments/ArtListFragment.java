@@ -1,10 +1,12 @@
 package michael.vdw.bxlartwalk.Fragments;
 
+import android.content.Context;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -32,32 +34,40 @@ import michael.vdw.bxlartwalk.Utils.CbArtAdapter;
 public class ArtListFragment extends Fragment {
 
     private CbArtAdapter adapter;
+    private FragmentActivity myContext;
 
     //nodig voor de tab
     public static ArtListFragment newInstance() {
         return new ArtListFragment();
     }
 
-    //TODO search uitschrijven omvat(OnQueryTextListener, onQueryTextSubmit, onQueryTextChange( bevat adapter dus aanmaken en gebruiken))
-    private SearchView.OnQueryTextListener searchListener = new SearchView.OnQueryTextListener() {
-        //pas filteren na zoeken
-        @Override
-        public boolean onQueryTextSubmit(String query) {
-            return false;
-        }
+//    //TODO search uitschrijven omvat(OnQueryTextListener, onQueryTextSubmit, onQueryTextChange( bevat adapter dus aanmaken en gebruiken))
+//    private SearchView.OnQueryTextListener searchListener = new SearchView.OnQueryTextListener() {
+//        //pas filteren na zoeken
+//        @Override
+//        public boolean onQueryTextSubmit(String query) {
+//            return false;
+//        }
+//
+//        //per letter filteren automatisch
+//        @Override
+//        public boolean onQueryTextChange(String newText) {
+//            adapter.getFilter().filter(newText);
+//            return false;
+//        }
+//    };
 
-        //per letter filteren automatisch
-        @Override
-        public boolean onQueryTextChange(String newText) {
-            adapter.getFilter().filter(newText);
-            return false;
-        }
-    };
 
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        myContext = (FragmentActivity) context;
+    }
 
     public ArtListFragment() {
         // Required empty public constructor
     }
+
 
 
     @Override
@@ -65,6 +75,9 @@ public class ArtListFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_art_list, container, false);
+
+        adapter = new CbArtAdapter(getActivity());
+
 
        //noodzakelijk omp search in te voegen
         setHasOptionsMenu(true);
@@ -74,9 +87,11 @@ public class ArtListFragment extends Fragment {
 
         //opvulling rv
         rvCbArt.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false));
+
         // adapter, nodig om data om te zetten naar iets visueel(hier is dat een card)
         adapter = new CbArtAdapter(getActivity());
         rvCbArt.setAdapter(adapter);
+
         //verwijzing naar viewModel, waar staat alle data
         ArtViewModel model = new ViewModelProvider(this).get(ArtViewModel.class);
 
@@ -103,6 +118,7 @@ public class ArtListFragment extends Fragment {
 
         return rootView;
     }
+
 
     @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
