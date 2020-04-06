@@ -76,7 +76,7 @@ public class MapFragment extends Fragment {
             if (cb != null)
                 data.putSerializable("passedCbArt", cb);
             Toast.makeText(getActivity(), "Comic Book Route", Toast.LENGTH_SHORT).show();
-            if (sa != null)
+            if (sa != null)//
                 data.putSerializable("passedStreetArt", sa);
             Navigation.findNavController(view).navigate(R.id.action_mapFragment_to_detailFragment, data);
             Toast.makeText(getActivity(), "Street Art", Toast.LENGTH_SHORT).show();
