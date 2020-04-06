@@ -182,6 +182,7 @@ public class CbArtAdapter extends RecyclerView.Adapter<CbArtAdapter.ArtViewHolde
                 String input = charSequence.toString();
                 itemsCbArt = OGItemsCbArt;
 
+
                 if (input.isEmpty()) {
                     itemsCbArt = OGItemsCbArt;
                 } else {

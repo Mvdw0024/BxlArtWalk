@@ -5,11 +5,13 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.Navigation;
 
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -34,6 +36,9 @@ import michael.vdw.bxlartwalk.Room.CbArtDataBase;
  */
 public class MapFragment extends Fragment {
 
+    private final LatLng coordBrussel = new LatLng(50.858712, 4.347446);
+    private View view;
+
     //nodig voor de tab
     public static MapFragment newInstance() {
         return new MapFragment();
@@ -53,13 +58,28 @@ public class MapFragment extends Fragment {
 //            artViewModel.getCbRouteArt();
 //            artViewModel.getStreetArtRoute();
             mMap = googleMap;
-            LatLng coordBrussel = new LatLng(50.858712, 4.347446);
             CameraUpdate moveToBrussel = CameraUpdateFactory.newLatLngZoom(coordBrussel, 12);
             mMap.animateCamera(moveToBrussel);
+            mMap.setOnInfoWindowClickListener(infoWindowClickListener);
 //            mMap.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
 
             drawMarkers();
 
+        }
+    };
+    private GoogleMap.OnInfoWindowClickListener infoWindowClickListener = new GoogleMap.OnInfoWindowClickListener() {
+        @Override
+        public void onInfoWindowClick(Marker marker) {
+            Bundle data = new Bundle();
+            CbArt cb = (CbArt) marker.getTag();
+            StreetArt sa = (StreetArt) marker.getTag();
+            if (cb != null)
+                data.putSerializable("passedCbArt", cb);
+            Toast.makeText(getActivity(), "Comic Book Route", Toast.LENGTH_SHORT).show();
+            if (sa != null)
+                data.putSerializable("passedStreetArt", sa);
+            Navigation.findNavController(view).navigate(R.id.action_mapFragment_to_detailFragment, data);
+            Toast.makeText(getActivity(), "Street Art", Toast.LENGTH_SHORT).show();
         }
     };
 
@@ -70,6 +90,7 @@ public class MapFragment extends Fragment {
                     .position(new LatLng(cbArtMarker.getLat(), cbArtMarker.getLng())));
             m.setTitle(cbArtMarker.getCharacters());
             m.setSnippet(cbArtMarker.getAuthors());
+            m.setTag(cbArtMarker);
         }
 
         for (StreetArt streetArtMarker : artViewModel.getAllStreetArtFromDataBase()) {
@@ -78,6 +99,7 @@ public class MapFragment extends Fragment {
                     .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
             s.setTitle(streetArtMarker.getWorkname());
             s.setSnippet(streetArtMarker.getArtists());
+            s.setTag(streetArtMarker);
         }
 
     }

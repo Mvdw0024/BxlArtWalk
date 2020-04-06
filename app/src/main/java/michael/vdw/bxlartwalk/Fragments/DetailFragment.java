@@ -35,7 +35,7 @@ public class DetailFragment extends Fragment {
         TextView yearTv = rootView.findViewById(R.id.tv_detail_yearOfTheArt);
         TextView authorTv =rootView.findViewById(R.id.tv_detail_authorOfTheArt);
 
-        //get argument scherm gaat ergumenten binnen trekken zie main_nav
+        //get argument scherm gaat argumenten binnen trekken zie main_nav
         Bundle data = getArguments();
         if (data != null) {
             if (data.containsKey("passedCbArt")) {
