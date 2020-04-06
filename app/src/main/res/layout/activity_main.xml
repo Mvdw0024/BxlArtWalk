@@ -23,6 +23,7 @@
             android:theme="?attr/actionBarTheme" />
 
         <com.google.android.material.tabs.TabLayout
+            app:fontFamily="@font/sen_bold"
             android:id="@+id/tab_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
