@@ -56,8 +56,8 @@ public class DetailFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_detail, container, false);
-        selectedCbArt = (getArguments() != null) ? (CbArt) getArguments().getSerializable("passArt") : null;
-        selectedStreetArt = (getArguments() != null) ? (StreetArt) getArguments().getSerializable("passArt") : null;
+        selectedCbArt = (getArguments() != null) ? (CbArt) getArguments().getSerializable("passedCbArt") : null;
+        selectedStreetArt = (getArguments() != null) ? (StreetArt) getArguments().getSerializable("passedStreetArt") : null;
 
         titleTv = rootView.findViewById(R.id.tv_detail_titleOfTheArt);
         // photoIv = rootView.findViewById(R.id.iv_detail_photo);

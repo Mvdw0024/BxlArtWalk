@@ -30,6 +30,7 @@ import michael.vdw.bxlartwalk.Models.CbArt;
 import michael.vdw.bxlartwalk.Models.StreetArt;
 import michael.vdw.bxlartwalk.R;
 import michael.vdw.bxlartwalk.Room.CbArtDataBase;
+import michael.vdw.bxlartwalk.Utils.CbArtAdapter;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -51,6 +52,7 @@ public class MapFragment extends Fragment {
     private GoogleMap mMap;
     private FragmentActivity fragmentActivity;
     private ArtViewModel artViewModel;
+    private CbArtAdapter adapter;
 
     private OnMapReadyCallback onMapReady = new OnMapReadyCallback() {
         @Override
@@ -71,15 +73,22 @@ public class MapFragment extends Fragment {
         @Override
         public void onInfoWindowClick(Marker marker) {
             Bundle data = new Bundle();
+            /*int position = getAdapterPosition();*/
             CbArt cb = (CbArt) marker.getTag();
             StreetArt sa = (StreetArt) marker.getTag();
-            if (cb != null)
+            if (cb != null) {
                 data.putSerializable("passedCbArt", cb);
-            Toast.makeText(getActivity(), "Comic Book Route", Toast.LENGTH_SHORT).show();
-            if (sa != null)//
+            } else {
+                Toast.makeText(getActivity(), "Comic Book Route", Toast.LENGTH_SHORT).show();
+            }
+            if (sa != null) {//
                 data.putSerializable("passedStreetArt", sa);
+
+            } else {
+                Toast.makeText(getActivity(), "Street Art", Toast.LENGTH_SHORT).show();
+            }
             Navigation.findNavController(view).navigate(R.id.action_mapFragment_to_detailFragment, data);
-            Toast.makeText(getActivity(), "Street Art", Toast.LENGTH_SHORT).show();
+
         }
     };
 

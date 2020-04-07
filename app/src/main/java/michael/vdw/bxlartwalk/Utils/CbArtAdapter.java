@@ -33,7 +33,7 @@ public class CbArtAdapter extends RecyclerView.Adapter<CbArtAdapter.ArtViewHolde
     class ArtViewHolder extends RecyclerView.ViewHolder {
         final TextView tvTitle, tvArtist;
         final ImageView ivPhoto, ivArtListFavorite;
-        public CardView cardArt;
+        public CardView artCard;
 
         private View.OnClickListener detailListener = new View.OnClickListener() {
             @Override
@@ -41,23 +41,26 @@ public class CbArtAdapter extends RecyclerView.Adapter<CbArtAdapter.ArtViewHolde
                 //welke card(rij)?
                 Log.d("detailTest", "watIkMaarWil");
                 int position = getAdapterPosition();
+                CbArt cbToPass = itemsCbArt.get(position);
+                StreetArt saToPass = itemsStreetArt.get(position);
                 Bundle data = new Bundle();
-                data.putSerializable("passedCbArt", itemsCbArt.get(position));
+                data.putSerializable("passedCbArt", cbToPass);
+                data.putSerializable("passedStreetArt", saToPass);
                 //navigatie starten
                 Navigation.findNavController(view).navigate(R.id.artList_to_detail, data);
             }
         };
 
         //default constructor(zonder parameter)
-         ArtViewHolder(@NonNull View itemView) {
+        ArtViewHolder(@NonNull View itemView) {
             super(itemView);
             tvTitle = itemView.findViewById(R.id.tv_artListCart_titleOfTheArt);
             tvArtist = itemView.findViewById(R.id.tv_artListCard_autor);
 //            tvYear = itemView.findViewById(R.id.tv_detail_yearOfTheArt);
             ivPhoto = itemView.findViewById(R.id.iv_artListCard_photo);
             ivArtListFavorite = itemView.findViewById(R.id.iv_artListCard_favorite);
-            cardArt = itemView.findViewById(R.id.cardArt);
-            cardArt.setOnClickListener(detailListener);
+            artCard = itemView.findViewById(R.id.cardArt);
+            artCard.setOnClickListener(detailListener);
         }
     }
 
@@ -89,16 +92,16 @@ public class CbArtAdapter extends RecyclerView.Adapter<CbArtAdapter.ArtViewHolde
     @Override
     public void onBindViewHolder(@NonNull ArtViewHolder holder, int position) {
 
-        if(itemsCbArt.size() > 0 && position < itemsCbArt.size()) {
+        if (itemsCbArt.size() > 0 && position < itemsCbArt.size()) {
 
             final CbArt currentCbArt = itemsCbArt.get(position);
             View.OnClickListener addCbToFavorites = new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Log.d("ckicke", currentCbArt.getCharacters());
-                    Log.d("ckicke", "favorite: "+currentCbArt.isFavorite());
+                    Log.d("ckicke", "favorite: " + currentCbArt.isFavorite());
                     currentCbArt.setFavorite(true);
-                    Log.d("ckicke", "favorite: "+currentCbArt.isFavorite());
+                    Log.d("ckicke", "favorite: " + currentCbArt.isFavorite());
                     // in database opslaan als favorite
 
                 }
@@ -128,16 +131,16 @@ public class CbArtAdapter extends RecyclerView.Adapter<CbArtAdapter.ArtViewHolde
                 holder.tvArtist.setText(currentCbArt.getAuthors());
             }
 
-            if (currentCbArt.getPhotoid() != "Unknown"){
-                Picasso.get().load("https://opendata.brussel.be/explore/dataset/striproute0/files/"+currentCbArt.getPhotoid()+"/download").into(holder.ivPhoto);
+            if (currentCbArt.getPhotoid() != "Unknown") {
+                Picasso.get().load("https://opendata.brussel.be/explore/dataset/striproute0/files/" + currentCbArt.getPhotoid() + "/download").into(holder.ivPhoto);
             }
 
             holder.ivArtListFavorite.setOnClickListener(addCbToFavorites);
         }
 
         StreetArt currentStreetArt;
-        if(itemsCbArt.size() > 0) {
-            if(itemsStreetArt.size() > 0 && position >= itemsCbArt.size() ){
+        if (itemsCbArt.size() > 0) {
+            if (itemsStreetArt.size() > 0 && position >= itemsCbArt.size()) {
                 currentStreetArt = itemsStreetArt.get(position - itemsCbArt.size());
 
                 if (currentStreetArt.getWorkname() == "") {
@@ -154,7 +157,7 @@ public class CbArtAdapter extends RecyclerView.Adapter<CbArtAdapter.ArtViewHolde
                 }
 
                 if (currentStreetArt.getPhotoid() != "Unkwown") {
-                    Picasso.get().load("https://opendata.brussel.be/explore/dataset/street-art/files/"+currentStreetArt.getPhotoid()+"/download").into(holder.ivPhoto);
+                    Picasso.get().load("https://opendata.brussel.be/explore/dataset/street-art/files/" + currentStreetArt.getPhotoid() + "/download").into(holder.ivPhoto);
                 }
             }
         }
