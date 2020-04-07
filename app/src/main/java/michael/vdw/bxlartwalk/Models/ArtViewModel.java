@@ -24,16 +24,19 @@ import okhttp3.Response;
 
 public class ArtViewModel extends AndroidViewModel {
     private Context context;
-    private CbArtDataBase cbArtDataBase;
+//    private CbArtDataBase cbArtDataBase;
     private MutableLiveData<ArrayList<CbArt>> cbRouteArt;
     private MutableLiveData<ArrayList<StreetArt>> streetArtRoute;
+    private MutableLiveData<ArrayList<CbArt>> cbArtFavorites;
+    private MutableLiveData<ArrayList<StreetArt>> streetArtFavorites;
     public ExecutorService threadExecutor = Executors.newFixedThreadPool(4);
 
     public ArtViewModel(Application application) {
         super(application);
         this.cbRouteArt = new MutableLiveData<>();
         this.streetArtRoute = new MutableLiveData<>();
-
+        this.cbArtFavorites = new MutableLiveData<>();
+        this.streetArtFavorites = new MutableLiveData<>();
     }
 
     public MutableLiveData<ArrayList<CbArt>> getCbRouteArt() {
@@ -52,6 +55,12 @@ public class ArtViewModel extends AndroidViewModel {
 
     public List<CbArt> getAllCbArtFromDataBase() {
         return CbArtDataBase.getSharedInstance(getApplication()).cbArtDao().getAllCb();
+    }
+
+    public MutableLiveData<ArrayList<CbArt>> fetchAllFavoriteCbArtFromDatabase() {
+        ArrayList<CbArt> cbArtFavorites = (ArrayList<CbArt>) CbArtDataBase.getSharedInstance(getApplication()).cbArtDao().findCbFavorite(true);
+        this.cbArtFavorites.postValue(cbArtFavorites);
+        return this.cbArtFavorites;
     }
 
     public void insertCbArtInDataBase(CbArt cbArt) {

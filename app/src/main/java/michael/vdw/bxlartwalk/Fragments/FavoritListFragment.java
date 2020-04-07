@@ -76,14 +76,16 @@ public class FavoritListFragment extends Fragment {
         //TODO verwijzing naar viewModel, waar staat alle data
         //enkel data dat op de lijst gezed dient te worden
 
-//        ArtViewModel model = new ViewModelProvider(this).get(ArtViewModel.class);
-//        model.getCbRouteArt().observe(getViewLifecycleOwner(), new Observer<ArrayList<CbArt>>() {
-//            @Override
-//            public void onChanged(ArrayList<CbArt> cbArts) {
-//                adapter.addItems(cbArts);
-//                adapter.notifyDataSetChanged();
-//            }
-//        });
+        ArtViewModel model = new ViewModelProvider(this).get(ArtViewModel.class);
+        model.fetchAllFavoriteCbArtFromDatabase().observe(getViewLifecycleOwner(), new Observer<ArrayList<CbArt>>(){
+
+            @Override
+            public void onChanged(ArrayList<CbArt> cbArts) {
+//                adapter.addFavoriteCbItems();
+                adapter.notifyDataSetChanged();
+            }
+        });
+
         return rootView;
 
   }

@@ -25,6 +25,7 @@ import java.util.ArrayList;
 import michael.vdw.bxlartwalk.Models.CbArt;
 import michael.vdw.bxlartwalk.Models.StreetArt;
 import michael.vdw.bxlartwalk.R;
+import michael.vdw.bxlartwalk.Room.CbArtDataBase;
 
 public class CbArtAdapter extends RecyclerView.Adapter<CbArtAdapter.ArtViewHolder> implements Filterable {
 
@@ -63,7 +64,6 @@ public class CbArtAdapter extends RecyclerView.Adapter<CbArtAdapter.ArtViewHolde
         }
     }
 
-
     FragmentActivity mContext;
     private ArrayList<CbArt> itemsCbArt;
     private ArrayList<CbArt> OGItemsCbArt;
@@ -98,17 +98,16 @@ public class CbArtAdapter extends RecyclerView.Adapter<CbArtAdapter.ArtViewHolde
         if (itemsCbArt.size() > 0 && position < itemsCbArt.size()) {
 
             final CbArt currentCbArt = itemsCbArt.get(position);
+
+            // Add favorite on click on icon: change value of isFavorite field, then update the database
             View.OnClickListener addCbToFavorites = new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Log.d("ckicke", currentCbArt.getCharacters());
-                    Log.d("ckicke", "favorite: " + currentCbArt.isFavorite());
                     currentCbArt.setFavorite(true);
-                    Log.d("ckicke", "favorite: " + currentCbArt.isFavorite());
-                    // in database opslaan als favorite
-
+                    CbArtDataBase.getSharedInstance(v.getContext()).cbArtDao().updateCbArt(currentCbArt);
                 }
             };
+
 //            final View.OnClickListener detailListener = new View.OnClickListener() {
 //                @Override
 //                public void onClick(View view) {
