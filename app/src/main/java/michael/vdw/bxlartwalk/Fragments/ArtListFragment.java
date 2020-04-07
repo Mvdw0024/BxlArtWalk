@@ -76,7 +76,7 @@ public class ArtListFragment extends Fragment {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_art_list, container, false);
 
-        adapter = new CbArtAdapter(getActivity());
+        adapter = new CbArtAdapter(myContext);
 
 
        //noodzakelijk omp search in te voegen

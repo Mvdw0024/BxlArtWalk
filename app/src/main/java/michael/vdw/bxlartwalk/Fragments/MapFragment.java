@@ -74,8 +74,14 @@ public class MapFragment extends Fragment {
         public void onInfoWindowClick(Marker marker) {
             Bundle data = new Bundle();
             /*int position = getAdapterPosition();*/
-            CbArt cb = (CbArt) marker.getTag();
-            StreetArt sa = (StreetArt) marker.getTag();
+            CbArt cb = null;
+            StreetArt sa = null;
+
+            if(marker.getTag() instanceof  CbArt)
+                 cb = (CbArt) marker.getTag();
+            else
+                 sa = (StreetArt) marker.getTag();
+
             if (cb != null) {
                 data.putSerializable("passedCbArt", cb);
             } else {

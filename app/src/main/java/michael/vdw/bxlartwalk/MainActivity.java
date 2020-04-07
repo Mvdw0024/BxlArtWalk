@@ -38,9 +38,8 @@ public class MainActivity extends AppCompatActivity {
             viewPager.setAdapter(adapter);
             tabLayout.setupWithViewPager(viewPager);
 
-        appBarConfiguration = new AppBarConfiguration.Builder(R.id.mapFragment).build();
+        appBarConfiguration = new AppBarConfiguration.Builder(R.id.mapFragment, R.id.artListFragment2).build();
         navController = Navigation.findNavController(this, R.id.nav_host);
-
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
 
     }

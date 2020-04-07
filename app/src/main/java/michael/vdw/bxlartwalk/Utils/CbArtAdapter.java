@@ -13,27 +13,25 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.FragmentActivity;
+import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import michael.vdw.bxlartwalk.Models.CbArt;
 import michael.vdw.bxlartwalk.Models.StreetArt;
 import michael.vdw.bxlartwalk.R;
-import michael.vdw.bxlartwalk.Room.CbArtDao;
 
 public class CbArtAdapter extends RecyclerView.Adapter<CbArtAdapter.ArtViewHolder> implements Filterable {
 
     class ArtViewHolder extends RecyclerView.ViewHolder {
         final TextView tvTitle, tvArtist;
         final ImageView ivPhoto, ivArtListFavorite;
-        public CardView artCard;
+        final CardView artCard;
 
         private View.OnClickListener detailListener = new View.OnClickListener() {
             @Override
@@ -44,10 +42,11 @@ public class CbArtAdapter extends RecyclerView.Adapter<CbArtAdapter.ArtViewHolde
                 CbArt cbToPass = itemsCbArt.get(position);
                 StreetArt saToPass = itemsStreetArt.get(position);
                 Bundle data = new Bundle();
-                data.putSerializable("passedCbArt", cbToPass);
-                data.putSerializable("passedStreetArt", saToPass);
+                //data.putSerializable("passedCbArt", cbToPass);
+                //data.putSerializable("passedStreetArt", saToPass);
                 //navigatie starten
-                Navigation.findNavController(view).navigate(R.id.artList_to_detail, data);
+                Navigation.findNavController(itemView).navigate(R.id.artlist_to_detail, data);
+
             }
         };
 
@@ -64,6 +63,8 @@ public class CbArtAdapter extends RecyclerView.Adapter<CbArtAdapter.ArtViewHolde
         }
     }
 
+
+    FragmentActivity mContext;
     private ArrayList<CbArt> itemsCbArt;
     private ArrayList<CbArt> OGItemsCbArt;
     private ArrayList<StreetArt> itemsStreetArt;
@@ -76,6 +77,8 @@ public class CbArtAdapter extends RecyclerView.Adapter<CbArtAdapter.ArtViewHolde
         //streetArt
         itemsStreetArt = new ArrayList<>();
         OGItemsStreetArt = new ArrayList<>();
+
+        mContext = fragmentActivity;
     }
 
 

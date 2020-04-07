@@ -26,7 +26,7 @@
         android:label="fragment_art_list"
         tools:layout="@layout/fragment_art_list" >
         <action
-            android:id="@+id/artList_to_detail"
+            android:id="@+id/artlist_to_detail"
             app:destination="@id/detailFragment" />
     </fragment>
     <fragment
