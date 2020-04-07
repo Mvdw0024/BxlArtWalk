@@ -46,7 +46,7 @@ public class CbArtAdapter extends RecyclerView.Adapter<CbArtAdapter.ArtViewHolde
                 //data.putSerializable("passedCbArt", cbToPass);
                 //data.putSerializable("passedStreetArt", saToPass);
                 //navigatie starten
-                Navigation.findNavController(itemView).navigate(R.id.artlist_to_detail, data);
+                Navigation.findNavController(view).navigate(R.id.artlist_to_detail, data);
 
             }
         };
@@ -60,7 +60,7 @@ public class CbArtAdapter extends RecyclerView.Adapter<CbArtAdapter.ArtViewHolde
             ivPhoto = itemView.findViewById(R.id.iv_artListCard_photo);
             ivArtListFavorite = itemView.findViewById(R.id.iv_artListCard_favorite);
             artCard = itemView.findViewById(R.id.cardArt);
-            artCard.setOnClickListener(detailListener);
+//            artCard.setOnClickListener(detailListener);
         }
     }
 
@@ -69,6 +69,8 @@ public class CbArtAdapter extends RecyclerView.Adapter<CbArtAdapter.ArtViewHolde
     private ArrayList<CbArt> OGItemsCbArt;
     private ArrayList<StreetArt> itemsStreetArt;
     private ArrayList<StreetArt> OGItemsStreetArt;
+    private ArrayList<CbArt> cbFavorites;
+
 
     public CbArtAdapter(FragmentActivity fragmentActivity) {
         //CbArt
@@ -77,6 +79,8 @@ public class CbArtAdapter extends RecyclerView.Adapter<CbArtAdapter.ArtViewHolde
         //streetArt
         itemsStreetArt = new ArrayList<>();
         OGItemsStreetArt = new ArrayList<>();
+        //favorites
+        cbFavorites = new ArrayList<>();
 
         mContext = fragmentActivity;
     }
@@ -107,19 +111,6 @@ public class CbArtAdapter extends RecyclerView.Adapter<CbArtAdapter.ArtViewHolde
                     CbArtDataBase.getSharedInstance(v.getContext()).cbArtDao().updateCbArt(currentCbArt);
                 }
             };
-
-//            final View.OnClickListener detailListener = new View.OnClickListener() {
-//                @Override
-//                public void onClick(View view) {
-//                    //welke card(rij)?
-//                    Log.d("detailTest", "watIkMaarWil");
-////                    int position = getAdapterPosition();
-//                    Bundle data = new Bundle();
-//                    data.putSerializable("passedCbArt", currentCbArt);
-//                    //navigatie starten
-//                    Navigation.findNavController(view).navigate(R.id.artList_to_detail, data);
-//                }
-//            };
 
             if (currentCbArt.getCharacters() == "") {
                 holder.tvTitle.setText("Unknown");
@@ -178,21 +169,12 @@ public class CbArtAdapter extends RecyclerView.Adapter<CbArtAdapter.ArtViewHolde
         itemsCbArt.clear();
         itemsCbArt.addAll(cbArts);
         OGItemsCbArt = cbArts;
-
-/* hier maak je 2 aparte Arraylists, volgens mij is dit niet correct // M
-        OGItemsCbArt.clear();
-        OGItemsCbArt.addAll(cbArts);
-        */
     }
 
     public void addStreetItems(ArrayList<StreetArt> streetArts) {
         itemsStreetArt.clear();
         itemsStreetArt.addAll(streetArts);
         OGItemsStreetArt = streetArts;
-/* hier maak je 2 aparte Arraylists, volgens mij is dit niet correct // M
-        OGItemsStreetArt.clear();
-        OGItemsStreetArt.addAll(streetArts);
-        */
     }
 
 
