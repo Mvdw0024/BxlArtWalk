@@ -12,6 +12,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.FragmentActivity;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
@@ -31,11 +33,13 @@ public class CbArtAdapter extends RecyclerView.Adapter<CbArtAdapter.ArtViewHolde
     class ArtViewHolder extends RecyclerView.ViewHolder {
         final TextView tvTitle, tvArtist;
         final ImageView ivPhoto, ivArtListFavorite;
+        public CardView cardArt;
 
-        final View.OnClickListener detailListener = new View.OnClickListener() {
+        private View.OnClickListener detailListener = new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 //welke card(rij)?
+                Log.d("detailTest", "watIkMaarWil");
                 int position = getAdapterPosition();
                 Bundle data = new Bundle();
                 data.putSerializable("passedCbArt", itemsCbArt.get(position));
@@ -45,13 +49,15 @@ public class CbArtAdapter extends RecyclerView.Adapter<CbArtAdapter.ArtViewHolde
         };
 
         //default constructor(zonder parameter)
-        public ArtViewHolder(@NonNull View itemView) {
+         ArtViewHolder(@NonNull View itemView) {
             super(itemView);
             tvTitle = itemView.findViewById(R.id.tv_artListCart_titleOfTheArt);
             tvArtist = itemView.findViewById(R.id.tv_artListCard_autor);
 //            tvYear = itemView.findViewById(R.id.tv_detail_yearOfTheArt);
             ivPhoto = itemView.findViewById(R.id.iv_artListCard_photo);
             ivArtListFavorite = itemView.findViewById(R.id.iv_artListCard_favorite);
+            cardArt = itemView.findViewById(R.id.cardArt);
+            cardArt.setOnClickListener(detailListener);
         }
     }
 
@@ -97,6 +103,18 @@ public class CbArtAdapter extends RecyclerView.Adapter<CbArtAdapter.ArtViewHolde
 
                 }
             };
+//            final View.OnClickListener detailListener = new View.OnClickListener() {
+//                @Override
+//                public void onClick(View view) {
+//                    //welke card(rij)?
+//                    Log.d("detailTest", "watIkMaarWil");
+////                    int position = getAdapterPosition();
+//                    Bundle data = new Bundle();
+//                    data.putSerializable("passedCbArt", currentCbArt);
+//                    //navigatie starten
+//                    Navigation.findNavController(view).navigate(R.id.artList_to_detail, data);
+//                }
+//            };
 
             if (currentCbArt.getCharacters() == "") {
                 holder.tvTitle.setText("Unknown");
