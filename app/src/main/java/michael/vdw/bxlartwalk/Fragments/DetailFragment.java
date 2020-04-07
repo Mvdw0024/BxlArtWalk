@@ -31,10 +31,10 @@ import michael.vdw.bxlartwalk.R;
  * A simple {@link Fragment} subclass.
  */
 public class DetailFragment extends Fragment {
-   private TextView titleTv, authorTv, yearTv;
-   private ImageView photoIv;
-   private CbArt selectedCbArt;
-   private StreetArt selectedStreetArt;
+    private TextView titleTv, authorTv, yearTv;
+    private ImageView photoIv;
+    private CbArt selectedCbArt;
+    private StreetArt selectedStreetArt;
     private FragmentActivity myContext;
 
     public DetailFragment() {
@@ -44,45 +44,45 @@ public class DetailFragment extends Fragment {
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
-        myContext= (FragmentActivity) context;
+        myContext = (FragmentActivity) context;
     }
-public static DetailFragment newInstance(){
+
+    public static DetailFragment newInstance() {
         return new DetailFragment();
-}
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_detail, container, false);
-        selectedCbArt = (getArguments() != null)?(CbArt)getArguments().getSerializable("passArt"):null;
-        selectedStreetArt= (getArguments() != null)?(StreetArt) getArguments().getSerializable("passArt"):null;
+        selectedCbArt = (getArguments() != null) ? (CbArt) getArguments().getSerializable("passArt") : null;
+        selectedStreetArt = (getArguments() != null) ? (StreetArt) getArguments().getSerializable("passArt") : null;
 
         titleTv = rootView.findViewById(R.id.tv_detail_titleOfTheArt);
-       // photoIv = rootView.findViewById(R.id.iv_detail_photo);
-         yearTv = rootView.findViewById(R.id.tv_detail_yearOfTheArt);
-         authorTv =rootView.findViewById(R.id.tv_detail_authorOfTheArt);
+        // photoIv = rootView.findViewById(R.id.iv_detail_photo);
+        yearTv = rootView.findViewById(R.id.tv_detail_yearOfTheArt);
+        authorTv = rootView.findViewById(R.id.tv_detail_authorOfTheArt);
 
 
         //get argument scherm gaat argumenten binnen trekken zie main_nav
-        Bundle data = getArguments();
-        if (data != null) {
-            if (data.containsKey("passedCbArt")) {
-                CbArt cbArt = (CbArt) data.getSerializable("passedCbArt");
-                titleTv.setText(cbArt.getCharacters());
-                yearTv.setText(cbArt.getYear());
-                authorTv.setText(cbArt.getAuthors());
-                //photoIv.setImageView(cbArt.getphotourl());
+        //Bundle data = getArguments();
+        if (selectedCbArt != null) {
+//            if (selectedCbArt.containsKey("passedCbArt")) {
+//                CbArt cbArt = (CbArt) selectedCbArt.getSerializable("passedCbArt");
+            titleTv.setText(selectedCbArt.getCharacters());
+            yearTv.setText(selectedCbArt.getYear());
+            authorTv.setText(selectedCbArt.getAuthors());
+            //photoIv.setImageView(cbArt.getphotourl());
 
-            }
+        }
 
-            if (data.containsKey("passedStreetArt")) {
-                StreetArt streetArt = (StreetArt) data.getSerializable("passedStreetArt");
-                titleTv.setText(streetArt.getWorkname());
-                yearTv.setText(streetArt.getJaar());
-                authorTv.setText(streetArt.getArtists());
-                //photoIv.setImageView(streetArt.getphotourl());
-
-            }
+        if (selectedStreetArt != null) {
+            //StreetArt streetArt = (StreetArt) selectedStreetArt.getSerializable("passedStreetArt");
+            titleTv.setText(selectedStreetArt.getWorkname());
+            yearTv.setText(selectedStreetArt.getJaar());
+            authorTv.setText(selectedStreetArt.getArtists());
+            //photoIv.setImageView(streetArt.getphotourl());
 
         }
 
