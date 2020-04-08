@@ -101,7 +101,6 @@ public class ArtListFragment extends Fragment {
             //TODO: Deze onChanged wordt nooit uitgevoerd in de code -> dus wordt de itemsCbArt in de adapter niet opgevuld (dus error)
             // Reden zit in de ArtViewModel, in de fetchCbArt(), momenteel kom ik in de catch terecht, dus de MutableLiveData wordt nooit geupdatet, dus geen onChanged()
             public void onChanged(ArrayList<CbArt> cbArts) {
-                Log.d("onChangedArtList", "yop!");
                 adapter.addCbItems(cbArts);
                 adapter.notifyDataSetChanged();
             }
@@ -110,7 +109,6 @@ public class ArtListFragment extends Fragment {
         model.getStreetArtRoute().observe(getViewLifecycleOwner(), new Observer<ArrayList<StreetArt>>() {
             @Override
             public void onChanged(ArrayList<StreetArt> streetArts) {
-                Log.d("onChangedStreetList", "streetyop!");
                 adapter.addStreetItems(streetArts);
                 adapter.notifyDataSetChanged();
             }

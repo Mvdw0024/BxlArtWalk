@@ -1,6 +1,7 @@
 package michael.vdw.bxlartwalk.Utils;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -59,15 +60,15 @@ public class FavoritesAdapter extends RecyclerView.Adapter<FavoritesAdapter.Favo
     @Override
     public void onBindViewHolder(@NonNull FavoriteViewHolder holder, int position) {
 
-        if (cbFavorites.size() > 0 && position < cbFavorites.size()) {
+//        if (cbFavorites.size() > 0 && position < cbFavorites.size()) {
 
             final CbArt currentFavoriteCbArt = cbFavorites.get(position);
             String title =
-                (currentFavoriteCbArt.getCharacters() == "") ?
+                (currentFavoriteCbArt.getCharacters() != "") ?
                 currentFavoriteCbArt.getCharacters() :
                 "Unknown";
             String author =
-                (currentFavoriteCbArt.getAuthors() == "") ?
+                (currentFavoriteCbArt.getAuthors() != "") ?
                 currentFavoriteCbArt.getAuthors() :
                 "Unknown";
 
@@ -78,16 +79,22 @@ public class FavoritesAdapter extends RecyclerView.Adapter<FavoritesAdapter.Favo
                 Picasso.get().load("https://opendata.brussel.be/explore/dataset/striproute0/files/" + currentFavoriteCbArt.getPhotoid() + "/download").into(holder.ivPhoto);
             }
 
-        }
+//        }
 
     }
 
     @Override
     public int getItemCount() {
+        Log.d("checktest", "items in getItemCount from FavAdapter: " + cbFavorites.size());
         return cbFavorites.size() + streetArtFavorites.size();
     }
 
-    public void addCbFavorites(ArrayList<CbArt> cbFavorites) {
-        cbFavorites.addAll(cbFavorites);
+    public void addCbFavorites(List<CbArt> cbFavoritesToAdd) {
+
+        if(cbFavoritesToAdd != null){
+            cbFavorites.clear();
+            cbFavorites.addAll(cbFavoritesToAdd);
+        }
+
     }
 }

@@ -5,6 +5,7 @@ import android.content.Context;
 import android.util.Log;
 
 import androidx.lifecycle.AndroidViewModel;
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import org.json.JSONArray;
@@ -27,7 +28,7 @@ public class ArtViewModel extends AndroidViewModel {
 //    private CbArtDataBase cbArtDataBase;
     private MutableLiveData<ArrayList<CbArt>> cbRouteArt;
     private MutableLiveData<ArrayList<StreetArt>> streetArtRoute;
-    private MutableLiveData<ArrayList<CbArt>> cbArtFavorites;
+    private LiveData<List<CbArt>> cbArtFavorites;
     private MutableLiveData<ArrayList<StreetArt>> streetArtFavorites;
     public ExecutorService threadExecutor = Executors.newFixedThreadPool(4);
 
@@ -57,11 +58,10 @@ public class ArtViewModel extends AndroidViewModel {
         return CbArtDataBase.getSharedInstance(getApplication()).cbArtDao().getAllCb();
     }
 
-    public MutableLiveData<ArrayList<CbArt>> fetchAllFavoriteCbArtFromDatabase() {
-        ArrayList<CbArt> cbArtFavoritesFromDatabase = (ArrayList<CbArt>) CbArtDataBase.getSharedInstance(getApplication()).cbArtDao().findCbFavorite(1);
-        Log.d("check", "# returned art from DB in fetchAllFavorite: "+cbArtFavoritesFromDatabase.size());
-        this.cbArtFavorites.postValue(cbArtFavoritesFromDatabase);
-        return this.cbArtFavorites;
+    public LiveData<List<CbArt>> fetchAllFavoriteCbArtFromDatabase() {
+        LiveData<List<CbArt>> cbArtFavoritesFromDatabase = CbArtDataBase.getSharedInstance(getApplication()).cbArtDao().findCbFavorite(1);
+        cbArtFavorites = cbArtFavoritesFromDatabase;
+        return cbArtFavorites;
     }
 
     public void insertCbArtInDataBase(CbArt cbArt) {

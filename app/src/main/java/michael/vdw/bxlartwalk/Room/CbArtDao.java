@@ -1,5 +1,7 @@
 package michael.vdw.bxlartwalk.Room;
 
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.Query;
@@ -28,5 +30,5 @@ public interface CbArtDao {
     CbArt findById(String id);
 
     @Query("SELECT * FROM CbArt WHERE isFavorite LIKE :isFavorite")
-    List<CbArt> findCbFavorite(int isFavorite);
+    LiveData<List<CbArt>> findCbFavorite(int isFavorite);
 }

@@ -19,6 +19,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import michael.vdw.bxlartwalk.Models.ArtViewModel;
 import michael.vdw.bxlartwalk.Models.CbArt;
@@ -71,20 +72,15 @@ public class FavoritListFragment extends Fragment {
         adapter = new FavoritesAdapter();
         rvFavorit.setAdapter(adapter);
 
-        //TODO verwijzing naar viewModel, waar staat alle data
-        //enkel data dat op de lijst gezed dient te worden
-
         ArtViewModel model = new ViewModelProvider(this).get(ArtViewModel.class);
-        ArrayList<CbArt> demoAllArt = (ArrayList<CbArt>) model.fetchAllFavoriteCbArtFromDatabase().getValue();
-            Log.d("check", "# returned from method: "+demoAllArt);
-
-        model.fetchAllFavoriteCbArtFromDatabase().observe(getViewLifecycleOwner(), new Observer<ArrayList<CbArt>>(){
+        model.fetchAllFavoriteCbArtFromDatabase().observe(getViewLifecycleOwner(), new Observer<List<CbArt>>(){
 
             @Override
-            public void onChanged(ArrayList<CbArt> cbFavorites) {
+            public void onChanged(List<CbArt> cbFavorites) {
                 adapter.addCbFavorites(cbFavorites);
                 adapter.notifyDataSetChanged();
             }
+
         });
 
         return rootView;
