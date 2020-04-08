@@ -28,5 +28,5 @@ public interface CbArtDao {
     CbArt findById(String id);
 
     @Query("SELECT * FROM CbArt WHERE isFavorite LIKE :isFavorite")
-    List<CbArt> findCbFavorite(boolean isFavorite);
+    List<CbArt> findCbFavorite(int isFavorite);
 }

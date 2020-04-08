@@ -58,8 +58,9 @@ public class ArtViewModel extends AndroidViewModel {
     }
 
     public MutableLiveData<ArrayList<CbArt>> fetchAllFavoriteCbArtFromDatabase() {
-        ArrayList<CbArt> cbArtFavorites = (ArrayList<CbArt>) CbArtDataBase.getSharedInstance(getApplication()).cbArtDao().findCbFavorite(true);
-        this.cbArtFavorites.postValue(cbArtFavorites);
+        ArrayList<CbArt> cbArtFavoritesFromDatabase = (ArrayList<CbArt>) CbArtDataBase.getSharedInstance(getApplication()).cbArtDao().findCbFavorite(1);
+        Log.d("check", "# returned art from DB in fetchAllFavorite: "+cbArtFavoritesFromDatabase.size());
+        this.cbArtFavorites.postValue(cbArtFavoritesFromDatabase);
         return this.cbArtFavorites;
     }
 

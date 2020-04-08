@@ -10,10 +10,13 @@ import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.FragmentActivity;
+import androidx.lifecycle.ViewModel;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
@@ -22,6 +25,7 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
+import michael.vdw.bxlartwalk.Models.ArtViewModel;
 import michael.vdw.bxlartwalk.Models.CbArt;
 import michael.vdw.bxlartwalk.Models.StreetArt;
 import michael.vdw.bxlartwalk.R;
@@ -99,6 +103,8 @@ public class CbArtAdapter extends RecyclerView.Adapter<CbArtAdapter.ArtViewHolde
     @Override
     public void onBindViewHolder(@NonNull ArtViewHolder holder, int position) {
 
+        final ArtViewModel model = new ViewModelProvider(this.mContext).get(ArtViewModel.class);
+
         if (itemsCbArt.size() > 0 && position < itemsCbArt.size()) {
 
             final CbArt currentCbArt = itemsCbArt.get(position);
@@ -107,8 +113,9 @@ public class CbArtAdapter extends RecyclerView.Adapter<CbArtAdapter.ArtViewHolde
             View.OnClickListener addCbToFavorites = new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    currentCbArt.setFavorite(true);
-                    CbArtDataBase.getSharedInstance(v.getContext()).cbArtDao().updateCbArt(currentCbArt);
+                    currentCbArt.setFavorite(1);
+                    model.updateCbArtInDatabase(currentCbArt);
+                    Toast.makeText(v.getContext(), "'" + currentCbArt.getCharacters() + "' was added to favorites.", Toast.LENGTH_LONG).show();
                 }
             };
 

@@ -11,6 +11,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -59,14 +60,12 @@ public class FavoritListFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+
         View rootView = inflater.inflate(R.layout.fragment_favorit_list, container, false);
 //        //noodzakelijk omp search in te voegen
 //        setHasOptionsMenu(true);
 
-        //verwijzing UI
         RecyclerView rvFavorit = rootView.findViewById(R.id.rv_favorit);
-        //opvulling rv
         rvFavorit.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false));
         //adapter, nodig om data om te zetten in iets visueel(in dit geval card)
         adapter = new FavoritesAdapter();
@@ -76,6 +75,9 @@ public class FavoritListFragment extends Fragment {
         //enkel data dat op de lijst gezed dient te worden
 
         ArtViewModel model = new ViewModelProvider(this).get(ArtViewModel.class);
+        ArrayList<CbArt> demoAllArt = (ArrayList<CbArt>) model.fetchAllFavoriteCbArtFromDatabase().getValue();
+            Log.d("check", "# returned from method: "+demoAllArt);
+
         model.fetchAllFavoriteCbArtFromDatabase().observe(getViewLifecycleOwner(), new Observer<ArrayList<CbArt>>(){
 
             @Override

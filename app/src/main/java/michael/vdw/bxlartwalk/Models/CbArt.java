@@ -19,8 +19,7 @@ public class CbArt implements Serializable {
     public String characters, authors, photourl, photoid;
 //    public LatLng geocoordinates;
     public Double lat, lng;
-    public int year;
-    public boolean isFavorite;
+    public int year, isFavorite;
 
     @Ignore
     public CbArt() {
@@ -36,7 +35,7 @@ public class CbArt implements Serializable {
         this.lat = lat;
         this.lng = lng;
         this.year = year;
-        this.isFavorite = false;
+        this.isFavorite = 0;
     }
 
     @NonNull
@@ -48,7 +47,7 @@ public class CbArt implements Serializable {
         this.id = id;
     }
 
-    public boolean isFavorite() {
+    public int isFavorite() {
         return isFavorite;
     }
 
@@ -60,7 +59,7 @@ public class CbArt implements Serializable {
         this.photoid = photoid;
     }
 
-    public void setFavorite(boolean favorite) {
+    public void setFavorite(int favorite) {
         isFavorite = favorite;
     }
 
