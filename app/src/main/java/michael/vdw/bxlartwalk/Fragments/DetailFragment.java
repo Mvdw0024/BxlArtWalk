@@ -17,6 +17,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TabHost;
 import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
@@ -36,6 +37,8 @@ public class DetailFragment extends Fragment {
     private CbArt selectedCbArt;
     private StreetArt selectedStreetArt;
     private FragmentActivity myContext;
+
+
 
     public DetailFragment() {
         // Required empty public constructor
