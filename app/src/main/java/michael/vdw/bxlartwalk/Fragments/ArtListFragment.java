@@ -16,6 +16,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -127,6 +128,22 @@ public class ArtListFragment extends Fragment {
 
 //        SearchView searchView = (SearchView) menu.findItem(R.id.mi_search).getActionView();
 //        searchView.setOnQueryTextListener(searchListener);
+        MenuItem item = menu.findItem(R.id.mi_search);
+        SearchView sv = (SearchView) item.getActionView();
+
+        sv.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                adapter.getFilter().filter(query);
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                adapter.getFilter().filter(newText);
+                return true;
+            }
+        });
 
         super.onCreateOptionsMenu(menu, inflater);
     }

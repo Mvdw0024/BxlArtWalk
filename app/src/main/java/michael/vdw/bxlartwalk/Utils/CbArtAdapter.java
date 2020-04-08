@@ -187,29 +187,43 @@ public class CbArtAdapter extends RecyclerView.Adapter<CbArtAdapter.ArtViewHolde
 
     @Override
     public Filter getFilter() {
-
         return new Filter() {
             @Override
             protected FilterResults performFiltering(CharSequence charSequence) {
                 String input = charSequence.toString();
                 itemsCbArt = OGItemsCbArt;
+                itemsStreetArt = OGItemsStreetArt;
 
 
-                if (input.isEmpty()) {
-                    itemsCbArt = OGItemsCbArt;
-                } else {
-                    ArrayList<CbArt> tempList = new ArrayList<>();
-                    for (CbArt element : itemsCbArt) {
-                        if (element.getCharacters().toLowerCase().contains(input.toLowerCase())) {
-                            tempList.add(element);
+                    if(!input.isEmpty()){
+
+                    ArrayList<CbArt> tempListCbArt = new ArrayList<>();
+                    ArrayList<StreetArt> tempListStreetArt = new ArrayList<>();
+
+
+                    for (CbArt elementCbArt : itemsCbArt) {
+                        if (elementCbArt.getCharacters().toLowerCase().contains(input.toLowerCase())) {
+                            tempListCbArt.add(elementCbArt);
                         } else {
-                            if (element.getAuthors().toLowerCase().contains(input.toLowerCase())) {
-                                tempList.add(element);
+                            if (elementCbArt.getAuthors().toLowerCase().contains(input.toLowerCase())) {
+                                tempListCbArt.add(elementCbArt);
                             }
-                            itemsCbArt = tempList;
+                        }
+                        itemsCbArt = tempListCbArt;
+                    }
+
+                    for (StreetArt elementStreetArt :itemsStreetArt){
+                            if (elementStreetArt.getWorkname().toLowerCase().contains(input.toLowerCase())) {
+                                tempListStreetArt.add(elementStreetArt);
+                            } else {
+                                if (elementStreetArt.getArtists().toLowerCase().contains(input.toLowerCase())) {
+                                    tempListStreetArt.add(elementStreetArt);
+                                }
+                            }
+                            itemsStreetArt = tempListStreetArt;
                         }
                     }
-                }
+
                 return null;
             }
 
