@@ -1,18 +1,23 @@
 package michael.vdw.bxlartwalk.Fragments;
 
+import android.Manifest;
+import android.content.Context;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
-import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -23,20 +28,19 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-import java.util.ArrayList;
-
 import michael.vdw.bxlartwalk.Models.ArtViewModel;
 import michael.vdw.bxlartwalk.Models.CbArt;
 import michael.vdw.bxlartwalk.Models.StreetArt;
 import michael.vdw.bxlartwalk.R;
-import michael.vdw.bxlartwalk.Room.CbArtDataBase;
 import michael.vdw.bxlartwalk.Utils.CbArtAdapter;
+
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public class MapFragment extends Fragment {
 
+    private static final int PERMISSION_ID = 132023;
     private final LatLng coordBrussel = new LatLng(50.858712, 4.347446);
     private View view;
 
@@ -53,6 +57,7 @@ public class MapFragment extends Fragment {
     private FragmentActivity fragmentActivity;
     private ArtViewModel artViewModel;
     private CbArtAdapter adapter;
+    private FusedLocationProviderClient fusedLocationClient;
 
     private OnMapReadyCallback onMapReady = new OnMapReadyCallback() {
         @Override
@@ -64,7 +69,7 @@ public class MapFragment extends Fragment {
             mMap.animateCamera(moveToBrussel);
             mMap.setOnInfoWindowClickListener(infoWindowClickListener);
 //            mMap.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
-
+            drawUserMarker();
             drawMarkers();
 
         }
@@ -77,23 +82,24 @@ public class MapFragment extends Fragment {
             CbArt cb = null;
             StreetArt sa = null;
 
-            if(marker.getTag() instanceof  CbArt)
-                 cb = (CbArt) marker.getTag();
+            if (marker.getTag() instanceof CbArt)
+                cb = (CbArt) marker.getTag();
             else
-                 sa = (StreetArt) marker.getTag();
+                sa = (StreetArt) marker.getTag();
 
             if (cb != null) {
                 data.putSerializable("passedCbArt", cb);
+                Navigation.findNavController(mapView).navigate(R.id.action_mapFragment_to_detailFragment, data);
             } else {
                 Toast.makeText(getActivity(), "Comic Book Route", Toast.LENGTH_SHORT).show();
             }
             if (sa != null) {//
                 data.putSerializable("passedStreetArt", sa);
-
+                Navigation.findNavController(mapView).navigate(R.id.action_mapFragment_to_detailFragment, data);
             } else {
                 Toast.makeText(getActivity(), "Street Art", Toast.LENGTH_SHORT).show();
             }
-            Navigation.findNavController(view).navigate(R.id.action_mapFragment_to_detailFragment, data);
+
 
         }
     };
@@ -132,23 +138,56 @@ public class MapFragment extends Fragment {
         mapView = rootView.findViewById(R.id.mapView);
         mapView.onCreate(savedInstanceState);
         mapView.getMapAsync(onMapReady);
-        //todo :uitleggen aan Talia waarvoor volgende lijn dient
         setHasOptionsMenu(true);
-
         artViewModel = new ViewModelProvider(getActivity()).get(ArtViewModel.class);
-        /* TODO: aanpassen voor ArtRoute
-        //voorbeeld uit demo:
 
-        iv = rootView.findViewById(R.id.iv_icon);
-        tv = rootView.findViewById(R.id.tv_joke);
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(fragmentActivity);
 
-        artViewModel.threadExecutor(getActivity(), new Observer<Art>() {
-        /*    @Override
-            public void onChanged(RandomJoke randomJoke) {
-                Picasso.get().load(randomJoke.getImageUrl()).into(iv);
-                tv.setText(randomJoke.getJokeText());
-         */
         return rootView;
+    }
+
+    private void drawUserMarker() {
+        //TODO: moet aangevuld worden; M
+/*        if fusedLocationClient.getLastLocation()
+                .addOnSuccessListener(this, new OnSuccessListener<Location>() {
+                    @Override
+                    public void onSuccess(Location location) {
+                        // Got last known location. In some rare situations this can be null.
+                        if (location != null) {
+                            // Logic to handle location object
+                            Location userLoc = location;
+                            LatLng userLocGeo = new LatLng(userLoc.getLatitude(), userLoc.getLongitude());
+                            MarkerOptions m = new MarkerOptions().position(userLocGeo).title("You are here");
+                            mMap.addMarker(m);
+
+                        } else {
+                            Toast.makeText(getActivity(), "User Location Unknown", Toast.LENGTH_LONG).show();
+                        }*/
+        Toast.makeText(getActivity(), "User Location Unknown", Toast.LENGTH_LONG).show();
+
+    }
+
+    private boolean checkPermissions() {
+        if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED &&
+                ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+            return true;
+        }
+        return false;
+    }
+
+    private void requestPermissions() {
+        ActivityCompat.requestPermissions(
+                getActivity(),
+                new String[]{Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION},
+                PERMISSION_ID
+        );
+    }
+
+    @Override
+
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        fragmentActivity = (FragmentActivity) context;
     }
 
     @Override
