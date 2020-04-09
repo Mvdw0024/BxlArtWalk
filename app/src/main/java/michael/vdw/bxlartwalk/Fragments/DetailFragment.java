@@ -44,6 +44,12 @@ public class DetailFragment extends Fragment {
         // Required empty public constructor
     }
 
+    public static DetailFragment newInstance(Bundle data) {
+        DetailFragment df = new DetailFragment();
+        df.setArguments(data);
+        return df;
+    }
+
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
@@ -69,12 +75,12 @@ public class DetailFragment extends Fragment {
 
 
         //get argument scherm gaat argumenten binnen trekken zie main_nav
-        //Bundle data = getArguments();
+        Bundle data = getArguments();
         if (selectedCbArt != null) {
 //            if (selectedCbArt.containsKey("passedCbArt")) {
 //                CbArt cbArt = (CbArt) selectedCbArt.getSerializable("passedCbArt");
             titleTv.setText(selectedCbArt.getCharacters());
-            yearTv.setText(selectedCbArt.getYear());
+            yearTv.setText(""+selectedCbArt.getYear());
             authorTv.setText(selectedCbArt.getAuthors());
             //photoIv.setImageView(cbArt.getphotourl());
 

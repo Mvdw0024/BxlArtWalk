@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main_nav"
     app:startDestination="@id/mapFragment">
-
     <fragment
         android:id="@+id/mapFragment"
         android:name="michael.vdw.bxlartwalk.Fragments.MapFragment"
@@ -21,10 +20,9 @@
             app:argType="michael.vdw.bxlartwalk.Models.StreetArt" />
     </fragment>
     <fragment
-        android:id="@+id/artListFragment2"
+        android:id="@+id/artListFragment"
         android:name="michael.vdw.bxlartwalk.Fragments.ArtListFragment"
-        android:label="fragment_art_list"
-        tools:layout="@layout/fragment_art_list" >
+        tools:layout="@layout/fragment_art_list">
         <action
             android:id="@+id/artlist_to_detail"
             app:destination="@id/detailFragment" />

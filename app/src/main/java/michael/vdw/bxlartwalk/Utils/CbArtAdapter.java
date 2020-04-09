@@ -23,6 +23,7 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
+import michael.vdw.bxlartwalk.Fragments.DetailFragment;
 import michael.vdw.bxlartwalk.Models.ArtViewModel;
 import michael.vdw.bxlartwalk.Models.CbArt;
 import michael.vdw.bxlartwalk.Models.StreetArt;
@@ -44,10 +45,16 @@ public class CbArtAdapter extends RecyclerView.Adapter<CbArtAdapter.ArtViewHolde
                 CbArt cbToPass = itemsCbArt.get(position);
                 StreetArt saToPass = itemsStreetArt.get(position);
                 Bundle data = new Bundle();
-                //data.putSerializable("passedCbArt", cbToPass);
+                data.putSerializable("passedCbArt", cbToPass);
                 //data.putSerializable("passedStreetArt", saToPass);
                 //navigatie starten
-                Navigation.findNavController(view).navigate(R.id.artlist_to_detail, data);
+               // Navigation.findNavController(view).navigate(R.id.artlist_to_detail, data);
+
+                DetailFragment details = DetailFragment.newInstance(data);
+                mContext.getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.container_fragment, details)
+                        .addToBackStack("BACK")
+                        .commit();
 
             }
         };
@@ -61,7 +68,7 @@ public class CbArtAdapter extends RecyclerView.Adapter<CbArtAdapter.ArtViewHolde
             ivPhoto = itemView.findViewById(R.id.iv_artListCard_photo);
             ivArtListFavorite = itemView.findViewById(R.id.iv_artListCard_favorite);
             artCard = itemView.findViewById(R.id.cardArt);
-//            artCard.setOnClickListener(detailListener);
+            artCard.setOnClickListener(detailListener);
         }
     }
 

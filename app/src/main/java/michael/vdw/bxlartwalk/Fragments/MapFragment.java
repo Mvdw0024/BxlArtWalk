@@ -40,7 +40,7 @@ import michael.vdw.bxlartwalk.Utils.CbArtAdapter;
  */
 public class MapFragment extends Fragment {
 
-    private static final int PERMISSION_ID = 132023;
+    private static final int PERMISSION_ID = 1320;
     private final LatLng coordBrussel = new LatLng(50.858712, 4.347446);
     private View view;
 
@@ -72,6 +72,7 @@ public class MapFragment extends Fragment {
             drawUserMarker();
             drawMarkers();
 
+
         }
     };
     private GoogleMap.OnInfoWindowClickListener infoWindowClickListener = new GoogleMap.OnInfoWindowClickListener() {
@@ -89,13 +90,21 @@ public class MapFragment extends Fragment {
 
             if (cb != null) {
                 data.putSerializable("passedCbArt", cb);
-                Navigation.findNavController(mapView).navigate(R.id.action_mapFragment_to_detailFragment, data);
+                DetailFragment details = DetailFragment.newInstance(data);
+                fragmentActivity.getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.container_fragment, details)
+                        .addToBackStack("BACK")
+                        .commit();
             } else {
                 Toast.makeText(getActivity(), "Comic Book Route", Toast.LENGTH_SHORT).show();
             }
             if (sa != null) {//
                 data.putSerializable("passedStreetArt", sa);
-                Navigation.findNavController(mapView).navigate(R.id.action_mapFragment_to_detailFragment, data);
+                DetailFragment details = DetailFragment.newInstance(data);
+                fragmentActivity.getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.container_fragment, details)
+                        .addToBackStack("BACK")
+                        .commit();
             } else {
                 Toast.makeText(getActivity(), "Street Art", Toast.LENGTH_SHORT).show();
             }
@@ -142,11 +151,14 @@ public class MapFragment extends Fragment {
         artViewModel = new ViewModelProvider(getActivity()).get(ArtViewModel.class);
 
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(fragmentActivity);
+        if(checkPermissions())
+            drawUserMarker();
 
         return rootView;
     }
 
     private void drawUserMarker() {
+        mMap.setMyLocationEnabled(true);
         //TODO: moet aangevuld worden; M
 /*        if fusedLocationClient.getLastLocation()
                 .addOnSuccessListener(this, new OnSuccessListener<Location>() {
@@ -168,19 +180,23 @@ public class MapFragment extends Fragment {
     }
 
     private boolean checkPermissions() {
-        if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED &&
-                ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+        if (ActivityCompat.checkSelfPermission(fragmentActivity, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED ||
+                ActivityCompat.checkSelfPermission(fragmentActivity, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
             return true;
         }
+        String[] permissions = {Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION};
+        requestPermissions(permissions, PERMISSION_ID);
         return false;
     }
 
-    private void requestPermissions() {
-        ActivityCompat.requestPermissions(
-                getActivity(),
-                new String[]{Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION},
-                PERMISSION_ID
-        );
+
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if(requestCode == PERMISSION_ID && grantResults[0] == PackageManager.PERMISSION_GRANTED){
+            drawUserMarker();
+        }
     }
 
     @Override
