@@ -5,11 +5,14 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
+import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.squareup.picasso.Picasso;
@@ -21,14 +24,14 @@ import michael.vdw.bxlartwalk.Models.CbArt;
 import michael.vdw.bxlartwalk.Models.StreetArt;
 import michael.vdw.bxlartwalk.R;
 
-public class FavoritesAdapter extends RecyclerView.Adapter<FavoritesAdapter.FavoriteViewHolder> {
+public class FavoritesAdapter extends RecyclerView.Adapter<FavoritesAdapter.FavoriteViewHolder> implements Filterable {
 
     class FavoriteViewHolder extends RecyclerView.ViewHolder {
 
         final TextView tvTitle, tvArtist;
         final ImageView ivPhoto, ivDeleteFavorite;
         final CardView favoriteCard;
-
+// todo OnClickListener detailistener
         FavoriteViewHolder(View favoriteView){
             super(favoriteView);
             tvTitle          = favoriteView.findViewById(R.id.tv_favoritListCard_titleOfArt);
@@ -39,14 +42,20 @@ public class FavoritesAdapter extends RecyclerView.Adapter<FavoritesAdapter.Favo
         }
 
     }
+FragmentActivity mContext;
+    private  ArrayList<CbArt>     cbFavorites;
+    private  ArrayList<CbArt>     OGCbFavorites;
+    private ArrayList<StreetArt> streetArtFavorites;
+    private ArrayList<StreetArt> OGStreetArtFavorites;
+    //private Context context;
 
-    private final List<CbArt>     cbFavorites;
-    private final List<StreetArt> streetArtFavorites;
-    private Context context;
-
-    public FavoritesAdapter(){
+    public FavoritesAdapter(FragmentActivity fragmentActivity){
         this.cbFavorites        = new ArrayList<>();
+        this.OGCbFavorites = new ArrayList<>();
         this.streetArtFavorites = new ArrayList<>();
+        this.OGStreetArtFavorites = new ArrayList<>();
+
+        mContext = fragmentActivity;
     }
 
     @NonNull
@@ -97,4 +106,53 @@ public class FavoritesAdapter extends RecyclerView.Adapter<FavoritesAdapter.Favo
         }
 
     }
+    @Override
+    public Filter getFilter() {
+        return new Filter() {
+            @Override
+            protected FilterResults performFiltering(CharSequence charSequence) {
+                String input = charSequence.toString();
+
+                cbFavorites = OGCbFavorites;
+                streetArtFavorites = OGStreetArtFavorites;
+
+                if(!input.isEmpty()){
+
+                    ArrayList<CbArt> tempListCbArt = new ArrayList<>();
+                    ArrayList<StreetArt> tempListStreetArt = new ArrayList<>();
+
+
+                    for (CbArt elementCbArt : cbFavorites) {
+                        if (elementCbArt.getCharacters().toLowerCase().contains(input.toLowerCase())) {
+                            tempListCbArt.add(elementCbArt);
+                        } else {
+                            if (elementCbArt.getAuthors().toLowerCase().contains(input.toLowerCase())) {
+                                tempListCbArt.add(elementCbArt);
+                            }
+                        }
+                        cbFavorites = tempListCbArt;
+                    }
+
+                    for (StreetArt elementStreetArt :streetArtFavorites){
+                        if (elementStreetArt.getWorkname().toLowerCase().contains(input.toLowerCase())) {
+                            tempListStreetArt.add(elementStreetArt);
+                        } else {
+                            if (elementStreetArt.getArtists().toLowerCase().contains(input.toLowerCase())) {
+                                tempListStreetArt.add(elementStreetArt);
+                            }
+                        }
+                        streetArtFavorites = tempListStreetArt;
+                    }
+                }
+
+                return null;
+            }
+
+            @Override
+            protected void publishResults(CharSequence constraint, FilterResults results) {
+                notifyDataSetChanged();
+            }
+        };
+    }
+
 }
