@@ -2,27 +2,18 @@ package michael.vdw.bxlartwalk.Fragments;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 
-import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.TabHost;
-import android.widget.TextView;
-
-import com.squareup.picasso.Picasso;
-
-import michael.vdw.bxlartwalk.Models.ArtViewModel;
 import michael.vdw.bxlartwalk.Models.CbArt;
 import michael.vdw.bxlartwalk.Models.StreetArt;
 import michael.vdw.bxlartwalk.R;
@@ -91,7 +82,7 @@ public class DetailFragment extends Fragment {
         if (selectedStreetArt != null) {
             //StreetArt streetArt = (StreetArt) selectedStreetArt.getSerializable("passedStreetArt");
             titleTv.setText(selectedStreetArt.getWorkname());
-            yearTv.setText(selectedStreetArt.getJaar());
+            yearTv.setText("" + selectedStreetArt.getJaar());
             authorTv.setText(selectedStreetArt.getArtists());
             Picasso.get().load("https://opendata.brussel.be/explore/dataset/striproute0/files/" + selectedStreetArt.getPhotoid() + "/download").into(photoIv);
         }

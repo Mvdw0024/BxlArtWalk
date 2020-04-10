@@ -70,8 +70,9 @@ public class MapFragment extends Fragment {
             mMap.animateCamera(moveToBrussel);
             mMap.setOnInfoWindowClickListener(infoWindowClickListener);
 //            mMap.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
-            drawUserMarker();
             drawMarkers();
+            if (checkPermissions())
+                drawUserMarker();
 
 
         }
@@ -150,8 +151,7 @@ public class MapFragment extends Fragment {
         artViewModel = new ViewModelProvider(getActivity()).get(ArtViewModel.class);
 
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(fragmentActivity);
-        if (checkPermissions())
-            drawUserMarker();
+
 
         return rootView;
     }
@@ -172,7 +172,6 @@ public class MapFragment extends Fragment {
                                 .position(userLocGeo)
                                 .title("You are here");
                         mMap.addMarker(m);
-                        Toast.makeText(getActivity(), "You are here", Toast.LENGTH_LONG).show();
                     }
                 }
             });
@@ -198,9 +197,15 @@ public class MapFragment extends Fragment {
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
                                            @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if (requestCode == PERMISSION_ID && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-            drawUserMarker();
-            mMap.setMyLocationEnabled(true);
+        switch (requestCode) {
+            case PERMISSION_ID:
+                if (requestCode == PERMISSION_ID && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    drawUserMarker();
+                    mMap.setMyLocationEnabled(true);
+                }
+                break;
+
+
         }
     }
 
