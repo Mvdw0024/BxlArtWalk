@@ -171,6 +171,7 @@ public class MapFragment extends Fragment {
                                 .position(userLocGeo)
                                 .title("You are here");
                         mMap.addMarker(m);
+                        Toast.makeText(getActivity(), "You are here", Toast.LENGTH_LONG).show();
                     }
                 }
             });
