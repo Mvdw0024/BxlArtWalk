@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -169,6 +168,7 @@ public class MapFragment extends Fragment {
                         Location userLoc = location;
                         LatLng userLocGeo = new LatLng(userLoc.getLatitude(), userLoc.getLongitude());
                         MarkerOptions m = new MarkerOptions().icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN))
+                                // fromResource(R.drawable.person_pin_foreground))
                                 .position(userLocGeo)
                                 .title("You are here");
                         mMap.addMarker(m);
