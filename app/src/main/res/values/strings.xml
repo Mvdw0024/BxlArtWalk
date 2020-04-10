@@ -6,4 +6,5 @@
     <string name="pref_swi_title_alphabetical">Alphabetical</string>
     <string name="pref_group_title_search">Search</string>
     <string name="empty_favorites_list">No favorites added yet</string>
+    <string name="userlocation">User location unknown</string>
 </resources>

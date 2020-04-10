@@ -3,6 +3,7 @@ package michael.vdw.bxlartwalk.Fragments;
 import android.Manifest;
 import android.content.Context;
 import android.content.pm.PackageManager;
+import android.location.Location;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,7 +15,6 @@ import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.navigation.Navigation;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
@@ -27,6 +27,8 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 
 import michael.vdw.bxlartwalk.Models.ArtViewModel;
 import michael.vdw.bxlartwalk.Models.CbArt;
@@ -62,8 +64,6 @@ public class MapFragment extends Fragment {
     private OnMapReadyCallback onMapReady = new OnMapReadyCallback() {
         @Override
         public void onMapReady(GoogleMap googleMap) {
-//            artViewModel.getCbRouteArt();
-//            artViewModel.getStreetArtRoute();
             mMap = googleMap;
             CameraUpdate moveToBrussel = CameraUpdateFactory.newLatLngZoom(coordBrussel, 12);
             mMap.animateCamera(moveToBrussel);
@@ -98,7 +98,7 @@ public class MapFragment extends Fragment {
             } else {
                 Toast.makeText(getActivity(), "Comic Book Route", Toast.LENGTH_SHORT).show();
             }
-            if (sa != null) {//
+            if (sa != null) {
                 data.putSerializable("passedStreetArt", sa);
                 DetailFragment details = DetailFragment.newInstance(data);
                 fragmentActivity.getSupportFragmentManager().beginTransaction()
@@ -108,7 +108,6 @@ public class MapFragment extends Fragment {
             } else {
                 Toast.makeText(getActivity(), "Street Art", Toast.LENGTH_SHORT).show();
             }
-
 
         }
     };
@@ -138,7 +137,6 @@ public class MapFragment extends Fragment {
         // Required empty public constructor
     }
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -151,33 +149,37 @@ public class MapFragment extends Fragment {
         artViewModel = new ViewModelProvider(getActivity()).get(ArtViewModel.class);
 
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(fragmentActivity);
-        if(checkPermissions())
+        if (checkPermissions())
             drawUserMarker();
 
         return rootView;
     }
 
     private void drawUserMarker() {
-        mMap.setMyLocationEnabled(true);
         //TODO: moet aangevuld worden; M
-/*        if fusedLocationClient.getLastLocation()
-                .addOnSuccessListener(this, new OnSuccessListener<Location>() {
-                    @Override
-                    public void onSuccess(Location location) {
-                        // Got last known location. In some rare situations this can be null.
-                        if (location != null) {
-                            // Logic to handle location object
-                            Location userLoc = location;
-                            LatLng userLocGeo = new LatLng(userLoc.getLatitude(), userLoc.getLongitude());
-                            MarkerOptions m = new MarkerOptions().position(userLocGeo).title("You are here");
-                            mMap.addMarker(m);
+//        mMap.setMyLocationEnabled(true); << geeft NullPointerException
 
-                        } else {
-                            Toast.makeText(getActivity(), "User Location Unknown", Toast.LENGTH_LONG).show();
-                        }*/
-        Toast.makeText(getActivity(), "User Location Unknown", Toast.LENGTH_LONG).show();
+        if (checkPermissions()) {
+            Task<Location> locationTask = fusedLocationClient.getLastLocation();
+            locationTask.addOnSuccessListener(new OnSuccessListener<Location>() {
+                @Override
+                public void onSuccess(Location location) {
+                    if (location != null) {
+                        Location userLoc = location;
+                        LatLng userLocGeo = new LatLng(userLoc.getLatitude(), userLoc.getLongitude());
+                        MarkerOptions m = new MarkerOptions().icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN))
+                                .position(userLocGeo)
+                                .title("You are here");
+                        mMap.addMarker(m);
+                    }
+                }
+            });
+        }
+        Toast.makeText(getActivity(), (R.string.userlocation), Toast.LENGTH_LONG).show();
 
     }
+
+    ;
 
     private boolean checkPermissions() {
         if (ActivityCompat.checkSelfPermission(fragmentActivity, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED ||
@@ -190,12 +192,13 @@ public class MapFragment extends Fragment {
     }
 
 
-
     @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
+                                           @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if(requestCode == PERMISSION_ID && grantResults[0] == PackageManager.PERMISSION_GRANTED){
+        if (requestCode == PERMISSION_ID && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
             drawUserMarker();
+            mMap.setMyLocationEnabled(true);
         }
     }
 
