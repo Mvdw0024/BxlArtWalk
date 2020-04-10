@@ -142,28 +142,38 @@ public class CbArtAdapter extends RecyclerView.Adapter<CbArtAdapter.ArtViewHolde
             holder.ivArtListFavorite.setOnClickListener(addCbToFavorites);
         }
 
-        StreetArt currentStreetArt;
-        if (itemsCbArt.size() > 0) {
-            if (itemsStreetArt.size() > 0 && position >= itemsCbArt.size()) {
-                currentStreetArt = itemsStreetArt.get(position - itemsCbArt.size());
+        if (itemsStreetArt.size() > 0 && position >= itemsCbArt.size()) {
 
-                if (currentStreetArt.getWorkname() == "") {
-                    holder.tvTitle.setText("Unknown");
-                } else {
+            final StreetArt currentStreetArt = itemsStreetArt.get(position - itemsCbArt.size());
 
-                    holder.tvTitle.setText(currentStreetArt.getWorkname());
+            // Add favorite on click on icon: change value of isFavorite field, then update the database
+            View.OnClickListener addStreetArtToFavorites = new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    currentStreetArt.setFavorite(1);
+                    model.updateStreetArtInDatabase(currentStreetArt);
+                    Toast.makeText(v.getContext(), "'" + currentStreetArt.getWorkname() + " by " + currentStreetArt.getArtists() + "' was added to favorites.", Toast.LENGTH_LONG).show();
                 }
+            };
 
-                if (currentStreetArt.getArtists() == "") {
-                    holder.tvArtist.setText("Unknown");
-                } else {
-                    holder.tvArtist.setText(currentStreetArt.getArtists());
-                }
+            if (currentStreetArt.getWorkname() == "") {
+                holder.tvTitle.setText("Unknown");
+            } else {
 
-                if (currentStreetArt.getPhotoid() != "Unknown") {
-                    Picasso.get().load("https://opendata.brussel.be/explore/dataset/street-art/files/" + currentStreetArt.getPhotoid() + "/download").into(holder.ivPhoto);
-                }
+                holder.tvTitle.setText(currentStreetArt.getWorkname());
             }
+
+            if (currentStreetArt.getArtists() == "") {
+                holder.tvArtist.setText("Unknown");
+            } else {
+                holder.tvArtist.setText(currentStreetArt.getArtists());
+            }
+
+            if (currentStreetArt.getPhotoid() != "Unknown") {
+                Picasso.get().load("https://opendata.brussel.be/explore/dataset/street-art/files/" + currentStreetArt.getPhotoid() + "/download").into(holder.ivPhoto);
+            }
+
+            holder.ivArtListFavorite.setOnClickListener(addStreetArtToFavorites);
         }
 
     }

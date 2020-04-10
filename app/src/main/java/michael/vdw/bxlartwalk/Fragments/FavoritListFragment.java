@@ -24,6 +24,7 @@ import java.util.List;
 
 import michael.vdw.bxlartwalk.Models.ArtViewModel;
 import michael.vdw.bxlartwalk.Models.CbArt;
+import michael.vdw.bxlartwalk.Models.StreetArt;
 import michael.vdw.bxlartwalk.R;
 import michael.vdw.bxlartwalk.Utils.CbArtAdapter;
 import michael.vdw.bxlartwalk.Utils.FavoritesAdapter;
@@ -85,6 +86,13 @@ public class FavoritListFragment extends Fragment {
                 adapter.notifyDataSetChanged();
             }
 
+        });
+        model.fetchAllFavoriteStreetArtFromDatabase().observe(getViewLifecycleOwner(), new Observer<List<StreetArt>>() {
+            @Override
+            public void onChanged(List<StreetArt> streetArtFavorites) {
+                adapter.addStreetArtFavorites(streetArtFavorites);
+                adapter.notifyDataSetChanged();
+            }
         });
 
         return rootView;

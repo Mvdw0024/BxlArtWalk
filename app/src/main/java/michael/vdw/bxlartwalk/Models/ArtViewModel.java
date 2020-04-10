@@ -26,10 +26,10 @@ import okhttp3.Response;
 public class ArtViewModel extends AndroidViewModel {
     private Context context;
 //    private CbArtDataBase cbArtDataBase;
-    private MutableLiveData<ArrayList<CbArt>> cbRouteArt;
+    private MutableLiveData<ArrayList<CbArt>>     cbRouteArt;
     private MutableLiveData<ArrayList<StreetArt>> streetArtRoute;
-    private LiveData<List<CbArt>> cbArtFavorites;
-    private MutableLiveData<ArrayList<StreetArt>> streetArtFavorites;
+    private LiveData<List<CbArt>>                 cbArtFavorites;
+    private LiveData<List<StreetArt>>             streetArtFavorites;
     public ExecutorService threadExecutor = Executors.newFixedThreadPool(4);
 
     public ArtViewModel(Application application) {
@@ -64,12 +64,22 @@ public class ArtViewModel extends AndroidViewModel {
         return cbArtFavorites;
     }
 
+    public LiveData<List<StreetArt>> fetchAllFavoriteStreetArtFromDatabase() {
+        LiveData<List<StreetArt>> streetArtFavoritesFromDatabase = CbArtDataBase.getSharedInstance(getApplication()).streetArtDao().findStreetArtFavorite(1);
+        streetArtFavorites = streetArtFavoritesFromDatabase;
+        return streetArtFavorites;
+    }
+
     public void insertCbArtInDataBase(CbArt cbArt) {
         CbArtDataBase.getSharedInstance(getApplication()).cbArtDao().insertCbArt(cbArt);
     }
 
     public void updateCbArtInDatabase(CbArt cbArt) {
         CbArtDataBase.getSharedInstance(getApplication()).cbArtDao().updateCbArt(cbArt);
+    }
+
+    public void updateStreetArtInDatabase(StreetArt streetArt) {
+        CbArtDataBase.getSharedInstance(getApplication()).streetArtDao().updateStreetArt(streetArt);
     }
 
     public void insertStreetArtInDataBase(StreetArt streetArt) {

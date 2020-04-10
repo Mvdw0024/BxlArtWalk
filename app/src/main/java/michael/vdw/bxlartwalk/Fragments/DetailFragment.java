@@ -32,7 +32,7 @@ import michael.vdw.bxlartwalk.R;
  * A simple {@link Fragment} subclass.
  */
 public class DetailFragment extends Fragment {
-    private TextView titleTv, authorTv, yearTv;
+    private TextView titleTv, authorTv, yearTv, addressTv, favButtonTv;
     private ImageView photoIv;
     private CbArt selectedCbArt;
     private StreetArt selectedStreetArt;
@@ -69,8 +69,10 @@ public class DetailFragment extends Fragment {
         selectedStreetArt = (getArguments() != null) ? (StreetArt) getArguments().getSerializable("passedStreetArt") : null;
 
         titleTv = rootView.findViewById(R.id.tv_detail_titleOfTheArt);
-        // photoIv = rootView.findViewById(R.id.iv_detail_photo);
+        photoIv = rootView.findViewById(R.id.iv_detail_photo);
         yearTv = rootView.findViewById(R.id.tv_detail_yearOfTheArt);
+        addressTv = rootView.findViewById(R.id.tv_detail_adresOfTheArt);
+        favButtonTv = rootView.findViewById(R.id.detail_tv_favorite);
         authorTv = rootView.findViewById(R.id.tv_detail_authorOfTheArt);
 
 
@@ -81,9 +83,9 @@ public class DetailFragment extends Fragment {
 //                CbArt cbArt = (CbArt) selectedCbArt.getSerializable("passedCbArt");
             titleTv.setText(selectedCbArt.getCharacters());
             yearTv.setText(""+selectedCbArt.getYear());
+            favButtonTv.setText(R.string.favButtonText);
             authorTv.setText(selectedCbArt.getAuthors());
-            //photoIv.setImageView(cbArt.getphotourl());
-
+            Picasso.get().load("https://opendata.brussel.be/explore/dataset/striproute0/files/" + selectedCbArt.getPhotoid() + "/download").into(photoIv);
         }
 
         if (selectedStreetArt != null) {
@@ -91,8 +93,7 @@ public class DetailFragment extends Fragment {
             titleTv.setText(selectedStreetArt.getWorkname());
             yearTv.setText(selectedStreetArt.getJaar());
             authorTv.setText(selectedStreetArt.getArtists());
-            //photoIv.setImageView(streetArt.getphotourl());
-
+            Picasso.get().load("https://opendata.brussel.be/explore/dataset/striproute0/files/" + selectedStreetArt.getPhotoid() + "/download").into(photoIv);
         }
 
         return rootView;

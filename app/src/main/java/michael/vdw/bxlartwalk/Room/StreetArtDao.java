@@ -1,5 +1,6 @@
 package michael.vdw.bxlartwalk.Room;
 
+import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.Query;
@@ -28,5 +29,5 @@ public interface StreetArtDao {
     StreetArt findById(String id);
 
     @Query("SELECT * FROM StreetArt WHERE isFavorite LIKE :isFavorite")
-    StreetArt findStreetArtFavorite(boolean isFavorite);
+    LiveData<List<StreetArt>> findStreetArtFavorite(int isFavorite);
 }

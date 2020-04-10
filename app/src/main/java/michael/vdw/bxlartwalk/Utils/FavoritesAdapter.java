@@ -42,17 +42,17 @@ public class FavoritesAdapter extends RecyclerView.Adapter<FavoritesAdapter.Favo
         }
 
     }
-FragmentActivity mContext;
-    private  ArrayList<CbArt>     cbFavorites;
-    private  ArrayList<CbArt>     OGCbFavorites;
+
+    FragmentActivity mContext;
+    private ArrayList<CbArt>     cbFavorites;
+    private List<CbArt>     OGCbFavorites;
     private ArrayList<StreetArt> streetArtFavorites;
-    private ArrayList<StreetArt> OGStreetArtFavorites;
-    //private Context context;
+    private List<StreetArt> OGStreetArtFavorites;
 
     public FavoritesAdapter(FragmentActivity fragmentActivity){
-        this.cbFavorites        = new ArrayList<>();
-        this.OGCbFavorites = new ArrayList<>();
-        this.streetArtFavorites = new ArrayList<>();
+        this.cbFavorites          = new ArrayList<>();
+        this.OGCbFavorites        = new ArrayList<>();
+        this.streetArtFavorites   = new ArrayList<>();
         this.OGStreetArtFavorites = new ArrayList<>();
 
         mContext = fragmentActivity;
@@ -69,43 +69,72 @@ FragmentActivity mContext;
     @Override
     public void onBindViewHolder(@NonNull FavoriteViewHolder holder, int position) {
 
-//        if (cbFavorites.size() > 0 && position < cbFavorites.size()) {
+        // CbArt Favorites
+        if (cbFavorites.size() > 0 && position < cbFavorites.size()) {
 
             final CbArt currentFavoriteCbArt = cbFavorites.get(position);
-            String title =
-                (currentFavoriteCbArt.getCharacters() != "") ?
-                currentFavoriteCbArt.getCharacters() :
-                "Unknown";
-            String author =
-                (currentFavoriteCbArt.getAuthors() != "") ?
-                currentFavoriteCbArt.getAuthors() :
-                "Unknown";
+            String cbTitle =
+                    (currentFavoriteCbArt.getCharacters() != "")
+                            ? currentFavoriteCbArt.getCharacters()
+                            : "Unknown";
+            String cbAuthor =
+                    (currentFavoriteCbArt.getAuthors() != "")
+                            ? currentFavoriteCbArt.getAuthors()
+                            : "Unknown";
 
-            holder.tvTitle.setText(title);
-            holder.tvArtist.setText(author);
+            holder.tvTitle.setText(cbTitle);
+            holder.tvArtist.setText(cbAuthor);
 
-            if(currentFavoriteCbArt.getPhotoid() != "Unknown") {
+            if (currentFavoriteCbArt.getPhotoid() != "Unknown") {
                 Picasso.get().load("https://opendata.brussel.be/explore/dataset/striproute0/files/" + currentFavoriteCbArt.getPhotoid() + "/download").into(holder.ivPhoto);
             }
+        }
 
-//        }
+        // StreetArt Favorites
+        if (streetArtFavorites.size() > 0 && position < streetArtFavorites.size()){
+            final StreetArt currentFavoriteStreetArt = streetArtFavorites.get(position);
+            String streetArtTitle =
+                    (currentFavoriteStreetArt.getWorkname() != "")
+                    ? currentFavoriteStreetArt.getWorkname()
+                    : "Unknown";
+            String streetArtAuthor =
+                    (currentFavoriteStreetArt.getArtists() != "")
+                    ? currentFavoriteStreetArt.getArtists()
+                    : "Unknown";
 
+            holder.tvTitle.setText(streetArtTitle);
+            holder.tvArtist.setText(streetArtAuthor);
+
+            if (currentFavoriteStreetArt.getPhotoid() != "Unknown") {
+                Picasso.get().load("https://opendata.brussel.be/explore/dataset/striproute0/files/" + currentFavoriteStreetArt.getPhotoid() + "/download").into(holder.ivPhoto);
+            }
+        }
     }
 
     @Override
     public int getItemCount() {
-        Log.d("checktest", "items in getItemCount from FavAdapter: " + cbFavorites.size());
         return cbFavorites.size() + streetArtFavorites.size();
     }
 
     public void addCbFavorites(List<CbArt> cbFavoritesToAdd) {
 
         if(cbFavoritesToAdd != null){
+
             cbFavorites.clear();
             cbFavorites.addAll(cbFavoritesToAdd);
+            OGCbFavorites = cbFavoritesToAdd;
         }
 
     }
+
+    public void addStreetArtFavorites(List<StreetArt> streetArtFavoritesToAdd) {
+        if(streetArtFavoritesToAdd != null) {
+            streetArtFavorites.clear();
+            streetArtFavorites.addAll(streetArtFavoritesToAdd);
+            OGStreetArtFavorites = streetArtFavoritesToAdd;
+        }
+    }
+
     @Override
     public Filter getFilter() {
         return new Filter() {
@@ -113,8 +142,8 @@ FragmentActivity mContext;
             protected FilterResults performFiltering(CharSequence charSequence) {
                 String input = charSequence.toString();
 
-                cbFavorites = OGCbFavorites;
-                streetArtFavorites = OGStreetArtFavorites;
+                cbFavorites = (ArrayList<CbArt>) OGCbFavorites;
+                streetArtFavorites = (ArrayList<StreetArt>) OGStreetArtFavorites;
 
                 if(!input.isEmpty()){
 
