@@ -165,12 +165,12 @@ public class MapFragment extends Fragment {
                 @Override
                 public void onSuccess(Location location) {
                     if (location != null) {
-                        Location userLoc = location;
-                        LatLng userLocGeo = new LatLng(userLoc.getLatitude(), userLoc.getLongitude());
-                        MarkerOptions m = new MarkerOptions().icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN))
-                                // fromResource(R.drawable.person_pin_foreground))
+                        LatLng userLocGeo = new LatLng(location.getLatitude(), location.getLongitude());
+                        MarkerOptions m = new MarkerOptions()
                                 .position(userLocGeo)
-                                .title("You are here");
+                                .title("You are here")
+                                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));
+
                         mMap.addMarker(m);
                     }
                 }
@@ -179,8 +179,6 @@ public class MapFragment extends Fragment {
         Toast.makeText(getActivity(), (R.string.userlocation), Toast.LENGTH_LONG).show();
 
     }
-
-    ;
 
     private boolean checkPermissions() {
         if (ActivityCompat.checkSelfPermission(fragmentActivity, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED ||
