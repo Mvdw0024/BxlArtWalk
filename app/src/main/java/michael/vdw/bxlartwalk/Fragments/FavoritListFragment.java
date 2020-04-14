@@ -39,7 +39,7 @@ public class FavoritListFragment extends Fragment {
     private FavoritesAdapter adapter;
     private FragmentActivity myContext;
 
-
+//todo streetart to detail
 
     //nodig voor de tab
     public static FavoritListFragment newInstance() {
