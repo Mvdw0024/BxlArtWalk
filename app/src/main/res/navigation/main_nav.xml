@@ -41,4 +41,12 @@
             app:argType="michael.vdw.bxlartwalk.Models.StreetArt"
             app:nullable="true" />
     </fragment>
+    <fragment
+        android:id="@+id/favoritListFragment"
+        android:name="michael.vdw.bxlartwalk.Fragments.FavoritListFragment"
+        tools:layout="@layout/fragment_favorit_list">
+        <action
+            android:id="@+id/action_favoritListFragment_to_detailFragment"
+            app:destination="@id/detailFragment" />
+    </fragment>
 </navigation>

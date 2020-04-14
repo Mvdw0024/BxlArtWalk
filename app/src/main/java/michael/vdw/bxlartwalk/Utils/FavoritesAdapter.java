@@ -1,6 +1,7 @@
 package michael.vdw.bxlartwalk.Utils;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,6 +21,7 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 import java.util.List;
 
+import michael.vdw.bxlartwalk.Fragments.DetailFragment;
 import michael.vdw.bxlartwalk.Models.CbArt;
 import michael.vdw.bxlartwalk.Models.StreetArt;
 import michael.vdw.bxlartwalk.R;
@@ -31,7 +33,42 @@ public class FavoritesAdapter extends RecyclerView.Adapter<FavoritesAdapter.Favo
         final TextView tvTitle, tvArtist;
         final ImageView ivPhoto, ivDeleteFavorite;
         final CardView favoriteCard;
-// todo OnClickListener detailistener
+        private View.OnClickListener detailListener = new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //welke card(rij)?
+                Log.d("detailTest", "watIkMaarWil");
+                int position = getAdapterPosition();
+                CbArt cbToPass = cbFavorites.get(position);
+                StreetArt saToPass = streetArtFavorites.get(position);
+                Bundle data = new Bundle();
+                data.putSerializable("passedCbArt", cbToPass);
+                //data.putSerializable("passedStreetArt", saToPass);
+                //navigatie starten
+                // Navigation.findNavController(view).navigate(R.id.artlist_to_detail, data);
+
+                DetailFragment details = DetailFragment.newInstance(data);
+                mContext.getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.container_fragment, details)
+                        .addToBackStack("BACK")
+                        .commit();
+
+            }
+        };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         FavoriteViewHolder(View favoriteView){
             super(favoriteView);
             tvTitle          = favoriteView.findViewById(R.id.tv_favoritListCard_titleOfArt);

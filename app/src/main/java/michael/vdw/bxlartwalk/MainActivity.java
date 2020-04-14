@@ -28,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
     private NavController navController;
     private TabLayout tabLayout;
     private TabLayout.BaseOnTabSelectedListener tabListener = new TabLayout.OnTabSelectedListener() {
+
         @Override
         public void onTabSelected(TabLayout.Tab tab) {
             switch (tab.getPosition()){
@@ -68,6 +69,8 @@ public class MainActivity extends AppCompatActivity {
         tabLayout = findViewById(R.id.tab_layout);
         tabLayout.addOnTabSelectedListener(tabListener);
     }
+
+
 
     public void navigateToFragment(Fragment f){
         getSupportFragmentManager().beginTransaction()

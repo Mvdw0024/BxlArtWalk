@@ -42,21 +42,6 @@ public class ArtListFragment extends Fragment {
         return new ArtListFragment();
     }
 
-//    //TODO search uitschrijven omvat(OnQueryTextListener, onQueryTextSubmit, onQueryTextChange( bevat adapter dus aanmaken en gebruiken))
-//    private SearchView.OnQueryTextListener searchListener = new SearchView.OnQueryTextListener() {
-//        //pas filteren na zoeken
-//        @Override
-//        public boolean onQueryTextSubmit(String query) {
-//            return false;
-//        }
-//
-//        //per letter filteren automatisch
-//        @Override
-//        public boolean onQueryTextChange(String newText) {
-//            adapter.getFilter().filter(newText);
-//            return false;
-//        }
-//    };
 
 
     @Override

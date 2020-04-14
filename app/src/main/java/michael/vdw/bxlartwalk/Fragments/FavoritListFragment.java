@@ -43,19 +43,7 @@ public class FavoritListFragment extends Fragment {
         return new FavoritListFragment();
     }
 
-    //search uitschrijven
-//    private SearchView.OnQueryTextListener searchListener = new SearchView.OnQueryTextListener() {
-//        @Override
-//        public boolean onQueryTextSubmit(String query) {
-//            return false;
-//        }
-//
-//        @Override
-//        public boolean onQueryTextChange(String newText) {
-//            adapter.getFilter().filter(newText);
-//            return false;
-//        }
-//    };
+
 
     public FavoritListFragment() {
         // Required empty public constructor

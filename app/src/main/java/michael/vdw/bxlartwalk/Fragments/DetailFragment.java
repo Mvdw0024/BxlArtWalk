@@ -14,6 +14,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.navigation.Navigation;
 
+import com.google.android.material.tabs.TabLayout;
 import com.squareup.picasso.Picasso;
 
 import michael.vdw.bxlartwalk.Models.CbArt;
@@ -30,6 +31,7 @@ public class DetailFragment extends Fragment {
     private CbArt selectedCbArt;
     private StreetArt selectedStreetArt;
     private FragmentActivity myContext;
+    private TabLayout tabLayout;
 
 
 
@@ -37,11 +39,14 @@ public class DetailFragment extends Fragment {
         // Required empty public constructor
     }
 
+
     public static DetailFragment newInstance(Bundle data) {
         DetailFragment df = new DetailFragment();
         df.setArguments(data);
         return df;
     }
+
+
 
     @Override
     public void onAttach(@NonNull Context context) {
@@ -117,4 +122,6 @@ public class DetailFragment extends Fragment {
 
         return super.onOptionsItemSelected(item);
     }
+
+
 }
