@@ -42,8 +42,8 @@ public class CbArtAdapter extends RecyclerView.Adapter<CbArtAdapter.ArtViewHolde
                 //welke card(rij)?
                 Log.d("detailTest", "watIkMaarWil");
                 int position = getAdapterPosition();
-                CbArt cbToPass = itemsCbArt.get(position);
-                StreetArt saToPass = itemsStreetArt.get(position);
+                CbArt cbToPass = OGItemsCbArt.get(position);
+                StreetArt saToPass = OGItemsStreetArt.get(position);
                 Bundle data = new Bundle();
                 data.putSerializable("passedCbArt", cbToPass);
                 //data.putSerializable("passedStreetArt", saToPass);
