@@ -33,14 +33,14 @@ public class FavoritesAdapter extends RecyclerView.Adapter<FavoritesAdapter.Favo
         final TextView tvTitle, tvArtist;
         final ImageView ivPhoto, ivDeleteFavorite;
         final CardView favoriteCard;
-        private View.OnClickListener detailListener = new View.OnClickListener() {
+        private View.OnClickListener favoritDetailListener = new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 //welke card(rij)?
                 Log.d("detailTest", "watIkMaarWil");
                 int position = getAdapterPosition();
-                CbArt cbToPass = cbFavorites.get(position);
-                StreetArt saToPass = streetArtFavorites.get(position);
+                CbArt cbToPass = OGCbFavorites.get(position);
+                StreetArt saToPass = OGStreetArtFavorites.get(position);
                 Bundle data = new Bundle();
                 data.putSerializable("passedCbArt", cbToPass);
                 //data.putSerializable("passedStreetArt", saToPass);
@@ -76,6 +76,7 @@ public class FavoritesAdapter extends RecyclerView.Adapter<FavoritesAdapter.Favo
             ivPhoto          = favoriteView.findViewById(R.id.iv_favoritListCard_photo);
             ivDeleteFavorite = favoriteView.findViewById(R.id.iv_favoritListCard_delete);
             favoriteCard     = favoriteView.findViewById(R.id.favorite_card);
+            favoriteCard.setOnClickListener(favoritDetailListener);
         }
 
     }
