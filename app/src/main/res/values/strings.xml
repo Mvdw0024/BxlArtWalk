@@ -8,4 +8,5 @@
     <string name="empty_favorites_list">No favorites added yet</string>
     <string name="userlocation">User location unknown</string>
     <string name="favButtonText">Add to favorites</string>
+    <string name="google_api_key_M" translatable="false">AIzaSyAAUvqHHnJtklELr3_IEQmW3IpykSj33xw</string>
 </resources>

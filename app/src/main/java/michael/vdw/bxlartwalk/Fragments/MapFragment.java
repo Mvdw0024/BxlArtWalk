@@ -28,6 +28,7 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 
@@ -45,7 +46,9 @@ public class MapFragment extends Fragment {
 
     private static final int PERMISSION_ID = 1320;
     private final LatLng coordBrussel = new LatLng(50.858712, 4.347446);
-    private View view;
+
+    private Location userLoc;
+    private LatLng userLocGeo /*= new LatLng(userLoc.getLatitude(), userLoc.getLongitude())*/;
 
     //nodig voor de tab
     public static MapFragment newInstance() {
@@ -73,10 +76,23 @@ public class MapFragment extends Fragment {
             drawMarkers();
             if (checkPermissions())
                 drawUserMarker();
+            //drawPolyline();
 
 
         }
     };
+
+    private void drawPolyline() {
+        mMap.addPolyline(new PolylineOptions()
+                .color(0xff990000)
+                .width(5)
+                .add(userLocGeo)
+                // .add(new LatLng(mMap.getMyLocation().getLongitude(), mMap.getMyLocation().getAltitude()))
+                .add(coordBrussel));
+
+    }
+
+
     private GoogleMap.OnInfoWindowClickListener infoWindowClickListener = new GoogleMap.OnInfoWindowClickListener() {
         @Override
         public void onInfoWindowClick(Marker marker) {
@@ -157,21 +173,25 @@ public class MapFragment extends Fragment {
     }
 
     private void drawUserMarker() {
-        //TODO: moet aangevuld worden; M
 //        mMap.setMyLocationEnabled(true); << geeft NullPointerException
 
         if (checkPermissions()) {
-            Task<Location> locationTask = fusedLocationClient.getLastLocation();
+            final Task<Location> locationTask = fusedLocationClient.getLastLocation();
             locationTask.addOnSuccessListener(new OnSuccessListener<Location>() {
                 @Override
                 public void onSuccess(Location location) {
                     if (location != null) {
-                  /*      LatLng userLocGeo = new LatLng(location.getLatitude(), location.getLongitude());
+                        userLoc = location;
+                        userLocGeo = new LatLng(userLoc.getLatitude(), userLoc.getLongitude());
+
+                        /*
                         MarkerOptions m = new MarkerOptions()
                                 .position(userLocGeo)
                                 .title("You are here")
                                 .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));
-                        mMap.addMarker(m);*/
+                        mMap.addMarker(m);
+                        */
+
                         mMap.setMyLocationEnabled(true);
                         LocationRequest locationRequest = LocationRequest.create();
                         locationRequest.setInterval(10000);
@@ -204,7 +224,7 @@ public class MapFragment extends Fragment {
             case PERMISSION_ID:
                 if (requestCode == PERMISSION_ID && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     drawUserMarker();
-                    mMap.setMyLocationEnabled(true);
+                    //mMap.setMyLocationEnabled(true);
                 }
                 break;
 

@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="michael.vdw.bxlartwalk">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
@@ -31,7 +31,7 @@
         <!--Michael-->
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyAAUvqHHnJtklELr3_IEQmW3IpykSj33xw">
+            android:value="@string/google_api_key_M">
 
         </meta-data>
 
