@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -114,7 +115,7 @@ public class MapFragment extends Fragment {
                         .addToBackStack("BACK")
                         .commit();
             } else {
-                Toast.makeText(getActivity(), "Street Art", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "Comic Book Route", Toast.LENGTH_SHORT).show();
             }
             if (sa != null) {
                 data.putSerializable("passedStreetArt", sa);
@@ -124,7 +125,7 @@ public class MapFragment extends Fragment {
                         .addToBackStack("BACK")
                         .commit();
             } else {
-                Toast.makeText(getActivity(), "Comic Book Route", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "Street Art", Toast.LENGTH_SHORT).show();
             }
 
         }
@@ -181,8 +182,8 @@ public class MapFragment extends Fragment {
                 @Override
                 public void onSuccess(Location location) {
                     if (location != null) {
-                        userLoc = location;
-                        userLocGeo = new LatLng(userLoc.getLatitude(), userLoc.getLongitude());
+                        userLocGeo = new LatLng(location.getLatitude(), location.getLongitude());
+                        Log.d("USERLOCATION", "onSuccess: " + userLocGeo);
 
                         /*
                         MarkerOptions m = new MarkerOptions()
@@ -266,5 +267,6 @@ public class MapFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
+        mapView.onStart();
     }
 }
