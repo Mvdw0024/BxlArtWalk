@@ -31,7 +31,7 @@ import michael.vdw.bxlartwalk.R;
 public class FavoritesAdapter extends RecyclerView.Adapter<FavoritesAdapter.FavoriteViewHolder> implements Filterable {
 
     class FavoriteViewHolder extends RecyclerView.ViewHolder {
-private FragmentActivity activity;
+        private FragmentActivity activity;
         final TextView tvTitle, tvArtist;
         final ImageView ivPhoto, ivDeleteFavorite;
         final CardView favoriteCard;
@@ -59,53 +59,42 @@ private FragmentActivity activity;
         };
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-        FavoriteViewHolder(View favoriteView){
+        FavoriteViewHolder(View favoriteView) {
             super(favoriteView);
-            tvTitle          = favoriteView.findViewById(R.id.tv_favoritListCard_titleOfArt);
-            tvArtist         = favoriteView.findViewById(R.id.tv_favoritListCard_autor);
-            ivPhoto          = favoriteView.findViewById(R.id.iv_favoritListCard_photo);
+            tvTitle = favoriteView.findViewById(R.id.tv_favoritListCard_titleOfArt);
+            tvArtist = favoriteView.findViewById(R.id.tv_favoritListCard_autor);
+            ivPhoto = favoriteView.findViewById(R.id.iv_favoritListCard_photo);
             ivDeleteFavorite = favoriteView.findViewById(R.id.iv_favoritListCard_delete);
-            favoriteCard     = favoriteView.findViewById(R.id.favorite_card);
+            favoriteCard = favoriteView.findViewById(R.id.favorite_card);
             favoriteCard.setOnClickListener(favoritDetailListener);
         }
+
         //todo onclicklistener
-private View.OnClickListener deleteListener = new View.OnClickListener() {
-    @Override
-    public void onClick(View view) {
-        int position = getAdapterPosition();
-        CbArt cbArtToDelete = OGCbFavorites.get(position);
+        private View.OnClickListener deleteListener = new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int position = getAdapterPosition();
+                CbArt cbArtToDelete = OGCbFavorites.get(position);
 
-        ArtViewModel model = new ViewModelProvider(activity).get(ArtViewModel.class);
+                ArtViewModel model = new ViewModelProvider(activity).get(ArtViewModel.class);
 //        model. ... (cbArtToDelete);
-        notifyDataSetChanged();
+                notifyDataSetChanged();
 
 
-    }
-};
+            }
+        };
     }
 
     FragmentActivity mContext;
-    private ArrayList<CbArt>     cbFavorites;
-    private List<CbArt>     OGCbFavorites;
+    private ArrayList<CbArt> cbFavorites;
+    private List<CbArt> OGCbFavorites;
     private ArrayList<StreetArt> streetArtFavorites;
     private List<StreetArt> OGStreetArtFavorites;
 
-    public FavoritesAdapter(FragmentActivity fragmentActivity){
-        this.cbFavorites          = new ArrayList<>();
-        this.OGCbFavorites        = new ArrayList<>();
-        this.streetArtFavorites   = new ArrayList<>();
+    public FavoritesAdapter(FragmentActivity fragmentActivity) {
+        this.cbFavorites = new ArrayList<>();
+        this.OGCbFavorites = new ArrayList<>();
+        this.streetArtFavorites = new ArrayList<>();
         this.OGStreetArtFavorites = new ArrayList<>();
 
         mContext = fragmentActivity;
@@ -144,16 +133,16 @@ private View.OnClickListener deleteListener = new View.OnClickListener() {
         }
 
         // StreetArt Favorites
-        if (streetArtFavorites.size() > 0 && position < streetArtFavorites.size()){
-            final StreetArt currentFavoriteStreetArt = streetArtFavorites.get(position);
+        if (streetArtFavorites.size() > 0 && position >= cbFavorites.size()) {
+            final StreetArt currentFavoriteStreetArt = streetArtFavorites.get(position - cbFavorites.size());
             String streetArtTitle =
                     (currentFavoriteStreetArt.getWorkname() != "")
-                    ? currentFavoriteStreetArt.getWorkname()
-                    : "Unknown";
+                            ? currentFavoriteStreetArt.getWorkname()
+                            : "Unknown";
             String streetArtAuthor =
                     (currentFavoriteStreetArt.getArtists() != "")
-                    ? currentFavoriteStreetArt.getArtists()
-                    : "Unknown";
+                            ? currentFavoriteStreetArt.getArtists()
+                            : "Unknown";
 
             holder.tvTitle.setText(streetArtTitle);
             holder.tvArtist.setText(streetArtAuthor);
@@ -171,7 +160,7 @@ private View.OnClickListener deleteListener = new View.OnClickListener() {
 
     public void addCbFavorites(List<CbArt> cbFavoritesToAdd) {
 
-        if(cbFavoritesToAdd != null){
+        if (cbFavoritesToAdd != null) {
 
             cbFavorites.clear();
             cbFavorites.addAll(cbFavoritesToAdd);
@@ -181,7 +170,7 @@ private View.OnClickListener deleteListener = new View.OnClickListener() {
     }
 
     public void addStreetArtFavorites(List<StreetArt> streetArtFavoritesToAdd) {
-        if(streetArtFavoritesToAdd != null) {
+        if (streetArtFavoritesToAdd != null) {
             streetArtFavorites.clear();
             streetArtFavorites.addAll(streetArtFavoritesToAdd);
             OGStreetArtFavorites = streetArtFavoritesToAdd;
@@ -198,7 +187,7 @@ private View.OnClickListener deleteListener = new View.OnClickListener() {
                 cbFavorites = (ArrayList<CbArt>) OGCbFavorites;
                 streetArtFavorites = (ArrayList<StreetArt>) OGStreetArtFavorites;
 
-                if(!input.isEmpty()){
+                if (!input.isEmpty()) {
 
                     ArrayList<CbArt> tempListCbArt = new ArrayList<>();
                     ArrayList<StreetArt> tempListStreetArt = new ArrayList<>();
@@ -215,7 +204,7 @@ private View.OnClickListener deleteListener = new View.OnClickListener() {
                         cbFavorites = tempListCbArt;
                     }
 
-                    for (StreetArt elementStreetArt :streetArtFavorites){
+                    for (StreetArt elementStreetArt : streetArtFavorites) {
                         if (elementStreetArt.getWorkname().toLowerCase().contains(input.toLowerCase())) {
                             tempListStreetArt.add(elementStreetArt);
                         } else {
