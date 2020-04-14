@@ -16,6 +16,7 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.squareup.picasso.Picasso;
@@ -41,23 +42,27 @@ public class CbArtAdapter extends RecyclerView.Adapter<CbArtAdapter.ArtViewHolde
                 //welke card(rij)?
                 Log.d("detailTest", "watIkMaarWil");
                 int position = getAdapterPosition();
-                CbArt cbToPass = OGItemsCbArt.get(position);
-                //TODO : Geeft IndexOutOfBoundsException wanneer het StreetArt is.
-                Bundle data = new Bundle();
-                if (cbToPass != null) {
+                    CbArt cbToPass = OGItemsCbArt.get(position);
+                StreetArt saToPass = OGItemsStreetArt.get(position);
+                    Bundle data = new Bundle();
                     data.putSerializable("passedCbArt", cbToPass);
-                } else {
-                    StreetArt saToPass = OGItemsStreetArt.get(position);
-                    data.putSerializable("passedStreetArt", saToPass);
-                }
-                // Navigation.findNavController(view).navigate(R.id.artlist_to_detail, data);
+                 //   data.putSerializable("passedStreetArt", saToPass);
+
+
+
+
+
                 //navigatie starten
+               // Navigation.findNavController(view).navigate(R.id.artlist_to_detail, data);
 
                 DetailFragment details = DetailFragment.newInstance(data);
                 mContext.getSupportFragmentManager().beginTransaction()
                         .replace(R.id.container_fragment, details)
                         .addToBackStack("BACK")
                         .commit();
+
+
+
 
             }
         };

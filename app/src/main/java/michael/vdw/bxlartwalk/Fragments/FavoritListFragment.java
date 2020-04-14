@@ -1,5 +1,6 @@
 package michael.vdw.bxlartwalk.Fragments;
 
+import android.content.Context;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -36,6 +37,8 @@ import michael.vdw.bxlartwalk.Utils.FavoritesAdapter;
 public class FavoritListFragment extends Fragment {
 
     private FavoritesAdapter adapter;
+    private FragmentActivity myContext;
+
 
 
     //nodig voor de tab
@@ -43,7 +46,11 @@ public class FavoritListFragment extends Fragment {
         return new FavoritListFragment();
     }
 
-
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        myContext = (FragmentActivity) context;
+    }
 
     public FavoritListFragment() {
         // Required empty public constructor

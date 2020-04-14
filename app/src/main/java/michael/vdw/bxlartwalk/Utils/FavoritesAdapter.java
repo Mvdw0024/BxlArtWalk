@@ -40,7 +40,7 @@ public class FavoritesAdapter extends RecyclerView.Adapter<FavoritesAdapter.Favo
                 Log.d("detailTest", "watIkMaarWil");
                 int position = getAdapterPosition();
                 CbArt cbToPass = OGCbFavorites.get(position);
-                StreetArt saToPass = OGStreetArtFavorites.get(position);
+//                StreetArt ToPass = OGStreetArtFavorites.get(position);
                 Bundle data = new Bundle();
                 data.putSerializable("passedCbArt", cbToPass);
                 //data.putSerializable("passedStreetArt", saToPass);
