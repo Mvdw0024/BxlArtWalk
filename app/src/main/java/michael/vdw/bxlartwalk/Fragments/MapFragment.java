@@ -98,7 +98,7 @@ public class MapFragment extends Fragment {
                         .addToBackStack("BACK")
                         .commit();
             } else {
-                Toast.makeText(getActivity(), "Comic Book Route", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "Street Art", Toast.LENGTH_SHORT).show();
             }
             if (sa != null) {
                 data.putSerializable("passedStreetArt", sa);
@@ -108,7 +108,7 @@ public class MapFragment extends Fragment {
                         .addToBackStack("BACK")
                         .commit();
             } else {
-                Toast.makeText(getActivity(), "Street Art", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "Comic Book Route", Toast.LENGTH_SHORT).show();
             }
 
         }
