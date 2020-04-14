@@ -17,6 +17,7 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -165,18 +166,22 @@ public class MapFragment extends Fragment {
                 @Override
                 public void onSuccess(Location location) {
                     if (location != null) {
-                        LatLng userLocGeo = new LatLng(location.getLatitude(), location.getLongitude());
+                  /*      LatLng userLocGeo = new LatLng(location.getLatitude(), location.getLongitude());
                         MarkerOptions m = new MarkerOptions()
                                 .position(userLocGeo)
                                 .title("You are here")
                                 .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));
+                        mMap.addMarker(m);*/
+                        mMap.setMyLocationEnabled(true);
+                        LocationRequest locationRequest = LocationRequest.create();
+                        locationRequest.setInterval(10000);
+                        locationRequest.setFastestInterval(5000);
+                        locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
 
-                        mMap.addMarker(m);
                     }
                 }
             });
         }
-        Toast.makeText(getActivity(), (R.string.userlocation), Toast.LENGTH_LONG).show();
 
     }
 
