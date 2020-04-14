@@ -14,6 +14,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.FragmentActivity;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.squareup.picasso.Picasso;
@@ -22,6 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import michael.vdw.bxlartwalk.Fragments.DetailFragment;
+import michael.vdw.bxlartwalk.Models.ArtViewModel;
 import michael.vdw.bxlartwalk.Models.CbArt;
 import michael.vdw.bxlartwalk.Models.StreetArt;
 import michael.vdw.bxlartwalk.R;
@@ -29,7 +31,7 @@ import michael.vdw.bxlartwalk.R;
 public class FavoritesAdapter extends RecyclerView.Adapter<FavoritesAdapter.FavoriteViewHolder> implements Filterable {
 
     class FavoriteViewHolder extends RecyclerView.ViewHolder {
-
+private FragmentActivity activity;
         final TextView tvTitle, tvArtist;
         final ImageView ivPhoto, ivDeleteFavorite;
         final CardView favoriteCard;
@@ -78,7 +80,20 @@ public class FavoritesAdapter extends RecyclerView.Adapter<FavoritesAdapter.Favo
             favoriteCard     = favoriteView.findViewById(R.id.favorite_card);
             favoriteCard.setOnClickListener(favoritDetailListener);
         }
+        //todo onclicklistener
+private View.OnClickListener deleteListener = new View.OnClickListener() {
+    @Override
+    public void onClick(View view) {
+        int position = getAdapterPosition();
+        CbArt cbArtToDelete = OGCbFavorites.get(position);
 
+        ArtViewModel model = new ViewModelProvider(activity).get(ArtViewModel.class);
+//        model. ... (cbArtToDelete);
+        notifyDataSetChanged();
+
+
+    }
+};
     }
 
     FragmentActivity mContext;
