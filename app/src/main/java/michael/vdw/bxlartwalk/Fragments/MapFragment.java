@@ -29,6 +29,7 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -38,15 +39,18 @@ import michael.vdw.bxlartwalk.Models.CbArt;
 import michael.vdw.bxlartwalk.Models.StreetArt;
 import michael.vdw.bxlartwalk.R;
 import michael.vdw.bxlartwalk.Utils.CbArtAdapter;
+import michael.vdw.bxlartwalk.Utils.Directionhelpers.FetchURL;
+import michael.vdw.bxlartwalk.Utils.Directionhelpers.TaskLoadedCallback;
 
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class MapFragment extends Fragment {
+public class MapFragment extends Fragment implements TaskLoadedCallback {
 
     private static final int PERMISSION_ID = 1320;
     private final LatLng coordBrussel = new LatLng(50.858712, 4.347446);
+    private final LatLng coordMechelen = new LatLng(51.0258761, 4.4775362);
 
     private Location userLoc;
     private LatLng userLocGeo /*= new LatLng(userLoc.getLatitude(), userLoc.getLongitude())*/;
@@ -64,6 +68,7 @@ public class MapFragment extends Fragment {
     private FragmentActivity fragmentActivity;
     private ArtViewModel artViewModel;
     private CbArtAdapter adapter;
+    private Polyline currentPolyLine;
     private FusedLocationProviderClient fusedLocationClient;
 
     private OnMapReadyCallback onMapReady = new OnMapReadyCallback() {
@@ -77,20 +82,42 @@ public class MapFragment extends Fragment {
             drawMarkers();
             if (checkPermissions())
                 drawUserMarker();
-            //drawPolyline();
+            drawPolyline();
 
 
         }
     };
 
     private void drawPolyline() {
-        mMap.addPolyline(new PolylineOptions()
+/*        mMap.addPolyline(new PolylineOptions()
                 .color(0xff990000)
                 .width(5)
                 .add(userLocGeo)
                 // .add(new LatLng(mMap.getMyLocation().getLongitude(), mMap.getMyLocation().getAltitude()))
-                .add(coordBrussel));
+                .add(coordBrussel));*/
+//TODO: get info for UserLocation :
+        MarkerOptions place1 = new MarkerOptions().position(coordBrussel);
+        MarkerOptions place2 = new MarkerOptions().position(coordMechelen);
+        String urldirections = getUrl(place1.getPosition(), place2.getPosition(), "walking");
+        new FetchURL(getContext()).execute(urldirections, "walking");
 
+
+    }
+
+    private String getUrl(LatLng origin, LatLng dest, String directionMode) {
+//Origin of route
+        String str_origin = "origin=" + origin.latitude + "," + origin.longitude;
+        //destination of route
+        String str_dest = "destination=" + dest.latitude + "," + dest.longitude;
+        //Mode
+        String mode = "mode=" + directionMode;
+        //Building the parameters to the webservice
+        String parameters = str_origin + "&" + str_dest + "&" + mode;
+        //output format
+        String output = "json";
+        //Building the url to the webservice
+        String url = "https://maps.googleapis.com/maps/directions" + output + "?" + parameters + "&key=" + getString(R.string.google_api_key_M);
+        return url;
     }
 
 
@@ -231,6 +258,13 @@ public class MapFragment extends Fragment {
 
 
         }
+    }
+
+    @Override
+    public void onTaskDone(Object... values) {
+        if (currentPolyLine != null)
+            currentPolyLine.remove();
+        currentPolyLine = mMap.addPolyline((PolylineOptions) values[0]);
     }
 
     @Override
