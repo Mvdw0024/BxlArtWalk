@@ -116,7 +116,7 @@ public class CbArtAdapter extends RecyclerView.Adapter<CbArtAdapter.ArtViewHolde
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ArtViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull final ArtViewHolder holder, int position) {
 
         final ArtViewModel model = new ViewModelProvider(this.mContext).get(ArtViewModel.class);
 
@@ -126,20 +126,15 @@ public class CbArtAdapter extends RecyclerView.Adapter<CbArtAdapter.ArtViewHolde
 
             // Add favorite on click on icon: change value of isFavorite field, then update the database
             View.OnClickListener addCbToFavorites = new View.OnClickListener() {
-                //todo volgende 3 lijnen gebruiken om na klik image aan te passen (denkt talia ;))
-//                    currentFavoritImmage++;
-//                    currentFavoritImmage = currentFavoritImmage % favoritImages.length;
-//                    ivArtListFavorite.setImageResource(favoritImages[currentFavoritImmage]);
-
-//                }
                 @Override
                 public void onClick(View v) {
                     currentCbArt.setFavorite(1);
                     model.updateCbArtInDatabase(currentCbArt);
+                    holder.ivArtListFavorite.setImageResource(R.drawable.ic_favorite_active);
                     Toast.makeText(v.getContext(), "'" + currentCbArt.getCharacters() + "' was added to favorites.", Toast.LENGTH_LONG).show();
-
                 }
             };
+            holder.ivArtListFavorite.setOnClickListener(addCbToFavorites);
 
             if (currentCbArt.getCharacters() == "") {
                 holder.tvTitle.setText("Unknown");
@@ -157,8 +152,10 @@ public class CbArtAdapter extends RecyclerView.Adapter<CbArtAdapter.ArtViewHolde
                 Picasso.get().load("https://opendata.brussel.be/explore/dataset/striproute0/files/" + currentCbArt.getPhotoid() + "/download").into(holder.ivPhoto);
             }
 
-            holder.ivArtListFavorite.setOnClickListener(addCbToFavorites
-            );
+            CbArt currentCbrtInDatabse = model.findCbById(currentCbArt.getId());
+            if (currentCbrtInDatabse.isFavorite() == 1) {
+                holder.ivArtListFavorite.setImageResource(R.drawable.ic_favorite_active);
+            }
 
         }
 
@@ -172,9 +169,11 @@ public class CbArtAdapter extends RecyclerView.Adapter<CbArtAdapter.ArtViewHolde
                 public void onClick(View v) {
                     currentStreetArt.setFavorite(1);
                     model.updateStreetArtInDatabase(currentStreetArt);
+                    holder.ivArtListFavorite.setImageResource(R.drawable.ic_favorite_active);
                     Toast.makeText(v.getContext(), "'" + currentStreetArt.getWorkname() + " by " + currentStreetArt.getArtists() + "' was added to favorites.", Toast.LENGTH_LONG).show();
                 }
             };
+            holder.ivArtListFavorite.setOnClickListener(addStreetArtToFavorites);
 
             if (currentStreetArt.getWorkname() == "") {
                 holder.tvTitle.setText("Unknown");
@@ -193,7 +192,11 @@ public class CbArtAdapter extends RecyclerView.Adapter<CbArtAdapter.ArtViewHolde
                 Picasso.get().load("https://opendata.brussel.be/explore/dataset/street-art/files/" + currentStreetArt.getPhotoid() + "/download").into(holder.ivPhoto);
             }
 
-            holder.ivArtListFavorite.setOnClickListener(addStreetArtToFavorites);
+            StreetArt currentStreetArtInDatabse = model.findStreetArtById(currentStreetArt.getId());
+            if (currentStreetArtInDatabse.isFavorite() == 1) {
+                holder.ivArtListFavorite.setImageResource(R.drawable.ic_favorite_active);
+            }
+
         }
 
     }
