@@ -10,6 +10,7 @@ import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
@@ -42,12 +43,8 @@ public class FavoritesAdapter extends RecyclerView.Adapter<FavoritesAdapter.Favo
                 Log.d("detailTest", "watIkMaarWil");
                 int position = getAdapterPosition();
                 CbArt cbToPass = OGCbFavorites.get(position);
-//                StreetArt ToPass = OGStreetArtFavorites.get(position);
                 Bundle data = new Bundle();
                 data.putSerializable("passedCbArt", cbToPass);
-                //data.putSerializable("passedStreetArt", saToPass);
-                //navigatie starten
-                // Navigation.findNavController(view).navigate(R.id.artlist_to_detail, data);
 
                 DetailFragment details = DetailFragment.newInstance(data);
                 mContext.getSupportFragmentManager().beginTransaction()
@@ -57,7 +54,6 @@ public class FavoritesAdapter extends RecyclerView.Adapter<FavoritesAdapter.Favo
 
             }
         };
-
 
         FavoriteViewHolder(View favoriteView) {
             super(favoriteView);
@@ -69,20 +65,6 @@ public class FavoritesAdapter extends RecyclerView.Adapter<FavoritesAdapter.Favo
             favoriteCard.setOnClickListener(favoritDetailListener);
         }
 
-        //todo onclicklistener
-        private View.OnClickListener deleteListener = new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                int position = getAdapterPosition();
-                CbArt cbArtToDelete = OGCbFavorites.get(position);
-
-                ArtViewModel model = new ViewModelProvider(activity).get(ArtViewModel.class);
-//        model. ... (cbArtToDelete);
-                notifyDataSetChanged();
-
-
-            }
-        };
     }
 
     FragmentActivity mContext;
@@ -111,10 +93,24 @@ public class FavoritesAdapter extends RecyclerView.Adapter<FavoritesAdapter.Favo
     @Override
     public void onBindViewHolder(@NonNull FavoriteViewHolder holder, int position) {
 
+        final ArtViewModel model = new ViewModelProvider(this.mContext).get(ArtViewModel.class);
+
         // CbArt Favorites
         if (cbFavorites.size() > 0 && position < cbFavorites.size()) {
 
             final CbArt currentFavoriteCbArt = cbFavorites.get(position);
+
+            View.OnClickListener deleteCbFromFavorites = new View.OnClickListener(){
+                // Remove favorite
+                @Override
+                public void onClick(View v) {
+                    currentFavoriteCbArt.setFavorite(0);
+                    model.updateCbArtInDatabase(currentFavoriteCbArt);
+                    Toast.makeText(v.getContext(), "'" + currentFavoriteCbArt.getCharacters() + "' was removed from favorites.", Toast.LENGTH_SHORT).show();
+                }
+            };
+            holder.ivDeleteFavorite.setOnClickListener(deleteCbFromFavorites);
+
             String cbTitle =
                     (currentFavoriteCbArt.getCharacters() != "")
                             ? currentFavoriteCbArt.getCharacters()
@@ -130,11 +126,26 @@ public class FavoritesAdapter extends RecyclerView.Adapter<FavoritesAdapter.Favo
             if (currentFavoriteCbArt.getPhotoid() != "Unknown") {
                 Picasso.get().load("https://opendata.brussel.be/explore/dataset/striproute0/files/" + currentFavoriteCbArt.getPhotoid() + "/download").into(holder.ivPhoto);
             }
+
+
         }
 
         // StreetArt Favorites
         if (streetArtFavorites.size() > 0 && position >= cbFavorites.size()) {
+
             final StreetArt currentFavoriteStreetArt = streetArtFavorites.get(position - cbFavorites.size());
+
+            View.OnClickListener deleteCbFromFavorites = new View.OnClickListener(){
+                // Remove favorite
+                @Override
+                public void onClick(View v) {
+                    currentFavoriteStreetArt.setFavorite(0);
+                    model.updateStreetArtInDatabase(currentFavoriteStreetArt);
+                    Toast.makeText(v.getContext(), "'" + currentFavoriteStreetArt.getWorkname() + " by " + currentFavoriteStreetArt.getArtists() + "' was removed from favorites.", Toast.LENGTH_SHORT).show();
+                }
+            };
+            holder.ivDeleteFavorite.setOnClickListener(deleteCbFromFavorites);
+
             String streetArtTitle =
                     (currentFavoriteStreetArt.getWorkname() != "")
                             ? currentFavoriteStreetArt.getWorkname()

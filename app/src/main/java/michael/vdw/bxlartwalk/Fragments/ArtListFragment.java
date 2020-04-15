@@ -86,6 +86,7 @@ public class ArtListFragment extends Fragment {
 
             @Override
             public void onChanged(ArrayList<CbArt> cbArts) {
+                Log.d("sentData",""+cbArts);
                 adapter.addCbItems(cbArts);
                 adapter.notifyDataSetChanged();
             }
