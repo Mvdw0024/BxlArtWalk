@@ -35,6 +35,8 @@ public class CbArtAdapter extends RecyclerView.Adapter<CbArtAdapter.ArtViewHolde
         final TextView tvTitle, tvArtist;
         final ImageView ivPhoto, ivArtListFavorite;
         final CardView artCard;
+        private int currentFavoritImmage;
+        int[] favoritImages= {R.drawable.ic_action_favorit, R.drawable.ic_action_myfavorit};
 
         private View.OnClickListener detailListener = new View.OnClickListener() {
             @Override
@@ -66,6 +68,7 @@ public class CbArtAdapter extends RecyclerView.Adapter<CbArtAdapter.ArtViewHolde
 
             }
         };
+
 
         //default constructor(zonder parameter)
         ArtViewHolder(@NonNull View itemView) {
@@ -123,11 +126,18 @@ public class CbArtAdapter extends RecyclerView.Adapter<CbArtAdapter.ArtViewHolde
 
             // Add favorite on click on icon: change value of isFavorite field, then update the database
             View.OnClickListener addCbToFavorites = new View.OnClickListener() {
+                //todo volgende 3 lijnen gebruiken om na klik image aan te passen (denkt talia ;))
+//                    currentFavoritImmage++;
+//                    currentFavoritImmage = currentFavoritImmage % favoritImages.length;
+//                    ivArtListFavorite.setImageResource(favoritImages[currentFavoritImmage]);
+
+//                }
                 @Override
                 public void onClick(View v) {
                     currentCbArt.setFavorite(1);
                     model.updateCbArtInDatabase(currentCbArt);
                     Toast.makeText(v.getContext(), "'" + currentCbArt.getCharacters() + "' was added to favorites.", Toast.LENGTH_LONG).show();
+
                 }
             };
 
@@ -147,7 +157,9 @@ public class CbArtAdapter extends RecyclerView.Adapter<CbArtAdapter.ArtViewHolde
                 Picasso.get().load("https://opendata.brussel.be/explore/dataset/striproute0/files/" + currentCbArt.getPhotoid() + "/download").into(holder.ivPhoto);
             }
 
-            holder.ivArtListFavorite.setOnClickListener(addCbToFavorites);
+            holder.ivArtListFavorite.setOnClickListener(addCbToFavorites
+            );
+
         }
 
         if (itemsStreetArt.size() > 0 && position >= itemsCbArt.size()) {
