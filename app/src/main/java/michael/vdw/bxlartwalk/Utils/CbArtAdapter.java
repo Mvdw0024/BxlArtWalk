@@ -231,7 +231,7 @@ public class CbArtAdapter extends RecyclerView.Adapter<CbArtAdapter.ArtViewHolde
                                 tempListCbArt.add(elementCbArt);
                             }
                         }
-                        itemsCbArt = tempListCbArt;
+                        OGItemsCbArt = tempListCbArt;
                     }
 
                     for (StreetArt elementStreetArt :itemsStreetArt){
@@ -242,7 +242,7 @@ public class CbArtAdapter extends RecyclerView.Adapter<CbArtAdapter.ArtViewHolde
                                     tempListStreetArt.add(elementStreetArt);
                                 }
                             }
-                            itemsStreetArt = tempListStreetArt;
+                            OGItemsStreetArt = tempListStreetArt;
                         }
                     }
 

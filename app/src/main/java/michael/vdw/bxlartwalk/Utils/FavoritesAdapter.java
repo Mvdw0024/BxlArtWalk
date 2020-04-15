@@ -201,7 +201,7 @@ public class FavoritesAdapter extends RecyclerView.Adapter<FavoritesAdapter.Favo
                                 tempListCbArt.add(elementCbArt);
                             }
                         }
-                        cbFavorites = tempListCbArt;
+                        OGCbFavorites = tempListCbArt;
                     }
 
                     for (StreetArt elementStreetArt : streetArtFavorites) {
@@ -212,7 +212,7 @@ public class FavoritesAdapter extends RecyclerView.Adapter<FavoritesAdapter.Favo
                                 tempListStreetArt.add(elementStreetArt);
                             }
                         }
-                        streetArtFavorites = tempListStreetArt;
+                        OGStreetArtFavorites = tempListStreetArt;
                     }
                 }
 
