@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
+import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
@@ -29,13 +30,17 @@ import michael.vdw.bxlartwalk.Models.CbArt;
 import michael.vdw.bxlartwalk.Models.StreetArt;
 import michael.vdw.bxlartwalk.R;
 
-public class FavoritesAdapter extends RecyclerView.Adapter<FavoritesAdapter.FavoriteViewHolder> implements Filterable {
+public class FavoritesAdapter extends RecyclerView.Adapter<FavoritesAdapter.FavoriteViewHolder>  implements Filterable {
 
     class FavoriteViewHolder extends RecyclerView.ViewHolder {
         private FragmentActivity activity;
         final TextView tvTitle, tvArtist;
         final ImageView ivPhoto, ivDeleteFavorite;
         final CardView favoriteCard;
+
+
+
+
         private View.OnClickListener favoritDetailListener = new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -104,6 +109,7 @@ public class FavoritesAdapter extends RecyclerView.Adapter<FavoritesAdapter.Favo
                 // Remove favorite
                 @Override
                 public void onClick(View v) {
+
                     currentFavoriteCbArt.setFavorite(0);
                     model.updateCbArtInDatabase(currentFavoriteCbArt);
                     Toast.makeText(v.getContext(), "'" + currentFavoriteCbArt.getCharacters() + "' was removed from favorites.", Toast.LENGTH_SHORT).show();
@@ -139,6 +145,7 @@ public class FavoritesAdapter extends RecyclerView.Adapter<FavoritesAdapter.Favo
                 // Remove favorite
                 @Override
                 public void onClick(View v) {
+
                     currentFavoriteStreetArt.setFavorite(0);
                     model.updateStreetArtInDatabase(currentFavoriteStreetArt);
                     Toast.makeText(v.getContext(), "'" + currentFavoriteStreetArt.getWorkname() + " by " + currentFavoriteStreetArt.getArtists() + "' was removed from favorites.", Toast.LENGTH_SHORT).show();
