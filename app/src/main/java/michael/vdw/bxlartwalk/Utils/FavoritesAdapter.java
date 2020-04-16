@@ -38,28 +38,6 @@ public class FavoritesAdapter extends RecyclerView.Adapter<FavoritesAdapter.Favo
         final ImageView ivPhoto, ivDeleteFavorite;
         final CardView favoriteCard;
 
-
-
-
-        private View.OnClickListener favoritDetailListener = new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //welke card(rij)?
-                Log.d("detailTest", "watIkMaarWil");
-                int position = getAdapterPosition();
-                CbArt cbToPass = OGCbFavorites.get(position);
-                Bundle data = new Bundle();
-                data.putSerializable("passedCbArt", cbToPass);
-
-                DetailFragment details = DetailFragment.newInstance(data);
-                mContext.getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.container_fragment, details)
-                        .addToBackStack("BACK")
-                        .commit();
-
-            }
-        };
-
         FavoriteViewHolder(View favoriteView) {
             super(favoriteView);
             tvTitle = favoriteView.findViewById(R.id.tv_favoritListCard_titleOfArt);
@@ -67,7 +45,6 @@ public class FavoritesAdapter extends RecyclerView.Adapter<FavoritesAdapter.Favo
             ivPhoto = favoriteView.findViewById(R.id.iv_favoritListCard_photo);
             ivDeleteFavorite = favoriteView.findViewById(R.id.iv_favoritListCard_delete);
             favoriteCard = favoriteView.findViewById(R.id.favorite_card);
-            favoriteCard.setOnClickListener(favoritDetailListener);
         }
 
     }
@@ -105,11 +82,26 @@ public class FavoritesAdapter extends RecyclerView.Adapter<FavoritesAdapter.Favo
 
             final CbArt currentFavoriteCbArt = cbFavorites.get(position);
 
+            // Navigate to Detail
+            View.OnClickListener cbDetailListener = new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Bundle data = new Bundle();
+                    data.putSerializable("passedCbArt", currentFavoriteCbArt);
+
+                    DetailFragment details = DetailFragment.newInstance(data);
+                    mContext.getSupportFragmentManager().beginTransaction()
+                            .replace(R.id.container_fragment, details)
+                            .addToBackStack("BACK")
+                            .commit();
+                }
+            };
+            holder.favoriteCard.setOnClickListener(cbDetailListener);
+
             View.OnClickListener deleteCbFromFavorites = new View.OnClickListener(){
                 // Remove favorite
                 @Override
                 public void onClick(View v) {
-
                     currentFavoriteCbArt.setFavorite(0);
                     model.updateCbArtInDatabase(currentFavoriteCbArt);
                     Toast.makeText(v.getContext(), "'" + currentFavoriteCbArt.getCharacters() + "' was removed from favorites.", Toast.LENGTH_SHORT).show();
@@ -140,6 +132,22 @@ public class FavoritesAdapter extends RecyclerView.Adapter<FavoritesAdapter.Favo
         if (streetArtFavorites.size() > 0 && position >= cbFavorites.size()) {
 
             final StreetArt currentFavoriteStreetArt = streetArtFavorites.get(position - cbFavorites.size());
+
+            // Navigate to Detail
+            View.OnClickListener streetArtDetailListener = new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Bundle data = new Bundle();
+                    data.putSerializable("passedStreetArt", currentFavoriteStreetArt);
+
+                    DetailFragment details = DetailFragment.newInstance(data);
+                    mContext.getSupportFragmentManager().beginTransaction()
+                            .replace(R.id.container_fragment, details)
+                            .addToBackStack("BACK")
+                            .commit();
+                }
+            };
+            holder.favoriteCard.setOnClickListener(streetArtDetailListener);
 
             View.OnClickListener deleteCbFromFavorites = new View.OnClickListener(){
                 // Remove favorite
