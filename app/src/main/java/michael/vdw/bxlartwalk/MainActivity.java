@@ -92,6 +92,9 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.aboutUs: NavigationUI.onNavDestinationSelected(item,navController);
+        }
 
         return super.onOptionsItemSelected(item);
     }
