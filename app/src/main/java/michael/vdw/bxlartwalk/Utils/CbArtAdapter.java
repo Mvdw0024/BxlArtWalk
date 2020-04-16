@@ -35,51 +35,14 @@ public class CbArtAdapter extends RecyclerView.Adapter<CbArtAdapter.ArtViewHolde
         final TextView tvTitle, tvArtist;
         final ImageView ivPhoto, ivArtListFavorite;
         final CardView artCard;
-        private int currentFavoritImmage;
-        int[] favoritImages= {R.drawable.ic_action_favorit, R.drawable.ic_action_myfavorit};
 
-        private View.OnClickListener detailListener = new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //welke card(rij)?
-                Log.d("detailTest", "watIkMaarWil");
-                int position = getAdapterPosition();
-                    CbArt cbToPass = OGItemsCbArt.get(position);
-                StreetArt saToPass = OGItemsStreetArt.get(position);
-                    Bundle data = new Bundle();
-                    data.putSerializable("passedCbArt", cbToPass);
-                 //   data.putSerializable("passedStreetArt", saToPass);
-
-
-
-
-
-                //navigatie starten
-               // Navigation.findNavController(view).navigate(R.id.artlist_to_detail, data);
-
-                DetailFragment details = DetailFragment.newInstance(data);
-                mContext.getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.container_fragment, details)
-                        .addToBackStack("BACK")
-                        .commit();
-
-
-
-
-            }
-        };
-
-
-        //default constructor(zonder parameter)
         ArtViewHolder(@NonNull View itemView) {
             super(itemView);
             tvTitle = itemView.findViewById(R.id.tv_artListCart_titleOfTheArt);
             tvArtist = itemView.findViewById(R.id.tv_artListCard_autor);
-//            tvYear = itemView.findViewById(R.id.tv_detail_yearOfTheArt);
             ivPhoto = itemView.findViewById(R.id.iv_artListCard_photo);
             ivArtListFavorite = itemView.findViewById(R.id.iv_artListCard_favorite);
             artCard = itemView.findViewById(R.id.cardArt);
-            artCard.setOnClickListener(detailListener);
         }
     }
 
@@ -88,7 +51,6 @@ public class CbArtAdapter extends RecyclerView.Adapter<CbArtAdapter.ArtViewHolde
     private ArrayList<CbArt> OGItemsCbArt;
     private ArrayList<StreetArt> itemsStreetArt;
     private ArrayList<StreetArt> OGItemsStreetArt;
-    private ArrayList<CbArt> cbFavorites;
 
 
     public CbArtAdapter(FragmentActivity fragmentActivity) {
@@ -98,8 +60,6 @@ public class CbArtAdapter extends RecyclerView.Adapter<CbArtAdapter.ArtViewHolde
         //streetArt
         itemsStreetArt = new ArrayList<>();
         OGItemsStreetArt = new ArrayList<>();
-        //favorites
-        cbFavorites = new ArrayList<>();
 
         mContext = fragmentActivity;
     }
@@ -123,6 +83,22 @@ public class CbArtAdapter extends RecyclerView.Adapter<CbArtAdapter.ArtViewHolde
         if (itemsCbArt.size() > 0 && position < itemsCbArt.size()) {
 
             final CbArt currentCbArt = itemsCbArt.get(position);
+
+            // Navigate to Detail
+            View.OnClickListener cbDetailListener = new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Bundle data = new Bundle();
+                    data.putSerializable("passedCbArt", currentCbArt);
+
+                    DetailFragment details = DetailFragment.newInstance(data);
+                    mContext.getSupportFragmentManager().beginTransaction()
+                            .replace(R.id.container_fragment, details)
+                            .addToBackStack("BACK")
+                            .commit();
+                }
+            };
+            holder.artCard.setOnClickListener(cbDetailListener);
 
             // Add favorite on click on icon: change value of isFavorite field, then update the database
             View.OnClickListener addCbToFavorites = new View.OnClickListener() {
@@ -162,6 +138,22 @@ public class CbArtAdapter extends RecyclerView.Adapter<CbArtAdapter.ArtViewHolde
         if (itemsStreetArt.size() > 0 && position >= itemsCbArt.size()) {
 
             final StreetArt currentStreetArt = itemsStreetArt.get(position - itemsCbArt.size());
+
+            // Navigate to Detail
+            View.OnClickListener streetArtDetailListener = new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Bundle data = new Bundle();
+                    data.putSerializable("passedStreetArt", currentStreetArt);
+
+                    DetailFragment details = DetailFragment.newInstance(data);
+                    mContext.getSupportFragmentManager().beginTransaction()
+                            .replace(R.id.container_fragment, details)
+                            .addToBackStack("BACK")
+                            .commit();
+                }
+            };
+            holder.artCard.setOnClickListener(streetArtDetailListener);
 
             // Add favorite on click on icon: change value of isFavorite field, then update the database
             View.OnClickListener addStreetArtToFavorites = new View.OnClickListener() {
