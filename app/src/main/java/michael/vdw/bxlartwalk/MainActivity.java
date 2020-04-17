@@ -60,6 +60,7 @@ public class MainActivity extends AppCompatActivity {
         //om tab bar te kunnen gebruiken
         tabLayout = findViewById(R.id.tab_layout);
         tabLayout.addOnTabSelectedListener(tabListener);
+
     }
 
     public void navigateToFragment(Fragment f) {
@@ -73,6 +74,7 @@ public class MainActivity extends AppCompatActivity {
         super.onResume();
         tabLayout.getTabAt(1).select();
         tabLayout.getTabAt(0).select();
+
     }
 
     @Override
