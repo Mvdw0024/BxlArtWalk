@@ -20,9 +20,10 @@ import java.util.List;
 
 public class PointsParser extends AsyncTask<String, Integer, List<List<HashMap<String, String>>>> {
     TaskLoadedCallback taskCallback;
-    String directionMode = "driving";
+    String directionMode = "walking";
 
     public PointsParser(Context mContext, String directionMode) {
+        //TODO : Error >  java.lang.ClassCastException: michael.vdw.bxlartwalk.MainActivity cannot be cast to michael.vdw.bxlartwalk.Utils.Directionhelpers.TaskLoadedCallback
         this.taskCallback = (TaskLoadedCallback) mContext;
         this.directionMode = directionMode;
     }

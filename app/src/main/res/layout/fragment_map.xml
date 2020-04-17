@@ -18,6 +18,7 @@
         app:layout_constraintVertical_bias="1.0" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/legend"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
@@ -51,7 +52,7 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <TextView
-                android:id="@+id/textView2"
+                android:id="@+id/leg_tv_cb"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
@@ -79,7 +80,7 @@
             app:layout_constraintTop_toBottomOf="@+id/constraintLayout5">
 
             <TextView
-                android:id="@+id/textView"
+                android:id="@+id/leg_tv_sa"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
