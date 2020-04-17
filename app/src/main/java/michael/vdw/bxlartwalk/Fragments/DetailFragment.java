@@ -8,7 +8,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -45,7 +44,6 @@ public class DetailFragment extends Fragment {
                     .replace(R.id.container_fragment, pinToMap)
                     .addToBackStack("BACK")
                     .commit();
-            Toast.makeText(myContext, "PIN TO MAP", Toast.LENGTH_SHORT).show();
         }
     };
 

@@ -94,20 +94,26 @@ public class MapFragment extends Fragment implements TaskLoadedCallback, Locatio
             if (userLoc != null) {
                 userLocGeo = new LatLng(userLoc.getLatitude(), userLoc.getLongitude());
             }
-            if(getArguments() != null) {
-                if(getArguments().get("passedCbArt") != null) {
+            if (getArguments() != null) {
+                if (getArguments().get("passedCbArt") != null) {
                     CbArt current = (CbArt) getArguments().get("passedCbArt");
                     LatLng coord = new LatLng(current.getLat(), current.getLng());
-                    CameraUpdate moveToBrussel = CameraUpdateFactory.newLatLngZoom(coord, 14);
+                    CameraUpdate moveToBrussel = CameraUpdateFactory.newLatLngZoom(coord, 18);
+                    mMap.animateCamera(moveToBrussel);
+
+                } else if (getArguments().get("passedStreetArt") != null) {
+                    StreetArt current = (StreetArt) getArguments().get("passedStreetArt");
+                    LatLng coord = new LatLng(current.getLat(), current.getLng());
+                    CameraUpdate moveToBrussel = CameraUpdateFactory.newLatLngZoom(coord, 18);
                     mMap.animateCamera(moveToBrussel);
                 }
-            }else{
+            } else {
                 CameraUpdate moveToBrussel = CameraUpdateFactory.newLatLngZoom(coordBrussel, 12);
                 mMap.animateCamera(moveToBrussel);
+
             }
         }
     };
-
 
 
     private void findNearestMarker() {
