@@ -21,6 +21,7 @@ import com.squareup.picasso.Picasso;
 import michael.vdw.bxlartwalk.Models.CbArt;
 import michael.vdw.bxlartwalk.Models.StreetArt;
 import michael.vdw.bxlartwalk.R;
+import michael.vdw.bxlartwalk.Utils.CbArtAdapter;
 
 
 /**
@@ -33,6 +34,7 @@ public class DetailFragment extends Fragment {
     private StreetArt selectedStreetArt;
     private FragmentActivity myContext;
     private TabLayout tabLayout;
+    private CbArtAdapter adapter;
     private View.OnClickListener pinToMapListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
