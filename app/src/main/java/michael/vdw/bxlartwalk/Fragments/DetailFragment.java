@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -32,7 +33,18 @@ public class DetailFragment extends Fragment {
     private StreetArt selectedStreetArt;
     private FragmentActivity myContext;
     private TabLayout tabLayout;
-
+    private View.OnClickListener pinToMapListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+//            Bundle data = new Bundle();
+//           // MapFragment pinToMap = MapFragment.newInstance(data);
+//            myContext.getSupportFragmentManager().beginTransaction()
+//                    .replace(R.id.container_fragment, pinToMap)
+//                    .addToBackStack("BACK")
+//                    .commit();
+            Toast.makeText(myContext, "PIN TO MAP", Toast.LENGTH_SHORT).show();
+        }
+    };
 
 
     public DetailFragment() {
@@ -45,7 +57,6 @@ public class DetailFragment extends Fragment {
         df.setArguments(data);
         return df;
     }
-
 
 
     @Override
@@ -72,6 +83,8 @@ public class DetailFragment extends Fragment {
 //        addressTv = rootView.findViewById(R.id.tv_detail_adresOfTheArt);
 //        favButtonTv = rootView.findViewById(R.id.detail_tv_favorite);
         authorTv = rootView.findViewById(R.id.tv_detail_authorOfTheArt);
+        ImageView pinToMap = rootView.findViewById(R.id.iv_detail_map);
+        pinToMap.setOnClickListener(pinToMapListener);
 
 
         //get argument scherm gaat argumenten binnen trekken zie main_nav
@@ -80,7 +93,7 @@ public class DetailFragment extends Fragment {
 //            if (selectedCbArt.containsKey("passedCbArt")) {
 //                CbArt cbArt = (CbArt) selectedCbArt.getSerializable("passedCbArt");
             titleTv.setText(selectedCbArt.getCharacters());
-            yearTv.setText(""+selectedCbArt.getYear());
+            yearTv.setText("" + selectedCbArt.getYear());
 //            favButtonTv.setText(R.string.favButtonText);
             authorTv.setText(selectedCbArt.getAuthors());
             Picasso.get().load("https://opendata.brussel.be/explore/dataset/striproute0/files/" + selectedCbArt.getPhotoid() + "/download").into(photoIv);

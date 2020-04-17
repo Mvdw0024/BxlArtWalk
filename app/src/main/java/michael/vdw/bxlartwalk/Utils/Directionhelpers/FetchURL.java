@@ -11,9 +11,13 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+/**
+ * Created by Vishal on 10/20/2018.
+ */
+
 public class FetchURL extends AsyncTask<String, Void, String> {
     Context mContext;
-    String directionMode = "driving";
+    String directionMode = "walking";
 
     public FetchURL(Context mContext) {
         this.mContext = mContext;

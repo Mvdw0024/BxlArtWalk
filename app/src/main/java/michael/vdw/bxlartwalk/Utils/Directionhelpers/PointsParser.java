@@ -23,6 +23,7 @@ public class PointsParser extends AsyncTask<String, Integer, List<List<HashMap<S
     String directionMode = "walking";
 
     public PointsParser(Context mContext, String directionMode) {
+        //TODO : Error >  java.lang.ClassCastException: michael.vdw.bxlartwalk.MainActivity cannot be cast to michael.vdw.bxlartwalk.Utils.Directionhelpers.TaskLoadedCallback
         this.taskCallback = (TaskLoadedCallback) mContext;
         this.directionMode = directionMode;
     }
