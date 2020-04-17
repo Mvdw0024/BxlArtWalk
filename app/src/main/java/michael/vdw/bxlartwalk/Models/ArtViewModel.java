@@ -1,7 +1,6 @@
 package michael.vdw.bxlartwalk.Models;
 
 import android.app.Application;
-import android.content.Context;
 import android.util.Log;
 
 import androidx.lifecycle.AndroidViewModel;
@@ -24,12 +23,11 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 public class ArtViewModel extends AndroidViewModel {
-    private Context context;
-//    private CbArtDataBase cbArtDataBase;
-    private MutableLiveData<ArrayList<CbArt>>     cbRouteArt;
+
+    private MutableLiveData<ArrayList<CbArt>> cbRouteArt;
     private MutableLiveData<ArrayList<StreetArt>> streetArtRoute;
-    private LiveData<List<CbArt>>                 cbArtFavorites;
-    private LiveData<List<StreetArt>>             streetArtFavorites;
+    private LiveData<List<CbArt>> cbArtFavorites;
+    private LiveData<List<StreetArt>> streetArtFavorites;
     public ExecutorService threadExecutor = Executors.newFixedThreadPool(4);
 
     public ArtViewModel(Application application) {
@@ -95,7 +93,7 @@ public class ArtViewModel extends AndroidViewModel {
     }
 
     private void fetchCbArt() {
-//        CbArtDataBase.getSharedInstance(getApplication()).cbArtDao().nukeTable();
+
         Log.d("dendezen", "heeft gedraaid");
 
         threadExecutor.execute(new Runnable() {
@@ -109,12 +107,9 @@ public class ArtViewModel extends AndroidViewModel {
                         .url("https://bruxellesdata.opendatasoft.com/api/records/1.0/search/?dataset=comic-book-route&rows=58")
                         .get()
                         .build();
-
-
                 try {
 
                     Response response = client.newCall(request).execute();
-
                     String postData = response.body().string();
 
                     JSONObject jsonObject = new JSONObject(postData);
@@ -130,14 +125,13 @@ public class ArtViewModel extends AndroidViewModel {
                                 jsonId,
                                 jsonArt.getString("personnage_s"),
                                 jsonArt.getString("auteur_s"),
-                                (jsonArt.has("photo"))?jsonArt.getJSONObject("photo").getString("filename"):"placeholder.image",
-                                (jsonArt.has("photo"))?jsonArt.getJSONObject("photo").getString("id"):"Unknown",
+                                (jsonArt.has("photo")) ? jsonArt.getJSONObject("photo").getString("filename") : "placeholder.image",
+                                (jsonArt.has("photo")) ? jsonArt.getJSONObject("photo").getString("id") : "Unknown",
                                 jsonArt.getJSONArray("coordonnees_geographiques").getDouble(0),
                                 jsonArt.getJSONArray("coordonnees_geographiques").getDouble(1),
                                 Integer.parseInt(jsonArt.getString("annee"))
                         );
                         comicBookArt.add(currentCbArt);
-                        //TODO: methode moet nog getest worden.
                         CbArtDataBase.dbExecutor.execute(new Runnable() {
                             @Override
                             public void run() {
@@ -153,15 +147,11 @@ public class ArtViewModel extends AndroidViewModel {
                     for (CbArt cbArt : comicBookArt) {
                         Log.d("ReceivedData", "" + cbArt);
                     }
-
                     cbRouteArt.postValue(comicBookArt);
-
-
                 } catch (IOException | JSONException e) {
                     Log.d("dendezen", "heeft scheef gedraaid");
                     e.printStackTrace();
                 }
-
 
             }
         });
@@ -180,7 +170,6 @@ public class ArtViewModel extends AndroidViewModel {
                         .get()
                         .build();
 
-
                 try {
                     Response response = client.newCall(request).execute();
 
@@ -196,7 +185,6 @@ public class ArtViewModel extends AndroidViewModel {
                         JSONObject jsonStreetArt = jsonRecords.getJSONObject(i).getJSONObject("fields");
 
                         // Prepare coordinates for Latlng
-
                         final StreetArt curStreetArt = new StreetArt(
                                 jsonId,
                                 (jsonStreetArt.has("naam_van_de_kunstenaar")) ? jsonStreetArt.getString("naam_van_de_kunstenaar") : "Unknown",
@@ -210,7 +198,6 @@ public class ArtViewModel extends AndroidViewModel {
 
                         );
                         streetArtJSON.add(curStreetArt);
-                        //TODO: methode moet nog getest worden.
                         CbArtDataBase.dbExecutor.execute(new Runnable() {
                             @Override
                             public void run() {
@@ -221,14 +208,11 @@ public class ArtViewModel extends AndroidViewModel {
                         });
                         i++;
                     }
-
                     // Geeft resultaten van de API call in de logcat
                     for (StreetArt curStreetArt : streetArtJSON) {
                         Log.d("ReceivedStreetData", "" + curStreetArt);
                     }
-
                     streetArtRoute.postValue(streetArtJSON);
-
                 } catch (IOException | JSONException e) {
                     e.printStackTrace();
                 }

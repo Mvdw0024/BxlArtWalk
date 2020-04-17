@@ -2,6 +2,13 @@ package michael.vdw.bxlartwalk.Fragments;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.SearchView;
@@ -11,15 +18,6 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ImageView;
 
 import java.util.ArrayList;
 
@@ -43,8 +41,6 @@ public class ArtListFragment extends Fragment {
         return new ArtListFragment();
     }
 
-
-
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
@@ -55,8 +51,6 @@ public class ArtListFragment extends Fragment {
         // Required empty public constructor
     }
 
-
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -65,28 +59,17 @@ public class ArtListFragment extends Fragment {
 
         adapter = new CbArtAdapter(myContext);
 
-
-       //noodzakelijk omp search in te voegen
         setHasOptionsMenu(true);
-
-        //verwijzing UI
         RecyclerView rvCbArt = rootView.findViewById(R.id.rv_art);
-
-        //opvulling rv
         rvCbArt.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false));
-
-        // adapter, nodig om data om te zetten naar iets visueel(hier is dat een card)
         adapter = new CbArtAdapter(getActivity());
         rvCbArt.setAdapter(adapter);
-
-        //verwijzing naar viewModel, waar staat alle data
         ArtViewModel model = new ViewModelProvider(this).get(ArtViewModel.class);
-
         model.getCbRouteArt().observe(getViewLifecycleOwner(), new Observer<ArrayList<CbArt>>() {
 
             @Override
             public void onChanged(ArrayList<CbArt> cbArts) {
-                Log.d("sentData",""+cbArts);
+                Log.d("sentData", "" + cbArts);
                 adapter.addCbItems(cbArts);
                 adapter.notifyDataSetChanged();
             }
@@ -107,10 +90,7 @@ public class ArtListFragment extends Fragment {
     @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
 
-        inflater.inflate(R.menu. search_menu,menu);
-
-//        SearchView searchView = (SearchView) menu.findItem(R.id.mi_search).getActionView();
-//        searchView.setOnQueryTextListener(searchListener);
+        inflater.inflate(R.menu.search_menu, menu);
         MenuItem item = menu.findItem(R.id.mi_search);
         SearchView sv = (SearchView) item.getActionView();
 

@@ -5,10 +5,7 @@ import androidx.room.Entity;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
-import com.google.android.gms.maps.model.LatLng;
-
 import java.io.Serializable;
-import java.util.Collection;
 
 @Entity // ROOM preparation
 public class CbArt implements Serializable {
@@ -17,7 +14,6 @@ public class CbArt implements Serializable {
     @PrimaryKey(autoGenerate = false)
     public String id;
     public String characters, authors, photourl, photoid;
-//    public LatLng geocoordinates;
     public Double lat, lng;
     public int year, isFavorite;
 
@@ -31,7 +27,6 @@ public class CbArt implements Serializable {
         this.authors = authors;
         this.photourl = photourl;
         this.photoid = photoid;
-//        this.geocoordinates = geocoordinates;
         this.lat = lat;
         this.lng = lng;
         this.year = year;
@@ -87,15 +82,6 @@ public class CbArt implements Serializable {
         this.photourl = photourl;
     }
 
-//    public LatLng getGeocoordinates() {
-//        return geocoordinates;
-//    }
-//
-//    public void setGeocoordinates(LatLng geocoordinates) {
-//        this.geocoordinates = geocoordinates;
-//    }
-
-
     public Double getLat() {
         return lat;
     }
@@ -119,10 +105,6 @@ public class CbArt implements Serializable {
     public void setYear(int year) {
         this.year = year;
     }
-
-
-
-    // nog geen idee, of dit nodig zal zijn, maar just in case
 
     @Override
     public String toString() {

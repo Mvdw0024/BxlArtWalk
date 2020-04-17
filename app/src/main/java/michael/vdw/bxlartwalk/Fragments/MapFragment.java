@@ -10,7 +10,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -40,7 +39,6 @@ import michael.vdw.bxlartwalk.Models.ArtViewModel;
 import michael.vdw.bxlartwalk.Models.CbArt;
 import michael.vdw.bxlartwalk.Models.StreetArt;
 import michael.vdw.bxlartwalk.R;
-import michael.vdw.bxlartwalk.Utils.CbArtAdapter;
 import michael.vdw.bxlartwalk.Utils.Directionhelpers.FetchURL;
 import michael.vdw.bxlartwalk.Utils.Directionhelpers.TaskLoadedCallback;
 
@@ -52,13 +50,8 @@ public class MapFragment extends Fragment implements TaskLoadedCallback, Locatio
 
     private static final int PERMISSION_ID = 1320;
     private final LatLng coordBrussel = new LatLng(50.858712, 4.347446);
-    private final LatLng coordMechelen = new LatLng(51.0258761, 4.4775362);
-
     private Location userLoc;
     private LatLng userLocGeo;
-    private TextView cblegend;
-    private TextView salegend;
-    private Bundle dataFromDetail;
 
     //nodig voor de tab
     public static MapFragment newInstance() {
@@ -78,7 +71,6 @@ public class MapFragment extends Fragment implements TaskLoadedCallback, Locatio
     private GoogleMap mMap;
     private FragmentActivity fragmentActivity;
     private ArtViewModel artViewModel;
-    private CbArtAdapter adapter;
     private Polyline currentPolyLine;
     private FusedLocationProviderClient fusedLocationClient;
 
@@ -87,7 +79,6 @@ public class MapFragment extends Fragment implements TaskLoadedCallback, Locatio
         public void onMapReady(GoogleMap googleMap) {
             mMap = googleMap;
             mMap.setOnInfoWindowClickListener(infoWindowClickListener);
-//            mMap.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
             drawMarkers();
             if (checkPermissions())
                 drawUserMarker();
@@ -148,36 +139,21 @@ public class MapFragment extends Fragment implements TaskLoadedCallback, Locatio
                 if (distanceToCb < distanceinM) {
                     // cblegend.setText("Cb TEST");
                     Toast.makeText(fragmentActivity, "Distance to :" + cbMarker.getCharacters() + ":" + distanceToCb, Toast.LENGTH_LONG).show();
-
                 }
                 if (distanceToSa < distanceinM) {
                     //salegend.setText("Sa TEST");saMarker.getWorkname()
                     Toast.makeText(fragmentActivity, "Distance to " + ":" + distanceToSa, Toast.LENGTH_LONG).show();
-
                 }
-
             }
         }
 
     }
 
-
-    private void drawPolyTest() {
-        mMap.addPolyline(new PolylineOptions()
-                .color(0xff990000)
-                .width(5)
-                //TODO: get info for UserLocation :
-                .add(userLocGeo)
-                // .add(new LatLng(mMap.getMyLocation().getLongitude(), mMap.getMyLocation().getAltitude()))
-                .add(coordBrussel));
-    }
-
-
     private void drawPolylineUserLocToMarker() {
-// not functional at the moment, getting ClassCastException.
+// not functional at the moment, getting ClassCastException // paying function in Google API
 //TODO: get info for UserLocation :
         MarkerOptions place1 = new MarkerOptions().position(coordBrussel);
-        MarkerOptions place2 = new MarkerOptions().position(coordMechelen);
+        MarkerOptions place2 = new MarkerOptions().position(userLocGeo);
         String urldirections = getUrl(place1.getPosition(), place2.getPosition(), "walking");
         new FetchURL(getContext()).execute(urldirections, "walking");
 
@@ -185,7 +161,7 @@ public class MapFragment extends Fragment implements TaskLoadedCallback, Locatio
     }
 
     private String getUrl(LatLng origin, LatLng dest, String directionMode) {
-//Origin of route
+        //Origin of route
         String str_origin = "origin=" + origin.latitude + "," + origin.longitude;
         //destination of route
         String str_dest = "destination=" + dest.latitude + "," + dest.longitude;
@@ -205,7 +181,6 @@ public class MapFragment extends Fragment implements TaskLoadedCallback, Locatio
         @Override
         public void onInfoWindowClick(Marker marker) {
             Bundle data = new Bundle();
-            /*int position = getAdapterPosition();*/
             CbArt cb = null;
             StreetArt sa = null;
 
@@ -222,7 +197,8 @@ public class MapFragment extends Fragment implements TaskLoadedCallback, Locatio
                         .addToBackStack("BACK")
                         .commit();
             } else {
-                Toast.makeText(getActivity(), "Comic Book Route", Toast.LENGTH_SHORT).show();
+                //don't really get why this use this toast when cb != null, but it does ... *Feature , not a bug :-) *
+                Toast.makeText(getActivity(), "Street Art", Toast.LENGTH_SHORT).show();
             }
             if (sa != null) {
                 data.putSerializable("passedStreetArt", sa);
@@ -232,7 +208,8 @@ public class MapFragment extends Fragment implements TaskLoadedCallback, Locatio
                         .addToBackStack("BACK")
                         .commit();
             } else {
-                Toast.makeText(getActivity(), "Street Art", Toast.LENGTH_SHORT).show();
+                //don't really get why this use this toast when cb != null, but it does ... *Feature , not a bug :-) *
+                Toast.makeText(getActivity(), "Comic Book Route", Toast.LENGTH_SHORT).show();
             }
 
         }
@@ -247,7 +224,6 @@ public class MapFragment extends Fragment implements TaskLoadedCallback, Locatio
             m.setSnippet(cbArtMarker.getAuthors());
             m.setTag(cbArtMarker);
         }
-
         for (StreetArt streetArtMarker : artViewModel.getAllStreetArtFromDataBase()) {
             Marker s = mMap.addMarker(new MarkerOptions()
                     .position(new LatLng(streetArtMarker.getLat(), streetArtMarker.getLng()))
@@ -256,7 +232,6 @@ public class MapFragment extends Fragment implements TaskLoadedCallback, Locatio
             s.setSnippet(streetArtMarker.getArtists());
             s.setTag(streetArtMarker);
         }
-
     }
 
     public MapFragment() {
@@ -271,22 +246,15 @@ public class MapFragment extends Fragment implements TaskLoadedCallback, Locatio
         rootView = inflater.inflate(R.layout.fragment_map, container, false);
         Bundle dataFromDetail = getArguments();
         mapView = rootView.findViewById(R.id.mapView);
-        cblegend = rootView.findViewById(R.id.leg_tv_cb);
-        salegend = rootView.findViewById(R.id.leg_tv_sa);
         mapView.onCreate(savedInstanceState);
         mapView.getMapAsync(onMapReady);
         setHasOptionsMenu(true);
         artViewModel = new ViewModelProvider(getActivity()).get(ArtViewModel.class);
-
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(fragmentActivity);
-
-
         return rootView;
     }
 
     private void drawUserMarker() {
-//        mMap.setMyLocationEnabled(true); << geeft NullPointerException
-
         if (checkPermissions()) {
             final Task<Location> locationTask = fusedLocationClient.getLastLocation();
             locationTask.addOnSuccessListener(new OnSuccessListener<Location>() {
@@ -307,10 +275,8 @@ public class MapFragment extends Fragment implements TaskLoadedCallback, Locatio
                         locationRequest.setInterval(10000);
                         locationRequest.setFastestInterval(5000);
                         locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
-                        //drawPolylineUserLocToMarker();
                         findNearestMarker();
                     }
-
                 }
             });
             //updates op locatie opvragen
@@ -338,11 +304,8 @@ public class MapFragment extends Fragment implements TaskLoadedCallback, Locatio
             case PERMISSION_ID:
                 if (requestCode == PERMISSION_ID && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     drawUserMarker();
-                    //mMap.setMyLocationEnabled(true);
                 }
                 break;
-
-
         }
     }
 

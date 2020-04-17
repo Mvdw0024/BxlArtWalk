@@ -2,7 +2,6 @@ package michael.vdw.bxlartwalk.Utils;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,7 +15,6 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.squareup.picasso.Picasso;
@@ -60,7 +58,6 @@ public class CbArtAdapter extends RecyclerView.Adapter<CbArtAdapter.ArtViewHolde
         //streetArt
         itemsStreetArt = new ArrayList<>();
         OGItemsStreetArt = new ArrayList<>();
-
         mContext = fragmentActivity;
     }
 
@@ -81,7 +78,6 @@ public class CbArtAdapter extends RecyclerView.Adapter<CbArtAdapter.ArtViewHolde
         final ArtViewModel model = new ViewModelProvider(this.mContext).get(ArtViewModel.class);
 
         if (itemsCbArt.size() > 0 && position < itemsCbArt.size()) {
-
             final CbArt currentCbArt = itemsCbArt.get(position);
 
             // Navigate to Detail
@@ -224,7 +220,7 @@ public class CbArtAdapter extends RecyclerView.Adapter<CbArtAdapter.ArtViewHolde
                 itemsStreetArt = OGItemsStreetArt;
 
 
-                    if(!input.isEmpty()){
+                if (!input.isEmpty()) {
 
                     ArrayList<CbArt> tempListCbArt = new ArrayList<>();
                     ArrayList<StreetArt> tempListStreetArt = new ArrayList<>();
@@ -241,17 +237,17 @@ public class CbArtAdapter extends RecyclerView.Adapter<CbArtAdapter.ArtViewHolde
                         OGItemsCbArt = tempListCbArt;
                     }
 
-                    for (StreetArt elementStreetArt :itemsStreetArt){
-                            if (elementStreetArt.getWorkname().toLowerCase().contains(input.toLowerCase())) {
+                    for (StreetArt elementStreetArt : itemsStreetArt) {
+                        if (elementStreetArt.getWorkname().toLowerCase().contains(input.toLowerCase())) {
+                            tempListStreetArt.add(elementStreetArt);
+                        } else {
+                            if (elementStreetArt.getArtists().toLowerCase().contains(input.toLowerCase())) {
                                 tempListStreetArt.add(elementStreetArt);
-                            } else {
-                                if (elementStreetArt.getArtists().toLowerCase().contains(input.toLowerCase())) {
-                                    tempListStreetArt.add(elementStreetArt);
-                                }
                             }
-                            OGItemsStreetArt = tempListStreetArt;
                         }
+                        OGItemsStreetArt = tempListStreetArt;
                     }
+                }
 
                 return null;
             }
