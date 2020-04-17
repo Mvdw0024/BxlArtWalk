@@ -221,8 +221,7 @@ public class CbArtAdapter extends RecyclerView.Adapter<CbArtAdapter.ArtViewHolde
 
 
                 if (!input.isEmpty()) {
-                    itemsCbArt = OGItemsCbArt;
-                } else {
+
                     ArrayList<CbArt> tempListCbArt = new ArrayList<>();
                     ArrayList<StreetArt> tempListStreetArt = new ArrayList<>();
 
