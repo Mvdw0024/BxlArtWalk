@@ -56,9 +56,7 @@ public class ArtListFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_art_list, container, false);
-
         adapter = new CbArtAdapter(myContext);
-
         setHasOptionsMenu(true);
         RecyclerView rvCbArt = rootView.findViewById(R.id.rv_art);
         rvCbArt.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false));
@@ -85,7 +83,6 @@ public class ArtListFragment extends Fragment {
 
         return rootView;
     }
-
 
     @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {

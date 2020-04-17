@@ -53,7 +53,6 @@ public class MapFragment extends Fragment implements TaskLoadedCallback, Locatio
     private Location userLoc;
     private LatLng userLocGeo;
 
-    //nodig voor de tab
     public static MapFragment newInstance() {
         return new MapFragment();
     }
@@ -122,7 +121,6 @@ public class MapFragment extends Fragment implements TaskLoadedCallback, Locatio
                 geoCoordCb.setLatitude(cbPos.latitude);
                 Log.d("CBPOS", "findNearestMarker:" + geoCoordCb);
             }
-
             for (StreetArt saMarker : artViewModel.getAllStreetArtFromDataBase()) {
                 LatLng saPost = new LatLng(saMarker.getLat(), saMarker.getLng());
                 geoCoordSa.setLatitude(saPost.latitude);
@@ -130,18 +128,16 @@ public class MapFragment extends Fragment implements TaskLoadedCallback, Locatio
                 Log.d("SAPOS", "findNearestMarker: " + geoCoordSa);
             }
             //when user gets in vicinity of less than (distanceinM) m from marker, text of legend should change or Toast should appear.
-            //TODO : get info to/from UserLoc;
             Log.d("USERLOCNEARESTMARKER", "" + userLoc);
             if (userLoc != null) {
                 float distanceToCb = userLoc.distanceTo(geoCoordCb);
                 float distanceToSa = userLoc.distanceTo(geoCoordSa);
                 float distanceinM = 100;
                 if (distanceToCb < distanceinM) {
-                    // cblegend.setText("Cb TEST");
                     Toast.makeText(fragmentActivity, "Distance to :" + cbMarker.getCharacters() + ":" + distanceToCb, Toast.LENGTH_LONG).show();
                 }
                 if (distanceToSa < distanceinM) {
-                    //salegend.setText("Sa TEST");saMarker.getWorkname()
+                    //;saMarker.getWorkname()
                     Toast.makeText(fragmentActivity, "Distance to " + ":" + distanceToSa, Toast.LENGTH_LONG).show();
                 }
             }
@@ -151,7 +147,6 @@ public class MapFragment extends Fragment implements TaskLoadedCallback, Locatio
 
     private void drawPolylineUserLocToMarker() {
 // not functional at the moment, getting ClassCastException // paying function in Google API
-//TODO: get info for UserLocation :
         MarkerOptions place1 = new MarkerOptions().position(coordBrussel);
         MarkerOptions place2 = new MarkerOptions().position(userLocGeo);
         String urldirections = getUrl(place1.getPosition(), place2.getPosition(), "walking");
@@ -261,12 +256,9 @@ public class MapFragment extends Fragment implements TaskLoadedCallback, Locatio
                 @Override
                 public void onSuccess(Location location) {
                     if (location != null) {
-
                         double longitude = location.getLongitude();
                         double latitude = location.getLatitude();
-
                         userLoc = location;
-
                         userLocGeo = new LatLng(latitude, longitude);
                         Log.d("USERLOCATION", "onSuccess: " + userLocGeo);
 

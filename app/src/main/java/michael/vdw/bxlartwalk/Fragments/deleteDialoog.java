@@ -15,7 +15,6 @@ public class deleteDialoog extends DialogFragment {
     /*Wordt voorlopig niet gebruikt , bedoeling is dat deze geimplementeerd wordt wanneer je het vuilbakje aanklikt in de favoritelist.
     --Begin 2.0 versie :-) */
 
-
     private DialogInterface.OnClickListener okListener = new DialogInterface.OnClickListener() {
         @Override
         public void onClick(DialogInterface dialog, int i) {
