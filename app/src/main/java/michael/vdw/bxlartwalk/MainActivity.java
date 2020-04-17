@@ -17,6 +17,7 @@ import android.view.MenuItem;
 
 import com.google.android.material.tabs.TabLayout;
 
+import michael.vdw.bxlartwalk.Fragments.AboutUsFragment;
 import michael.vdw.bxlartwalk.Fragments.ArtListFragment;
 import michael.vdw.bxlartwalk.Fragments.FavoritListFragment;
 import michael.vdw.bxlartwalk.Fragments.MapFragment;
@@ -93,7 +94,9 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()){
-            case R.id.aboutUs: NavigationUI.onNavDestinationSelected(item,navController);
+            case R.id.aboutUs:
+                AboutUsFragment af = new AboutUsFragment();
+                navigateToFragment(af);
         }
 
         return super.onOptionsItemSelected(item);

@@ -4,6 +4,7 @@ import android.Manifest;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.location.Location;
+import android.location.LocationListener;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -47,7 +48,7 @@ import michael.vdw.bxlartwalk.Utils.Directionhelpers.TaskLoadedCallback;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class MapFragment extends Fragment implements TaskLoadedCallback {
+public class MapFragment extends Fragment implements TaskLoadedCallback, LocationListener {
 
     private static final int PERMISSION_ID = 1320;
     private final LatLng coordBrussel = new LatLng(50.858712, 4.347446);
@@ -64,6 +65,12 @@ public class MapFragment extends Fragment implements TaskLoadedCallback {
         return new MapFragment();
     }
 
+    public static MapFragment newInstance(Bundle data) {
+        MapFragment mf = new MapFragment();
+        mf.setArguments(data);
+        Log.d("DATA", data.toString());
+        return mf;
+    }
     //Fragment to implement a MapView
 
     private View rootView;
@@ -79,8 +86,6 @@ public class MapFragment extends Fragment implements TaskLoadedCallback {
         @Override
         public void onMapReady(GoogleMap googleMap) {
             mMap = googleMap;
-            CameraUpdate moveToBrussel = CameraUpdateFactory.newLatLngZoom(coordBrussel, 12);
-            mMap.animateCamera(moveToBrussel);
             mMap.setOnInfoWindowClickListener(infoWindowClickListener);
 //            mMap.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
             drawMarkers();
@@ -88,14 +93,22 @@ public class MapFragment extends Fragment implements TaskLoadedCallback {
                 drawUserMarker();
             if (userLoc != null) {
                 userLocGeo = new LatLng(userLoc.getLatitude(), userLoc.getLongitude());
-                drawPolyTest();
-                //drawPolylineUserLocToMarker();
-                findNearestMarker();
             }
-
-
+            if(getArguments() != null) {
+                if(getArguments().get("passedCbArt") != null) {
+                    CbArt current = (CbArt) getArguments().get("passedCbArt");
+                    LatLng coord = new LatLng(current.getLat(), current.getLng());
+                    CameraUpdate moveToBrussel = CameraUpdateFactory.newLatLngZoom(coord, 14);
+                    mMap.animateCamera(moveToBrussel);
+                }
+            }else{
+                CameraUpdate moveToBrussel = CameraUpdateFactory.newLatLngZoom(coordBrussel, 12);
+                mMap.animateCamera(moveToBrussel);
+            }
         }
     };
+
+
 
     private void findNearestMarker() {
         //nearestMarker to UserLocation
@@ -278,8 +291,7 @@ public class MapFragment extends Fragment implements TaskLoadedCallback {
                         double longitude = location.getLongitude();
                         double latitude = location.getLatitude();
 
-                        userLoc.setLongitude(location.getLongitude());
-                        userLoc.setLatitude(location.getLatitude());
+                        userLoc = location;
 
                         userLocGeo = new LatLng(latitude, longitude);
                         Log.d("USERLOCATION", "onSuccess: " + userLocGeo);
@@ -289,12 +301,14 @@ public class MapFragment extends Fragment implements TaskLoadedCallback {
                         locationRequest.setInterval(10000);
                         locationRequest.setFastestInterval(5000);
                         locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
-
+                        //drawPolylineUserLocToMarker();
+                        findNearestMarker();
                     }
 
                 }
-
             });
+            //updates op locatie opvragen
+            //fusedLocationClient.requestLocationUpdates()
         }
 
     }
@@ -368,5 +382,25 @@ public class MapFragment extends Fragment implements TaskLoadedCallback {
     public void onStart() {
         super.onStart();
         mapView.onStart();
+    }
+
+    @Override
+    public void onLocationChanged(Location location) {
+
+    }
+
+    @Override
+    public void onStatusChanged(String s, int i, Bundle bundle) {
+
+    }
+
+    @Override
+    public void onProviderEnabled(String s) {
+
+    }
+
+    @Override
+    public void onProviderDisabled(String s) {
+
     }
 }

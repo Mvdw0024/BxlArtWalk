@@ -38,12 +38,13 @@ public class DetailFragment extends Fragment {
     private View.OnClickListener pinToMapListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-//            Bundle data = new Bundle();
-//           // MapFragment pinToMap = MapFragment.newInstance(data);
-//            myContext.getSupportFragmentManager().beginTransaction()
-//                    .replace(R.id.container_fragment, pinToMap)
-//                    .addToBackStack("BACK")
-//                    .commit();
+            Bundle data = new Bundle();
+            data = getArguments();
+            MapFragment pinToMap = MapFragment.newInstance(data);
+            myContext.getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.container_fragment, pinToMap)
+                    .addToBackStack("BACK")
+                    .commit();
             Toast.makeText(myContext, "PIN TO MAP", Toast.LENGTH_SHORT).show();
         }
     };
