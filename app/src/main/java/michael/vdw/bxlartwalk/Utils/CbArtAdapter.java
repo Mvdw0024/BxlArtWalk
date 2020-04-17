@@ -221,10 +221,10 @@ public class CbArtAdapter extends RecyclerView.Adapter<CbArtAdapter.ArtViewHolde
 
 
                 if (!input.isEmpty()) {
-
+                    itemsCbArt = OGItemsCbArt;
+                } else {
                     ArrayList<CbArt> tempListCbArt = new ArrayList<>();
                     ArrayList<StreetArt> tempListStreetArt = new ArrayList<>();
-
 
                     for (CbArt elementCbArt : itemsCbArt) {
                         if (elementCbArt.getCharacters().toLowerCase().contains(input.toLowerCase())) {
@@ -248,7 +248,6 @@ public class CbArtAdapter extends RecyclerView.Adapter<CbArtAdapter.ArtViewHolde
                         OGItemsStreetArt = tempListStreetArt;
                     }
                 }
-
                 return null;
             }
 
